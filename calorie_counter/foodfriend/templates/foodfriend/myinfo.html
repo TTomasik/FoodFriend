@@ -1,0 +1,39 @@
+{% extends 'foodfriend/base.html' %}
+
+{% block title %}
+<font color="white">Food Friend</font>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/my.css" >
+
+ <div class="panel panel-primary">
+        <div class="panel-heading">
+            {% if avatar %}
+            <img src="/{{ avatar }}" width="25%" height="25%">
+            {% endif %}
+            <h3>{{ user }}</h3>
+        </div>
+        <div class="panel-body">
+
+            <div>
+
+                <hr>
+                <b>AGE:</b> {{ age }}
+                <hr>
+                <b>GENDER:</b> {{ sex }}
+                <hr>
+                <b>WEIGHT:</b> {{ weight }} kg
+                <hr>
+                <b>HEIGHT:</b> {{ height }} cm
+                <hr>
+                <b>TARGET:</b> {{ target }}
+                <hr>
+                <b>DAILY GOAL:</b> {{ calories }} kcal
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+

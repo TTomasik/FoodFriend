@@ -1,0 +1,28 @@
+{% extends 'foodfriend/base.html' %}
+
+<div class="base-headline-title">
+        <h3>
+            {% block title %}<font color="white">Welcome to Food Friend</font>{% endblock %}
+        </h3>
+    </div>
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/custom.css" >
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Create account:
+        </div>
+        <div class="panel-body">
+
+
+            <div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Join">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
