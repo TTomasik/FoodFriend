@@ -24,6 +24,15 @@ SEX = (
     (2, "Man"),
 )
 
+MEALS = (
+    (0, "Choose meal type:"),
+    (1, "Breakfast"),
+    (2, "Breakfast II"),
+    (3, "Lunch"),
+    (4, "Dinner"),
+    (5, "Supper"),
+)
+
 
 class UserExtend(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -61,12 +70,57 @@ class UserExtend(models.Model):
 
             return calories_count
 
+    def __str__(self):
+        return self.user.username
 
-
-
-
-
+class Food(models.Model):
+    name = models.CharField(max_length=124)
+    kcal = models.IntegerField()
+    proteins = models.IntegerField()
+    carbs = models.IntegerField()
+    fats = models.IntegerField()
+    grams = models.IntegerField(default=100)
+    # meal_food = models.ForeignKey('Meal', null=True, blank=True)
 
     def __str__(self):
-        return '%s is %s' % (self.user.username, self.avatar)
+        return '%s: kcal:%s, P:%s, C:%s, F:%s' % (self.name, self.kcal, self.proteins, self.carbs, self.fats)
 
+class Days(models.Model):
+    date = models.DateField(auto_now_add=True)
+    date_user = models.ForeignKey(UserExtend)
+
+    class Meta:
+        unique_together = ('date', 'date_user',)
+
+    def __str__(self):
+        return "{} - {}".format(self.date, self.date_user)
+
+
+class Meal(models.Model):
+    meal_name = models.IntegerField(choices=MEALS, default=0)
+    day = models.ForeignKey(Days, null=True, blank=True)
+
+    foods = models.ManyToManyField(Food)
+
+    def __str__(self):
+        return '%s: %s' % (self.meal_name, self.foods)
+
+
+
+
+# class Movie(models.Model):
+#     title = models.CharField(max_length=128)
+#     director = models.ForeignKey('Person', related_name='movie_director')
+#     screenplay = models.ForeignKey('Person', related_name='movie_screenplay')
+#     starring = models.ManyToManyField('Person', through='Role', blank=True)
+#     year = models.SmallIntegerField()
+#     ranking = models.IntegerField(choices=RANKS, default=0)
+#
+#     def __str__(self):
+#         return self.title
+#
+#
+# class Role(models.Model):
+#     person = models.ForeignKey('Person', on_delete=models.CASCADE, related_name="Movie")
+#     movie = models.ForeignKey('Movie', on_delete=models.CASCADE, related_name="Movie")
+#     role = models.CharField(max_length=128, primary_key=True)

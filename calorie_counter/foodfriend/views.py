@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm
-from foodfriend.models import UserExtend, TARGETS, SEX
+from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -45,8 +45,8 @@ class CheckLogin(View):
 
 class MyInfo(View):
 
-    def test_func(self):
-        return self.request.user.is_superuser + self.request.user.id == 2
+    # def test_func(self):
+    #     return self.request.user.is_superuser + self.request.user.id
 
     # model = Profile
     # template_name = 'profile_edit.html'
@@ -61,6 +61,8 @@ class MyInfo(View):
     #     return True
 
     def get(self, request, my_id):
+        if not self.request.user.is_superuser:
+            my_id = self.request.user.id
         cont = {}
         extended = UserExtend.objects.get(pk=my_id)
         user = User.objects.get(pk=my_id)
@@ -103,6 +105,50 @@ class CreateAccount(View):
 
         form = CreateAccountForm()
         return HttpResponse("<h1>Hasło niepoprawne.</h1>")
+
+class DaysView(View):
+
+    def get(self, request, my_id):
+        if not self.request.user.is_superuser:
+            my_id = self.request.user.id
+
+        cont = {}
+        extended = UserExtend.objects.get(pk=my_id)
+        days = Days.objects.filter(date_user=extended)
+        days_list = []
+        # cont['example'] = Days.objects.filter(date_user=extended)[0].date
+        for day in days:
+            d = {}
+            d['date'] = day.date
+            days_list.append(d)
+            print(d)
+        cont['days'] = days_list
+        cont['my_id'] = my_id
+
+        return render(request, "foodfriend/calendar.html", cont)
+
+
+class MealsView(View):
+    def get(self, request, my_id, day_id):
+        if not self.request.user.is_superuser:
+            my_id = self.request.user.id
+
+        cont = {}
+        day = Days.objects.get(pk=day_id)
+        user = User.objects.get(pk=my_id)
+        meals = Meal.objects.filter(day__date_user=user.userextend, day__date=day.date)
+        meal_list = []
+        for meal in meals:
+            d = {}
+            d['name'] = meal.meal_name
+            meal_list.append(d)
+            print(d)
+        cont['names'] = meal_list
+        cont['my_id'] = my_id
+
+        return render(request, "foodfriend/calendar.html", cont)
+
+
 
 
 

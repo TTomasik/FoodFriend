@@ -1,0 +1,58 @@
+{% extends 'foodfriend/base.html' %}
+
+{% block title %}
+<font color="white">Food Friend</font>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/my.css" >
+<div class="to-calendar">
+
+
+ <div class="panel panel-primary">
+        <div class="panel-heading">
+            {% if avatar %}
+            <img src="/{{ avatar }}" width="25%" height="25%">
+            {% endif %}
+            <h3>{{ user }}</h3>
+        </div>
+        <div class="panel-body">
+
+            <div>
+                <table class="table" id="albums-table">
+                    <thead>
+                    <tr>
+                        <th>Day-1</th>
+                        <th>Day-2</th>
+                        <th>Day-3</th>
+                        <th>Day-4</th>
+                        <th>Day-5</th>
+                        <th>Day-6</th>
+                        <th>Day-7</th>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+
+                    {{ example }}
+                    {% for day in days %}
+                        <tr>
+                            <td>{{ day.date }}</td>
+                            <td>Styczen-20-2016</td>
+                            <td>Styczen-21-2016</td>
+                            <td>Styczen-22-2016</td>
+                            <td>Styczen-23-2016</td>
+                            <td>Styczen-24-2016</td>
+                            <td>Styczen-25-2016</td>
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+

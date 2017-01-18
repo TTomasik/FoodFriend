@@ -1,5 +1,5 @@
 from django.contrib import admin
-from foodfriend.models import UserExtend
+from foodfriend.models import UserExtend, Food, Meal, Days
 
 
 
@@ -11,6 +11,23 @@ class UserExtendAdmin(admin.ModelAdmin):
         return "<img src ='/{}' width='50' height='50' >".format(obj.avatar)
 
     image_url.allow_tags = True
+
+@admin.register(Food)
+class FoodAdmin(admin.ModelAdmin):
+    list_display = ('name', 'grams', 'kcal', 'proteins', 'carbs', 'fats')
+
+@admin.register(Meal)
+class MealAdmin(admin.ModelAdmin):
+    list_display = ('meal_name', 'Foods')
+
+    def Foods(self, meal_food):
+        return ", ".join([str(t) for t in meal_food.foods.all()])
+
+@admin.register(Days)
+class DayAdmin(admin.ModelAdmin):
+    list_display = ('date', 'date_user')
+
+
 
 
 

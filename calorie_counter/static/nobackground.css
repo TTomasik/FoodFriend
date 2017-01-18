@@ -64,3 +64,9 @@
 body {
     background: transparent;
 }
+
+}
+.content-block2 {
+    margin: 10px;
+    width: 50%;
+}
