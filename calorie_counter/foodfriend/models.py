@@ -70,8 +70,27 @@ class UserExtend(models.Model):
             return calories_count
 
     @property
-    def proteins(self):
-        result = self.calories
+    def protein(self):
+        if self.target == 1:
+            result = int(100*0.25)
+        else:
+            result = int(100*0.3)
+        return result
+
+    @property
+    def carb(self):
+        if self.target == 1:
+            result = int(100*0.45)
+        else:
+            result = int(100*0.5)
+        return result
+
+    @property
+    def fat(self):
+        if self.target == 1:
+            result = int(100*0.3)
+        else:
+            result = int(100*0.2)
         return result
 
 

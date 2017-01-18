@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm
+from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm
 from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food, MEALS
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
@@ -44,22 +44,6 @@ class CheckLogin(View):
 # LoginRequiredMixin, UserPassesTestMixin,  <--- tego uzywac do ponizszego w class MyInfo
 
 class MyInfo(View):
-
-    # def test_func(self):
-    #     return self.request.user.is_superuser + self.request.user.id
-
-    # model = Profile
-    # template_name = 'profile_edit.html'
-    #
-    # def test_func(self, user):
-    #     """ Allow user access if superuser or object owner """
-    #     user = self.request.user
-    #     obj = self.get_object()
-    #
-    #     if not user.is_superuser or obj.user != user:
-    #         return False
-    #     return True
-
     def get(self, request, my_id):
         if not self.request.user.is_superuser:
             my_id = self.request.user.id
@@ -79,9 +63,7 @@ class MyInfo(View):
         return render(request, "foodfriend/myinfo.html", cont)
 
 
-
 class CreateAccount(View):
-
     def get(self, request):
         form = CreateAccountForm()
         return render(request, "foodfriend/user_form.html", {"form": form})
@@ -92,7 +74,7 @@ class CreateAccount(View):
 
             user = form.cleaned_data['login']
             pass1 = form.cleaned_data['password']
-            pass2 = form.cleaned_data['password']
+            pass2 = form.cleaned_data['password2']
             em = form.cleaned_data['email']
 
             if pass1 == pass2:
@@ -103,11 +85,9 @@ class CreateAccount(View):
             else:
                 return HttpResponse("<h1>Wprowadzone hasło jest niepoprawne.</h1>")
 
-        form = CreateAccountForm()
-        return HttpResponse("<h1>Hasło niepoprawne.</h1>")
+        return redirect("/index")
 
 class DaysView(View):
-
     def get(self, request, my_id):
         if not self.request.user.is_superuser:
             my_id = self.request.user.id
@@ -116,7 +96,6 @@ class DaysView(View):
         extended = UserExtend.objects.get(pk=my_id)
         days = Days.objects.filter(date_user=extended)
         days_list = []
-        # cont['example'] = Days.objects.filter(date_user=extended)[0].date
         for day in days:
             d = {}
             d['date'] = day.date
@@ -142,11 +121,15 @@ class MealsView(View):
         for meal in meals:
             d = {}
             d['name'] = dict(MEALS).get(meal.meal_name)
+            d['id'] = meal.id
+            d['day_id'] = day.id
             meal_list.append(d)
             print(d)
         cont['meal_names'] = meal_list
         cont['my_id'] = my_id
-        cont['day_id'] = day_id
+        cont['day_id'] = day.id
+        cont['day_date'] = day.date
+
 
         return render(request, "foodfriend/meal.html", cont)
 
@@ -175,6 +158,40 @@ class FoodsView(View):
         cont['my_id'] = my_id
 
         return render(request, "foodfriend/food.html", cont)
+
+
+class CreateMeal(View):
+    def get(self, request):
+        form = CreateMealForm()
+        return render(request, "foodfriend/meal_form.html", {"form": form})
+
+    def post(self, request):
+        form = CreateMealForm(request.POST)
+        if form.is_valid():
+
+            name = form.cleaned_data['meal_name']
+            day = form.cleaned_data['day']
+            food = form.cleaned_data['foods']
+
+            boolean, object = Meal.objects.get_or_create(meal_name = name, day = day, foods = food)
+            if boolean:
+                print(object)
+                object.foods.add(food)
+            else:
+                object.save()
+
+        form = CreateAccountForm()
+        return HttpResponse("<h1>Hasło niepoprawne.</h1>")
+
+class AddDay(View):
+    def get(self, request, my_id):
+        my_id = self.request.user.id
+        user_extend = UserExtend.objects.get(pk=my_id)
+        day = Days.objects.create(date_user=user_extend)
+        day.save()
+        return redirect('/calendar/{}'.format(my_id))
+
+
 
 
 

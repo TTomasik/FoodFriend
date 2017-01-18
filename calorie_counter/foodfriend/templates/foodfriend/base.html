@@ -17,7 +17,9 @@
             {% if request.user.username %}
             <a class="menuspace" href="{% url 'my-info' my_id %}"><font color="white">
             {{ request.user.username }}   |</font>
-            <a class="menuspace" href="{% url 'my-info-edit' my_id %}"><font color="white">EDIT</a>| </font>
+            <a class="menuspace" href="{% url 'my-info-edit' my_id %}"><font color="white">EDIT</a>|</font>
+            <a class="menuspace" href="{% url 'calendar' my_id %}"><font color="white">CALENDAR</a>|</font>
+            <a class="menuspace" href="{% url 'login' %}"><font color="white">MAIN</a>| </font>
             <a class="menuspace" href="{% url 'logout' %}"><font color="white">LOGOUT</font></a>
                 {% endif %}
 

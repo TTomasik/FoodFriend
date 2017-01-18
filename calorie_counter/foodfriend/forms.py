@@ -1,6 +1,7 @@
 from django import forms
-from foodfriend.models import UserExtend
+from foodfriend.models import UserExtend, Meal, Food, Days, MEALS
 from django.core.exceptions import ValidationError
+from django.forms import ModelForm
 
 
 class LoginForm(forms.Form):
@@ -22,9 +23,7 @@ class UserExtendForm(forms.Form):
         model = UserExtend
         fields = ('avatar', 'user', 'age', 'sex', 'weight', 'height', 'target', 'calories')
 
-def validate_password(password):
-    if 'password2' != password:
-        raise ValidationError("Hasło niepoprawne!")
+
 
 class CreateAccountForm(forms.Form):
     login = forms.CharField(
@@ -44,7 +43,7 @@ class CreateAccountForm(forms.Form):
         max_length=64,
         widget=forms.PasswordInput,
         required=True,
-        validators=[validate_password]
+
     )
     email = forms.CharField(
         label='Email',
@@ -52,6 +51,11 @@ class CreateAccountForm(forms.Form):
         widget=forms.TextInput,
         required=True,
     )
+
+class CreateMealForm(ModelForm):
+    class Meta:
+        model = Meal
+        fields = '__all__'
 
 
 

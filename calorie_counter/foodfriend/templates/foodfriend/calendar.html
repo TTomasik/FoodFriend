@@ -14,7 +14,7 @@
             {% if avatar %}
             <img src="/{{ avatar }}" width="25%" height="25%">
             {% endif %}
-            <h3>{{ user }}</h3>
+            <h3><b>{{ user }}</b> | <a href="{% url 'add-day' request.user.id %}"><font color="white">ADD DAY</font></a></h3>
         </div>
         <div class="panel-body">
 
@@ -37,12 +37,7 @@
                     {% for day in days %}
                         <tr>
                             <td><a href="{% url 'calendar-meal' my_id=my_id day_id=day.id %}">{{ day.date }}</a></td>
-                            <td>Styczen-20-2016</td>
-                            <td>Styczen-21-2016</td>
-                            <td>Styczen-22-2016</td>
-                            <td>Styczen-23-2016</td>
-                            <td>Styczen-24-2016</td>
-                            <td>Styczen-25-2016</td>
+
                         </tr>
 
                     {% endfor %}

@@ -18,21 +18,34 @@
         <div class="panel-body">
 
             <div>
+                <table class="table" id="albums-table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>kcal</th>
+                        <th>proteins</th>
+                        <th>carbs</th>
+                        <th>fats</th>
+
+                    </tr>
+                    </thead>
+                    <tbody class="list">
 
                 {% for food in food_names %}
                         <tr>
-                            <td><b>{{ food.name }}</b></td><hr>
-                            <td><b>{{ food.kcal }}</b></td><hr>
-                            <td><b>{{ food.proteins }}</b></td><hr>
-                            <td><b>{{ food.carbs }}</b></td><hr>
-                            <td><b>{{ food.fats }}</b></td><hr>
-                            <td><b>{{ food.grams }}</b></td><hr>
+                            <td><b>{{ food.name }}:</b></td>
+                            <td>{{ food.kcal }}</td>
+                            <td>{{ food.proteins }}</td>
+                            <td>{{ food.carbs }}</td>
+                            <td>{{ food.fats }}</td>
+
 
 
                         </tr>
 
                     {% endfor %}
-
+                    </tbody>
+                </table>
             </div>
 
         </div>
