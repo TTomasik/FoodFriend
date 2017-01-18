@@ -41,7 +41,7 @@ class CheckLogin(View):
         #     # return render(request, "exercises/login.html", {"form": form})
         #     return HttpResponse("<h1>Nieprawidłowy login lub hasło.</h1>")
 
-# LoginRequiredMixin, UserPassesTestMixin,
+# LoginRequiredMixin, UserPassesTestMixin,  <--- tego uzywac do ponizszego w classie
 
 class MyInfo(View):
 
