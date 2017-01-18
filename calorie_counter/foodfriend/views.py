@@ -6,7 +6,8 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.models import User
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.views.generic.base import TemplateView
 from django.views.generic import CreateView
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
@@ -40,9 +41,24 @@ class CheckLogin(View):
         #     # return render(request, "exercises/login.html", {"form": form})
         #     return HttpResponse("<h1>Nieprawidłowy login lub hasło.</h1>")
 
-
+# LoginRequiredMixin, UserPassesTestMixin,
 
 class MyInfo(View):
+
+    def test_func(self):
+        return self.request.user.is_superuser + self.request.user.id == 2
+
+    # model = Profile
+    # template_name = 'profile_edit.html'
+    #
+    # def test_func(self, user):
+    #     """ Allow user access if superuser or object owner """
+    #     user = self.request.user
+    #     obj = self.get_object()
+    #
+    #     if not user.is_superuser or obj.user != user:
+    #         return False
+    #     return True
 
     def get(self, request, my_id):
         cont = {}
@@ -60,15 +76,9 @@ class MyInfo(View):
 
         return render(request, "foodfriend/myinfo.html", cont)
 
-# class CreateAccount(CreateView):
-#     model = User
-#     fields = ('username', 'first_name', 'last_name', 'password')
-#     success_url = '/index/'
+
 
 class CreateAccount(View):
-    # def test_func(self):
-    #     return self.request.user.is_superuser UserPassesTestMixin
-
 
     def get(self, request):
         form = CreateAccountForm()
@@ -92,7 +102,7 @@ class CreateAccount(View):
                 return HttpResponse("<h1>Wprowadzone hasło jest niepoprawne.</h1>")
 
         form = CreateAccountForm()
-        return redirect("/index")
+        return HttpResponse("<h1>Hasło niepoprawne.</h1>")
 
 
 
