@@ -19,9 +19,15 @@
 
             <div>
 
-                {% for meal in meal_names %}
+                {% for food in food_names %}
                         <tr>
-                            <td>{{ meal.name }}</td><hr>
+                            <td><b>{{ food.name }}</b></td><hr>
+                            <td><b>{{ food.kcal }}</b></td><hr>
+                            <td><b>{{ food.proteins }}</b></td><hr>
+                            <td><b>{{ food.carbs }}</b></td><hr>
+                            <td><b>{{ food.fats }}</b></td><hr>
+                            <td><b>{{ food.grams }}</b></td><hr>
+
 
                         </tr>
 

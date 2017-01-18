@@ -73,6 +73,14 @@
             </div>
         </font>
     </div>
+    <div class="my_margin">
+    <form action="{% url 'calendar' request.user.id %}">
+        {% csrf_token %}
+
+        <input type="submit" value="ADD FOOD" class="btn btn-secondary btn-sm">
+    </form>
+    </div>
+
 </body>
 </html>
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm
-from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food
+from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food, MEALS
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -120,6 +120,7 @@ class DaysView(View):
         for day in days:
             d = {}
             d['date'] = day.date
+            d['id'] = day.id
             days_list.append(d)
             print(d)
         cont['days'] = days_list
@@ -140,13 +141,40 @@ class MealsView(View):
         meal_list = []
         for meal in meals:
             d = {}
-            d['name'] = meal.meal_name
+            d['name'] = dict(MEALS).get(meal.meal_name)
             meal_list.append(d)
             print(d)
-        cont['names'] = meal_list
+        cont['meal_names'] = meal_list
+        cont['my_id'] = my_id
+        cont['day_id'] = day_id
+
+        return render(request, "foodfriend/meal.html", cont)
+
+class FoodsView(View):
+    def get(self, request, my_id, day_id, meal_id):
+        if not self.request.user.is_superuser:
+            my_id = self.request.user.id
+
+        cont = {}
+        day = Days.objects.get(pk=day_id)
+        user = User.objects.get(pk=my_id)
+        meal = Meal.objects.get(pk=meal_id)
+        foods = meal.foods.all()
+        food_list = []
+        for food in foods:
+            d = {}
+            d['name'] = food.name
+            d['kcal'] = food.kcal
+            d['proteins'] = food.proteins
+            d['carbs'] = food.carbs
+            d['fats'] = food.fats
+            d['grams'] = food.grams
+            food_list.append(d)
+            print(d)
+        cont['food_names'] = food_list
         cont['my_id'] = my_id
 
-        return render(request, "foodfriend/calendar.html", cont)
+        return render(request, "foodfriend/food.html", cont)
 
 
 

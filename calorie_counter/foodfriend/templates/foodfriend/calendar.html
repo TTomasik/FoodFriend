@@ -6,7 +6,7 @@
 
 {% block content %}
 <link rel="stylesheet" type="text/css" href="/static/my.css" >
-<div class="to-calendar">
+<div class="content-block2">
 
 
  <div class="panel panel-primary">
@@ -36,7 +36,7 @@
                     {{ example }}
                     {% for day in days %}
                         <tr>
-                            <td>{{ day.date }}</td>
+                            <td><a href="{% url 'calendar-meal' my_id=my_id day_id=day.id %}">{{ day.date }}</a></td>
                             <td>Styczen-20-2016</td>
                             <td>Styczen-21-2016</td>
                             <td>Styczen-22-2016</td>
