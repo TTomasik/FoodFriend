@@ -227,6 +227,35 @@ class UpdateUser(UpdateView):
 
     template_name_suffix = '_update_form'
 
+class CreateFood(CreateView):
+    def get_success_url(self, **kwargs):
+        return reverse('food-list')
+
+    model = Food
+    fields = '__all__'
+    template_name_suffix = '_form'
+    success_url = '/foodlist'
+
+class FoodList(View):
+    def get(self, request):
+        cont = {}
+        foods = Food.objects.all()
+        food_list = []
+
+        for m in foods:
+            d = {}
+            d['name'] = m.name
+            d['kcal'] = m.kcal
+            d['protein'] = m.proteins
+            d['carbs'] = m.carbs
+            d['fats'] = m.fats
+            d['grams'] = m.grams
+            food_list.append(d)
+
+        cont['food'] = food_list
+
+        return render(request, 'foodfriend/food_list.html', cont)
+
 
 
 
