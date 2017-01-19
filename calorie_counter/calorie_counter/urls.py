@@ -18,13 +18,13 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
 from foodfriend.views import CheckLogin, MyInfo, CreateAccount, DaysView,\
-    MealsView, FoodsView, CreateMeal, AddDay, UpdateMeal, UpdateUser, CreateFood, FoodList
+    MealsView, FoodsView, CreateMeal, AddDay, UpdateMeal, UpdateUser, CreateFood, FoodList, UserMacros
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^index/$', CheckLogin.as_view(), name='login'),
-    url(r'^index/logout$', logout_then_login, name='logout'),
+    url(r'^login/$', CheckLogin.as_view(), name='login'),
+    url(r'^login/logout$', logout_then_login, name='logout'),
     url(r'^myinfo/(?P<my_id>(\d){1,4})$', MyInfo.as_view(), name='my-info'),
     url(r'^myinfoedit/(?P<my_id>(\d){1,4})$', MyInfo.as_view(), name='my-info-edit'),
     url(r'^createaccount/?$', CreateAccount.as_view(), name='create-account'),
@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^userupdate/(?P<pk>\d+)/?$', UpdateUser.as_view(), name='update-user'),
     url(r'^createfood/$', CreateFood.as_view(), name='create-food'),
     url(r'^foodlist/$', FoodList.as_view(), name='food-list'),
+    url(r'^index/$', UserMacros.as_view(), name='index'),
 
 
 ]

@@ -93,8 +93,6 @@ class UserExtend(models.Model):
             result = int(self.calories*0.2/9)
         return result
 
-
-
     def __str__(self):
         return self.user.username
 
@@ -105,7 +103,6 @@ class Food(models.Model):
     carbs = models.IntegerField()
     fats = models.IntegerField()
     grams = models.IntegerField(default=100)
-    # meal_food = models.ForeignKey('Meal', null=True, blank=True)
 
     def __str__(self):
         return '%s: kcal:%s, P:%s, C:%s, F:%s' % (self.name, self.kcal, self.proteins, self.carbs, self.fats)
@@ -115,7 +112,39 @@ class Days(models.Model):
     date_user = models.ForeignKey(UserExtend)
 
     class Meta:
-        unique_together = ('date', 'date_user',)
+        unique_together = ('date', 'date_user')
+
+    @property
+    def day_calories(self):
+        food_calories = Food.objects.filter(meal__day=self)
+        cal = 0
+        for p in food_calories:
+            cal += p.kcal
+        return cal
+
+    @property
+    def day_proteins(self):
+        food_proteins = Food.objects.filter(meal__day=self)
+        protein = 0
+        for p in food_proteins:
+            protein += p.proteins
+        return protein
+
+    @property
+    def day_carbs(self):
+        food_carbs = Food.objects.filter(meal__day=self)
+        carb = 0
+        for p in food_carbs:
+            carb += p.carbs
+        return carb
+
+    @property
+    def day_fats(self):
+        food_fats = Food.objects.filter(meal__day=self)
+        fat = 0
+        for p in food_fats:
+            fat += p.fats
+        return fat
 
     def __str__(self):
         return "{} - {}".format(self.date, self.date_user)
@@ -124,7 +153,7 @@ class Days(models.Model):
 class Meal(models.Model):
     meal_name = models.IntegerField(choices=MEALS, default=0)
     day = models.ForeignKey(Days, null=True, blank=True)
-    foods = models.ManyToManyField(Food, blank=True, null=True)
+    foods = models.ManyToManyField(Food, blank=True)
 
     def __str__(self):
         return '%s: %s' % (self.meal_name, self.foods)

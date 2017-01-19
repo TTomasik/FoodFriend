@@ -57,7 +57,7 @@
             <a class="menuspace" href="{% url 'my-info' request.user.id %}"><font color="white">
             {{ request.user.username }}   |</font>
             <a class="menuspace" href="{% url 'update-user' pk=request.user.id %}"><font color="white">EDIT</a>|</font><a class="menuspace" href="{% url 'calendar' my_id=request.user.id  %}"><font color="white">CALENDAR</a>|</font>
-            <a class="menuspace" href="{% url 'login' %}"><font color="white">MAIN</a>| </font>
+            <a class="menuspace" href="{% url 'index' %}"><font color="white">MAIN</a>| </font>
             <a class="menuspace" href="{% url 'create-food' %}"><font color="white">CREATE FOOD</a> | </font>
                 <a class="menuspace" href="{% url 'logout' %}"><font color="white">LOGOUT</a> | </font>
 
@@ -71,16 +71,16 @@
             <h3>Your daily goal:</h3>
             <div>
                 <h1>
-                0 / {{ request.user.userextend.calories }} kcal
+                {{ calories }} / {{ request.user.userextend.calories }} kcal
                 </h1>
                 <h1>
-                0 / {{ request.user.userextend.protein }} proteins
+                {{ proteins }} / {{ request.user.userextend.protein }} proteins
                 </h1>
                 <h1>
-                0 / {{ request.user.userextend.carb }} carbs
+                {{ carbs }} / {{ request.user.userextend.carb }} carbs
                 </h1>
                 <h1>
-                0 / {{ request.user.userextend.fat }} fats
+                {{ fats }} / {{ request.user.userextend.fat }} fats
                 </h1>
             </div>
         </font>

@@ -17,6 +17,7 @@ from django.views.generic import UpdateView
 from django.urls import reverse_lazy, reverse
 from django.db import IntegrityError
 from django.http import Http404
+import datetime
 
 
 class CheckLogin(View):
@@ -77,7 +78,6 @@ class CreateAccount(View):
     def post(self, request):
         form = CreateAccountForm(request.POST)
         if form.is_valid():
-
             user = form.cleaned_data['login']
             pass1 = form.cleaned_data['password']
             pass2 = form.cleaned_data['password2']
@@ -89,9 +89,9 @@ class CreateAccount(View):
                 b = UserExtend.objects.create(user = User.objects.get(username=a.username))
                 b.save()
             else:
-                return HttpResponse("<h1>Wprowadzone hasło jest niepoprawne.</h1>")
+                return HttpResponse("<h1>Your password is incorrect.</h1>")
 
-        return redirect("/index")
+        return redirect("/login")
 
 class DaysView(View):
     def get(self, request, my_id):
@@ -255,6 +255,36 @@ class FoodList(View):
         cont['food'] = food_list
 
         return render(request, 'foodfriend/food_list.html', cont)
+
+class UserMacros(View):
+    def get(self, request, my_id=None):
+        if not my_id:
+            my_id = self.request.user.id
+            day, _create = Days.objects.get_or_create(date=datetime.date.today(), date_user=request.user.userextend)
+        cont = {}
+        cont['calories'] = day.day_calories
+        cont['proteins'] = day.day_proteins
+        cont['carbs'] = day.day_carbs
+        cont['fats'] = day.day_fats
+
+        return render(request, 'foodfriend/index.html', cont)
+
+    # if not my_id:
+    #     my_id = self.request.user.id
+    #     extended = UserExtend.objects.get(pk=my_id)
+    #     days = Days.objects.filter(date_user=extended)
+    #     for d in days:
+    #         if d.date == datetime.date.today():
+    #             pass
+    #         else:
+    #             day = Days.objects.create(date_user=request.user.userextend)
+    #             day.save()
+    #
+    #     day = Days.objects.get(date=datetime.date.today(), date_user=request.user.userextend)
+
+
+
+
 
 
 
