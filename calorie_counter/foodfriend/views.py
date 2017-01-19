@@ -14,7 +14,9 @@ from django.views.generic import CreateView
 from django.views.generic import DeleteView
 from django.views.generic import FormView
 from django.views.generic import UpdateView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.db import IntegrityError
+from django.http import Http404
 
 
 class CheckLogin(View):
@@ -165,12 +167,16 @@ class FoodsView(View):
 class CreateMeal(View):
 
     def get(self, request):
+        my_id = self.request.user.id
+        user = User.objects.get(pk=my_id)
         form = CreateMealForm()
+        form.fields["day"].queryset = Days.objects.filter(date_user=user.userextend)
         return render(request, "foodfriend/meal_form.html", {"form": form})
 
     def post(self, request):
         form = CreateMealForm(request.POST)
         my_id = self.request.user.id
+
         if form.is_valid():
 
             name = form.cleaned_data['meal_name']
@@ -184,25 +190,42 @@ class CreateMeal(View):
                 <h1><a href="/calendar/{}">Create another meal or update exist one!</a></h1>
                 """.format(my_id))
             else:
-                meal = Meal.objects.create(meal_name = name, day = day, foods=food)
-                meal.save()
+                print(meal)
+                meal.foods.set(food)
+                # meal = Meal.objects.create(meal_name = name, day = day, foods=food)
+                # meal.save()
 
-        form = CreateAccountForm()
         return redirect('/calendar/{}'.format(my_id))
 
 class AddDay(View):
     def get(self, request, my_id):
-        my_id = self.request.user.id
-        user_extend = UserExtend.objects.get(pk=my_id)
-        day = Days.objects.create(date_user=user_extend)
-        day.save()
-        return redirect('/calendar/{}'.format(my_id))
+        try:
+            my_id = self.request.user.id
+            user_extend = UserExtend.objects.get(pk=my_id)
+            day = Days.objects.create(date_user=user_extend)
+            day.save()
+            return redirect('/calendar/{}'.format(my_id))
+        except IntegrityError:
+            return HttpResponse('<h1>You have already done this <b>today</b>!</h1>')
 
 class UpdateMeal(UpdateView):
+    def get_success_url(self, **kwargs):
+        return reverse('calendar-food', kwargs={'meal_id':self.object.id,
+                                                'my_id':self.object.day.date_user.id,
+                                                'day_id':self.object.day.id})
     model = Meal
     fields = ['foods']
     template_name_suffix = '_form'
-    success_url = reverse_lazy('calendar/{}'.format(1))
+
+
+class UpdateUser(UpdateView):
+    def get_success_url(self, **kwargs):
+        return reverse('my-info', kwargs={'my_id':self.object.id})
+
+    model = UserExtend
+    fields = ['avatar', 'age', 'sex', 'weight', 'height', 'factor', 'target']
+
+    template_name_suffix = '_update_form'
 
 
 

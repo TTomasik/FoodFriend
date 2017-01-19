@@ -124,7 +124,7 @@ class Days(models.Model):
 class Meal(models.Model):
     meal_name = models.IntegerField(choices=MEALS, default=0)
     day = models.ForeignKey(Days, null=True, blank=True)
-    foods = models.ManyToManyField(Food)
+    foods = models.ManyToManyField(Food, blank=True, null=True)
 
     def __str__(self):
         return '%s: %s' % (self.meal_name, self.foods)

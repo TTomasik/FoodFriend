@@ -56,7 +56,7 @@
         <p class="navbar-right logout">
             <a class="menuspace" href="{% url 'my-info' request.user.id %}"><font color="white">
             {{ request.user.username }}   |</font>
-            <a class="menuspace" href="{% url 'my-info-edit' request.user.id %}"><font color="white">EDIT</a>|</font><a class="menuspace" href="{% url 'calendar' my_id=request.user.id  %}"><font color="white">CALENDAR</a>|</font>
+            <a class="menuspace" href="{% url 'update-user' pk=request.user.id %}"><font color="white">EDIT</a>|</font><a class="menuspace" href="{% url 'calendar' my_id=request.user.id  %}"><font color="white">CALENDAR</a>|</font>
             <a class="menuspace" href="{% url 'login' %}"><font color="white">MAIN</a>| </font>
             <a class="menuspace" href="{% url 'logout' %}"><font color="white">LOGOUT</font></a>
         </p>
