@@ -10,6 +10,11 @@ from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views.generic.base import TemplateView
 from django.views.generic import CreateView
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.views.generic import CreateView
+from django.views.generic import DeleteView
+from django.views.generic import FormView
+from django.views.generic import UpdateView
+from django.urls import reverse_lazy
 
 
 class CheckLogin(View):
@@ -19,7 +24,6 @@ class CheckLogin(View):
 
     def post(self, request):
         form = LoginForm(request.POST)
-        # next = request.GET.get('next')
 
         if form.is_valid():
             u = form.cleaned_data['login']
@@ -35,7 +39,7 @@ class CheckLogin(View):
             login(request, user)
             return redirect("/index")
         else:
-            return HttpResponse("<h1>Nieprawidłowy login lub hasło.</h1>")
+            return HttpResponse("<h1><font color='red'>Incorrect login or password!</font></h1>")
         # przekierowanie dalej
         # else:
         #     # return render(request, "exercises/login.html", {"form": form})
@@ -101,7 +105,6 @@ class DaysView(View):
             d['date'] = day.date
             d['id'] = day.id
             days_list.append(d)
-            print(d)
         cont['days'] = days_list
         cont['my_id'] = my_id
 
@@ -124,7 +127,6 @@ class MealsView(View):
             d['id'] = meal.id
             d['day_id'] = day.id
             meal_list.append(d)
-            print(d)
         cont['meal_names'] = meal_list
         cont['my_id'] = my_id
         cont['day_id'] = day.id
@@ -153,35 +155,40 @@ class FoodsView(View):
             d['fats'] = food.fats
             d['grams'] = food.grams
             food_list.append(d)
-            print(d)
         cont['food_names'] = food_list
         cont['my_id'] = my_id
+        cont['meal_id'] = meal.id
 
         return render(request, "foodfriend/food.html", cont)
 
 
 class CreateMeal(View):
+
     def get(self, request):
         form = CreateMealForm()
         return render(request, "foodfriend/meal_form.html", {"form": form})
 
     def post(self, request):
         form = CreateMealForm(request.POST)
+        my_id = self.request.user.id
         if form.is_valid():
 
             name = form.cleaned_data['meal_name']
             day = form.cleaned_data['day']
             food = form.cleaned_data['foods']
 
-            boolean, object = Meal.objects.get_or_create(meal_name = name, day = day, foods = food)
-            if boolean:
-                print(object)
-                object.foods.add(food)
+            meal, _create = Meal.objects.get_or_create(meal_name = name, day = day)
+            print(_create)
+            if _create is False:
+                return HttpResponse("""<h1>You have already added this meal today!</h1>
+                <h1><a href="/calendar/{}">Create another meal or update exist one!</a></h1>
+                """.format(my_id))
             else:
-                object.save()
+                meal = Meal.objects.create(meal_name = name, day = day, foods=food)
+                meal.save()
 
         form = CreateAccountForm()
-        return HttpResponse("<h1>Hasło niepoprawne.</h1>")
+        return redirect('/calendar/{}'.format(my_id))
 
 class AddDay(View):
     def get(self, request, my_id):
@@ -190,6 +197,12 @@ class AddDay(View):
         day = Days.objects.create(date_user=user_extend)
         day.save()
         return redirect('/calendar/{}'.format(my_id))
+
+class UpdateMeal(UpdateView):
+    model = Meal
+    fields = ['foods']
+    template_name_suffix = '_form'
+    success_url = reverse_lazy('calendar/{}'.format(1))
 
 
 

@@ -17,7 +17,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
-from foodfriend.views import CheckLogin, MyInfo, CreateAccount, DaysView, MealsView, FoodsView, CreateMeal, AddDay
+from foodfriend.views import CheckLogin, MyInfo, CreateAccount, DaysView,\
+    MealsView, FoodsView, CreateMeal, AddDay, UpdateMeal
 
 
 urlpatterns = [
@@ -32,5 +33,6 @@ urlpatterns = [
     url(r'^calendar/(?P<my_id>(\d){1,4})/meal/(?P<day_id>(\d){1,4})/food/(?P<meal_id>(\d){1,4})$', FoodsView.as_view(), name='calendar-food'),
     url(r'^createmeal/$', CreateMeal.as_view(), name='create-meal'),
     url(r'^addday/(?P<my_id>(\d){1,4})$', AddDay.as_view(), name='add-day'),
+    url(r'^mealupdate/(?P<pk>\d+)/?$', UpdateMeal.as_view(), name='update-meal'),
 
 ]

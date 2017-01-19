@@ -72,25 +72,25 @@ class UserExtend(models.Model):
     @property
     def protein(self):
         if self.target == 1:
-            result = int(100*0.25)
+            result = int(self.calories*0.25/4)
         else:
-            result = int(100*0.3)
+            result = int(self.calories*0.3/4)
         return result
 
     @property
     def carb(self):
         if self.target == 1:
-            result = int(100*0.45)
+            result = int(self.calories*0.45/4)
         else:
-            result = int(100*0.5)
+            result = int(self.calories*0.5/4)
         return result
 
     @property
     def fat(self):
         if self.target == 1:
-            result = int(100*0.3)
+            result = int(self.calories*0.3/9)
         else:
-            result = int(100*0.2)
+            result = int(self.calories*0.2/9)
         return result
 
 

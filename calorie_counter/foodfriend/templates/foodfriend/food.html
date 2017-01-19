@@ -48,6 +48,16 @@
                 </table>
             </div>
 
+            <div class="my_margin">
+    <form action="{% url 'update-meal' pk=meal_id %}">
+        {% csrf_token %}
+
+        <input type="submit" value="UPDATE" class="btn btn-secondary btn-sm">
+    </form>
+    </div>
+
+
+
         </div>
     </div>
 </div>
