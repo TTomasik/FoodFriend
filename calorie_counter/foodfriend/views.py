@@ -42,7 +42,7 @@ class CheckLogin(View):
             login(request, user)
             return redirect("/index")
         else:
-            return HttpResponse("<h1><font color='red'>Incorrect login or password!</font></h1>")
+            return HttpResponse("<h1><center><br><br><br><br><font color='red'>Incorrect login or password!<center></font></h1>")
         # przekierowanie dalej
         # else:
         #     # return render(request, "exercises/login.html", {"form": form})
@@ -55,9 +55,9 @@ class MyInfo(View):
         if not self.request.user.is_superuser:
             my_id = self.request.user.id
         cont = {}
-        extended = UserExtend.objects.get(pk=my_id)
+        extended = UserExtend.objects.get(user_id=my_id)
         user = User.objects.get(pk=my_id)
-        cont['my_id'] = user.pk
+        cont['my_id'] = extended.user_id
         cont['avatar'] = extended.avatar
         cont['user'] = user.username
         cont['age'] = extended.age
@@ -68,6 +68,12 @@ class MyInfo(View):
         cont['calories'] = extended.calories
 
         return render(request, "foodfriend/myinfo.html", cont)
+
+    def post(self, request, my_id):
+        if not self.request.user.is_superuser:
+            my_id = self.request.user.id
+        return redirect('/myinfo/{}'.format(my_id))
+
 
 
 class CreateAccount(View):
@@ -99,7 +105,7 @@ class DaysView(View):
             my_id = self.request.user.id
 
         cont = {}
-        extended = UserExtend.objects.get(pk=my_id)
+        extended = UserExtend.objects.get(user_id=my_id)
         days = Days.objects.filter(date_user=extended)
         days_list = []
         for day in days:
@@ -201,7 +207,7 @@ class AddDay(View):
     def get(self, request, my_id):
         try:
             my_id = self.request.user.id
-            user_extend = UserExtend.objects.get(pk=my_id)
+            user_extend = UserExtend.objects.get(user_id=my_id)
             day = Days.objects.create(date_user=user_extend)
             day.save()
             return redirect('/calendar/{}'.format(my_id))
@@ -220,7 +226,7 @@ class UpdateMeal(UpdateView):
 
 class UpdateUser(UpdateView):
     def get_success_url(self, **kwargs):
-        return reverse('my-info', kwargs={'my_id':self.object.id})
+        return reverse('my-info', kwargs={'my_id':self.object.user_id})
 
     model = UserExtend
     fields = ['avatar', 'age', 'sex', 'weight', 'height', 'factor', 'target']
@@ -282,7 +288,19 @@ class UserMacros(View):
     #
     #     day = Days.objects.get(date=datetime.date.today(), date_user=request.user.userextend)
 
+class MyPerson(View):
+    def get(self, request, my_id):
+        p = UserExtend.objects.get(user_id=my_id)
+        form = UserExtendForm(instance=p)
+        name = form.cleaned_data['name']
+        return render(request, "foodfriend/userextend_update_form2.html", {"form": form})
 
+    def post(self, request, my_id):
+        p = UserExtend.objects.get(user_id=my_id)
+        form = UserExtendForm(request.POST, instance=p)
+        if form.is_valid():
+            form.save()
+        return render(request, "foodfriend/userextend_update_form2.html", {"form": form})
 
 
 

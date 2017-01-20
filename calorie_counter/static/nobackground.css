@@ -70,3 +70,7 @@ body {
     margin: 10px;
     width: 50%;
 }
+
+.my_margin {
+    padding-left: 25px;
+}

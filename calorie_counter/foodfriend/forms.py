@@ -18,10 +18,10 @@ class LoginForm(forms.Form):
         required=True,
     )
 
-class UserExtendForm(forms.Form):
+class UserExtendForm(ModelForm):
     class Meta:
         model = UserExtend
-        fields = ('avatar', 'user', 'age', 'sex', 'weight', 'height', 'target', 'calories')
+        fields = ('avatar', 'user', 'age', 'sex', 'weight', 'height', 'target')
 
 
 
