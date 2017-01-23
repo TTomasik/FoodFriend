@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'^createfood/$', CreateFood.as_view(), name='create-food'),
     url(r'^foodlist/$', FoodList.as_view(), name='food-list'),
     url(r'^index/$', UserMacros.as_view(), name='index'),
-    url(r'^test/(?P<my_id>\d+)/?$', MyPerson.as_view(), name='test'),
+    url(r'^userupdate/(?P<my_id>\d+)/?$', MyPerson.as_view(), name='test'),
 
 
 

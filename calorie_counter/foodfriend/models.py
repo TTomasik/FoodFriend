@@ -159,8 +159,6 @@ class Meal(models.Model):
         return '%s: %s' % (self.meal_name, self.foods)
 
 
-
-
 # class Movie(models.Model):
 #     title = models.CharField(max_length=128)
 #     director = models.ForeignKey('Person', related_name='movie_director')
