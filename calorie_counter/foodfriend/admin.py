@@ -27,6 +27,10 @@ class MealAdmin(admin.ModelAdmin):
 class DayAdmin(admin.ModelAdmin):
     list_display = ('date', 'date_user','day_calories', 'day_proteins', 'day_carbs', 'day_fats')
 
+# @admin.register(Quantity)
+# class QuantityAdmin(admin.ModelAdmin):
+#     list_display = ('meal_quantity', 'food_quantity', 'quantity')
+
 
 
 

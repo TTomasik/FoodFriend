@@ -1,0 +1,45 @@
+from django.core.management import BaseCommand
+from django.utils import timezone
+from foodfriend.models import Food
+
+
+def populate():
+    Food.objects.update_or_create(name="Ryż brązowy", kcal=353, proteins=7.1, carbs=76.8, fats=1.9, grams=100)
+    Food.objects.update_or_create(name="Boczek parzony", kcal=259, proteins=14, carbs=1.3, fats=22, grams=100)
+    Food.objects.update_or_create(name="Ser Gouda", kcal=356, proteins=24.9, carbs=2.2, fats=27.5, grams=100)
+    Food.objects.update_or_create(name="Chleb razowy", kcal=217, proteins=6.7, carbs=43.7, fats=1.5, grams=100)
+    Food.objects.update_or_create(name="Pomidor", kcal=20, proteins=1, carbs=3, fats=0.2, grams=100)
+    Food.objects.update_or_create(name="Jajko (1 porcja ok. 68g)", kcal=139, proteins=12.5, carbs=0.6, fats=9.7, grams=100)
+    Food.objects.update_or_create(name="Ziemniaki", kcal=80, proteins=2, carbs=16.8, fats=0.1, grams=100)
+    Food.objects.update_or_create(name="Filet z kurczaka", kcal=99, proteins=21.5, carbs=0, fats=1.3, grams=100)
+    Food.objects.update_or_create(name="Mięso mielone wieprzowe", kcal=100, proteins=21.3, carbs=0, fats=9.6, grams=100)
+    Food.objects.update_or_create(name="Wołowina, polędwica", kcal=116, proteins=20, carbs=0, fats=4, grams=100)
+    Food.objects.update_or_create(name="Makaron razowy, spaghetti", kcal=343, proteins=13, carbs=65, fats=1.9, grams=100)
+    Food.objects.update_or_create(name="Banan", kcal=90, proteins=1, carbs=20.2, fats=0.3, grams=100)
+    Food.objects.update_or_create(name="Jogurt naturalny", kcal=61, proteins=4.6, carbs=6.1, fats=2, grams=100)
+    Food.objects.update_or_create(name="Orzechy włoskie", kcal=607, proteins=14.1, carbs=14.5, fats=65.3, grams=100)
+    Food.objects.update_or_create(name="Ser mozarella", kcal=221, proteins=20.1, carbs=0.1, fats=15.6, grams=100)
+    Food.objects.update_or_create(name="Grejpfrut", kcal=30, proteins=0.7, carbs=7.3, fats=0.1, grams=100)
+
+class Command(BaseCommand):
+    help = 'Initialize database'
+
+    def add_arguments(self, parser):
+        parser.add_argument('--add-foods',
+                            action='store_true',
+                            dest='add-foods',
+                            default=False,
+                            help='Insert food data')
+    
+
+    def handle(self, *args, **options):
+        start = timezone.now()
+
+        update_all = not any([options['add-foods']])
+
+        if options['add-foods'] or update_all:
+            print("Loading foods...")
+            populate()
+
+        end = timezone.now()
+        print(end - start)

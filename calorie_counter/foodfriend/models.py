@@ -98,11 +98,12 @@ class UserExtend(models.Model):
 
 class Food(models.Model):
     name = models.CharField(max_length=124)
-    kcal = models.IntegerField()
-    proteins = models.IntegerField()
-    carbs = models.IntegerField()
-    fats = models.IntegerField()
-    grams = models.IntegerField(default=100)
+    kcal = models.FloatField()
+    proteins = models.FloatField()
+    carbs = models.FloatField()
+    fats = models.FloatField()
+    grams = models.FloatField(default=100)
+
 
     def __str__(self):
         return '%s: kcal:%s, P:%s, C:%s, F:%s' % (self.name, self.kcal, self.proteins, self.carbs, self.fats)
@@ -155,8 +156,9 @@ class Meal(models.Model):
     day = models.ForeignKey(Days, null=True, blank=True)
     foods = models.ManyToManyField(Food, blank=True)
 
+
     def __str__(self):
-        return '%s: %s' % (self.meal_name, self.foods)
+        return self.meal_name
 
 
 # class Movie(models.Model):
@@ -176,5 +178,13 @@ class Meal(models.Model):
 #     movie = models.ForeignKey('Movie', on_delete=models.CASCADE, related_name="Movie")
 #     role = models.CharField(max_length=128, primary_key=True)
 
-class Quantity(models.Model):
-    pass
+# class Quantity(models.Model):
+#     meal_quantity = models.ForeignKey('Meal', on_delete=models.CASCADE, related_name="MealQuantity")
+#     food_quantity = models.ForeignKey('Food', on_delete=models.CASCADE, related_name="FoodQuantity")
+#     quantity = models.IntegerField(blank=True, null=True)
+#
+#     class Meta:
+#         auto_created = True
+#
+#     def __str__(self):
+#         return 'meal: %s, quantity: %s' % (self.meal.meal_name, self.quantity)

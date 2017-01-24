@@ -190,13 +190,13 @@ class CreateMeal(View):
             food = form.cleaned_data['foods']
 
             meal, _create = Meal.objects.get_or_create(meal_name = name, day = day)
-            print(_create)
+            # print(_create)
             if _create is False:
                 return HttpResponse("""<h1>You have already added this meal today!</h1>
                 <h1><a href="/calendar/{}">Create another meal or update exist one!</a></h1>
                 """.format(my_id))
             else:
-                print(meal)
+                # print(meal)
                 meal.foods.set(food)
                 # meal = Meal.objects.create(meal_name = name, day = day, foods=food)
                 # meal.save()
