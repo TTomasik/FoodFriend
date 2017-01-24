@@ -154,11 +154,11 @@ class Days(models.Model):
 class Meal(models.Model):
     meal_name = models.IntegerField(choices=MEALS, default=0)
     day = models.ForeignKey(Days, null=True, blank=True)
-    foods = models.ManyToManyField(Food, blank=True)
+    foods = models.ManyToManyField(Food, through='Quantity', blank=True)
 
 
     def __str__(self):
-        return self.meal_name
+        return str(self.meal_name)
 
 
 # class Movie(models.Model):
@@ -178,13 +178,11 @@ class Meal(models.Model):
 #     movie = models.ForeignKey('Movie', on_delete=models.CASCADE, related_name="Movie")
 #     role = models.CharField(max_length=128, primary_key=True)
 
-# class Quantity(models.Model):
-#     meal_quantity = models.ForeignKey('Meal', on_delete=models.CASCADE, related_name="MealQuantity")
-#     food_quantity = models.ForeignKey('Food', on_delete=models.CASCADE, related_name="FoodQuantity")
-#     quantity = models.IntegerField(blank=True, null=True)
-#
-#     class Meta:
-#         auto_created = True
-#
-#     def __str__(self):
-#         return 'meal: %s, quantity: %s' % (self.meal.meal_name, self.quantity)
+class Quantity(models.Model):
+    meal_quantity = models.ForeignKey('Meal', on_delete=models.CASCADE, related_name="MealQuantity")
+    food_quantity = models.ForeignKey('Food', on_delete=models.CASCADE, related_name="FoodQuantity")
+    quantity = models.IntegerField(default=100, blank=True, null=True)
+
+
+    def __str__(self):
+        return 'meal: %s, quantity: %s' % (self.meal_quantity, self.quantity)

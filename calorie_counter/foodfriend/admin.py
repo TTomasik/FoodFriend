@@ -1,5 +1,6 @@
 from django.contrib import admin
-from foodfriend.models import UserExtend, Food, Meal, Days
+from foodfriend.models import UserExtend, Food, Meal, Days, Quantity
+
 
 
 
@@ -15,10 +16,12 @@ class UserExtendAdmin(admin.ModelAdmin):
 @admin.register(Food)
 class FoodAdmin(admin.ModelAdmin):
     list_display = ('name', 'grams', 'kcal', 'proteins', 'carbs', 'fats')
+    # inlines = ('QuantityInline', )
 
 @admin.register(Meal)
 class MealAdmin(admin.ModelAdmin):
     list_display = ('meal_name', 'Foods')
+    # inlines = ('QuantityInline', )
 
     def Foods(self, meal_food):
         return ", ".join([str(t) for t in meal_food.foods.all()])
@@ -27,9 +30,15 @@ class MealAdmin(admin.ModelAdmin):
 class DayAdmin(admin.ModelAdmin):
     list_display = ('date', 'date_user','day_calories', 'day_proteins', 'day_carbs', 'day_fats')
 
-# @admin.register(Quantity)
-# class QuantityAdmin(admin.ModelAdmin):
-#     list_display = ('meal_quantity', 'food_quantity', 'quantity')
+@admin.register(Quantity)
+class QuantityAdmin(admin.ModelAdmin):
+    list_display = ('meal_quantity', 'food_quantity', 'quantity')
+
+
+class QuantityInline(admin.TabularInline):
+    model = Quantity
+    extra = 1
+
 
 
 
