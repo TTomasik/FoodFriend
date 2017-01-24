@@ -303,10 +303,8 @@ class MyPerson(View):
         return render(request, "foodfriend/userextend_update_form2.html", {"form": form})
 
 
-
-
-
-
+# Quantity.objects.filter(meal_quantity__day__date=datetime.date.today())
+# Quantity.objects.filter(meal_quantity__day__date=datetime.date.today(), meal_quantity__day__date_user=user.userextend)
 
 
 
