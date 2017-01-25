@@ -1,3 +1,69 @@
-<html>
-tutaj bedzie list wszsytkich dostepnych produktow
-</html>
+{% extends 'foodfriend/base.html' %}
+
+{% block title %}
+<font color="white">Food Friend</font>
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/my.css" >
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            List of Food:
+        </div>
+        <div class="panel-body">
+            <div>
+                <table class="table" id="movie-table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Weight[g]</th>
+                        <th>Kcal</th>
+                        <th>Proteins[g]</th>
+                        <th>Carbohydrates[g]</th>
+                        <th>Fats[g]</th>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+                    {% for f in food %}
+                        <tr>
+                            <td>{{ f.name }}</td>
+                            <td>{{ f.grams }}</td>
+                            <td>{{ f.kcal }}</td>
+                            <td>{{ f.protein }}</td>
+                            <td>{{ f.carbs }}</td>
+                            <td>{{ f.fats }}</td>
+                        </tr>
+                        {#{% empty %}#}
+                        {#<tr>#}
+                        {# #}
+                        {#</tr>#}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <form action="{% url 'create-food' %}">
+                            <input type="submit" value="CREATE FOOD" />
+                            </form></td>
+
+
+    </div>
+{% endblock %}
+{% block content_js %}
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            try {
+                $('#movie-table').DataTable({
+                    "bFilter": true,
+                    "sDom": "lfrtip" // default is lfrtip, where the f is the filter
+                });
+            }
+            catch (err) {
+            }
+        });
+    </script>
+{% endblock %}
+
+

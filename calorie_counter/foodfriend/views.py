@@ -250,6 +250,7 @@ class CreateFood(CreateView):
 
 class FoodList(View):
     def get(self, request):
+
         cont = {}
         foods = Food.objects.all()
         food_list = []
@@ -298,7 +299,7 @@ class MyPerson(View):
     def get(self, request, my_id):
         p = UserExtend.objects.get(user_id=my_id)
         form = UserExtendForm(instance=p)
-        name = form.cleaned_data['name']
+
         return render(request, "foodfriend/userextend_update_form2.html", {"form": form})
 
     def post(self, request, my_id):
