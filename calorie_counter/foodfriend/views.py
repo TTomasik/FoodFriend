@@ -182,6 +182,7 @@ class CreateMeal(View):
         user = User.objects.get(pk=my_id)
         form = CreateMealForm()
         form.fields["day"].queryset = Days.objects.filter(date_user=user.userextend)
+
         return render(request, "foodfriend/meal_form.html", {"form": form})
 
     def post(self, request):
@@ -189,13 +190,13 @@ class CreateMeal(View):
         my_id = self.request.user.id
 
         if form.is_valid():
-
             name = form.cleaned_data['meal_name']
             day = form.cleaned_data['day']
             food = form.cleaned_data['foods']
 
+
             meal, _create = Meal.objects.get_or_create(meal_name = name, day = day)
-            # print(_create)
+
             if _create is False:
                 return HttpResponse("""<h1>You have already added this meal today!</h1>
                 <h1><a href="/calendar/{}">Create another meal or update exist one!</a></h1>
@@ -208,16 +209,16 @@ class CreateMeal(View):
 
         return redirect('/calendar/{}'.format(my_id))
 
-class AddDay(View):
-    def get(self, request, my_id):
-        try:
-            my_id = self.request.user.id
-            user_extend = UserExtend.objects.get(user_id=my_id)
-            day = Days.objects.create(date_user=user_extend)
-            day.save()
-            return redirect('/calendar/{}'.format(my_id))
-        except IntegrityError:
-            return HttpResponse('<h1>You have already done this <b>today</b>!</h1>')
+# class AddDay(View):
+#     def get(self, request, my_id):
+#         try:
+#             my_id = self.request.user.id
+#             user_extend = UserExtend.objects.get(user_id=my_id)
+#             day = Days.objects.create(date_user=user_extend)
+#             day.save()
+#             return redirect('/calendar/{}'.format(my_id))
+#         except IntegrityError:
+#             return HttpResponse('<h1>You have already done this <b>today</b>!</h1>')
 
 class UpdateMeal(UpdateView):
     def get_success_url(self, **kwargs):

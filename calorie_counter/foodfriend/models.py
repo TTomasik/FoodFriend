@@ -107,7 +107,7 @@ class Food(models.Model):
 
 
     def __str__(self):
-        return '%s: kcal:%s, P:%s, C:%s, F:%s' % (self.name, self.kcal, self.proteins, self.carbs, self.fats)
+        return '%s: kcal:%s / P:%s / C:%s / F:%s' % (self.name, self.kcal, self.proteins, self.carbs, self.fats)
 
 class Days(models.Model):
     date = models.DateField(auto_now_add=True)

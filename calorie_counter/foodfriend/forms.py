@@ -1,5 +1,5 @@
 from django import forms
-from foodfriend.models import UserExtend, Meal, Food, Days, MEALS
+from foodfriend.models import UserExtend, Meal, Food, Days, MEALS, Quantity
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm, HiddenInput, IntegerField, CharField
 
@@ -53,9 +53,24 @@ class CreateAccountForm(forms.Form):
     )
 
 class CreateMealForm(ModelForm):
+    foods = forms.ModelMultipleChoiceField(queryset=Food.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
+    quantity = forms.IntegerField()
     class Meta:
         model = Meal
-        fields = '__all__'
+        fields = ('meal_name', 'day', 'foods')
+
+
+
+# class CreateMealForm(ModelForm):
+#     class Meta:
+#         model = Meal
+#         fields = '__all__'
+
+
+
+
+
+
 
 # class CreateMealForm(ModelForm):
 #
