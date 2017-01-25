@@ -121,7 +121,8 @@ class Days(models.Model):
         food_calories = Food.objects.filter(meal__day=self)
         cal = 0
         for p in food_calories:
-            cal += p.kcal
+            quant = Quantity.objects.filter(food_quantity__id=p.id)[0].quantity
+            cal += math.ceil(p.kcal*quant/100)
         return cal
 
     @property
@@ -129,15 +130,18 @@ class Days(models.Model):
         food_proteins = Food.objects.filter(meal__day=self)
         protein = 0
         for p in food_proteins:
-            protein += p.proteins
+            quant = Quantity.objects.filter(food_quantity__id=p.id)[0].quantity
+            protein += math.ceil(p.proteins*quant/100)
         return protein
+
 
     @property
     def day_carbs(self):
         food_carbs = Food.objects.filter(meal__day=self)
         carb = 0
         for p in food_carbs:
-            carb += p.carbs
+            quant = Quantity.objects.filter(food_quantity__id=p.id)[0].quantity
+            carb += math.ceil(p.carbs*quant/100)
         return carb
 
     @property
@@ -145,7 +149,8 @@ class Days(models.Model):
         food_fats = Food.objects.filter(meal__day=self)
         fat = 0
         for p in food_fats:
-            fat += p.fats
+            quant = Quantity.objects.filter(food_quantity__id=p.id)[0].quantity
+            fat += math.ceil(p.fats*quant/100)
         return fat
 
     def __str__(self):
@@ -186,36 +191,39 @@ class Quantity(models.Model):
 
     @property
     def kcal_quant(self):
-        calories = Food.objects.filter(FoodQuantity__quantity=self.quantity)[0].kcal
-        before_round = (calories*self.quantity) / 100
+        calories = Food.objects.filter(FoodQuantity__id=self.id)[0].kcal
+        grams = Food.objects.filter(FoodQuantity__id=self.id)[0].grams
+        before_round = (calories*self.quantity) / grams
         result = math.ceil(before_round)
         return result
 
     @property
     def proteins_quant(self):
-        proteins = Food.objects.filter(FoodQuantity__quantity=self.quantity)[0].proteins
-        before_round = (proteins * self.quantity) / 100
+        proteins = Food.objects.filter(FoodQuantity__id=self.id)[0].proteins
+        grams = Food.objects.filter(FoodQuantity__id=self.id)[0].grams
+        before_round = (proteins * self.quantity) / grams
         result = math.ceil(before_round)
         return result
 
     @property
     def carbs_quant(self):
-        carbs = Food.objects.filter(FoodQuantity__quantity=self.quantity)[0].carbs
-        before_round = (carbs * self.quantity) / 100
+        carbs = Food.objects.filter(FoodQuantity__id=self.id)[0].carbs
+        grams = Food.objects.filter(FoodQuantity__id=self.id)[0].grams
+        before_round = (carbs * self.quantity) / grams
         result = math.ceil(before_round)
         return result
 
     @property
     def fats_quant(self):
-        fats = Food.objects.filter(FoodQuantity__quantity=self.quantity)[0].fats
-        before_round = (fats * self.quantity) / 100
+        fats = Food.objects.filter(FoodQuantity__id=self.id)[0].fats
+        grams = Food.objects.filter(FoodQuantity__id=self.id)[0].grams
+        before_round = (fats * self.quantity) / grams
         result = math.ceil(before_round)
         return result
-    
 
 
     def __str__(self):
-        return 'meal: %s, quantity: %s' % (self.meal_quantity, self.quantity)
+        return 'meal: %s, quantity: %s, kcal: %s' % (self.meal_quantity, self.quantity, self.kcal_quant)
 
 
 

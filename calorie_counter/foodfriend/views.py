@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm
-from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food, MEALS
+from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food, MEALS, Quantity
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -18,6 +18,7 @@ from django.urls import reverse_lazy, reverse
 from django.db import IntegrityError
 from django.http import Http404
 import datetime
+import math
 
 
 class CheckLogin(View):
@@ -155,14 +156,16 @@ class FoodsView(View):
         foods = meal.foods.all()
         food_list = []
         for food in foods:
+            quant = Quantity.objects.filter(food_quantity__id=food.id)[0].quantity
             d = {}
-            # d['quantity'] = trzeba to powiazac z tym co na samym dole przygotowalem
             d['name'] = food.name
-            d['kcal'] = food.kcal
-            d['proteins'] = food.proteins
-            d['carbs'] = food.carbs
-            d['fats'] = food.fats
+            d['kcal'] = food.kcal = math.ceil(food.kcal*quant/food.grams)
+            d['proteins'] = food.proteins = math.ceil(food.proteins*quant/food.grams)
+            d['carbs'] = food.carbs = math.ceil(food.carbs*quant/food.grams)
+            d['fats'] = food.fats = math.ceil(food.fats*quant/food.grams)
             d['grams'] = food.grams
+            d['quantity'] = food.quantity = quant
+
 
             food_list.append(d)
         cont['food_names'] = food_list
