@@ -24,7 +24,7 @@ class MealAdmin(admin.ModelAdmin):
     # inlines = ('QuantityInline', )
 
     def Foods(self, meal_food):
-        return ", ".join([str(t) for t in meal_food.foods.all()])
+        return ",  ".join([str(t) for t in meal_food.foods.all()])
 
 @admin.register(Days)
 class DayAdmin(admin.ModelAdmin):
@@ -32,7 +32,7 @@ class DayAdmin(admin.ModelAdmin):
 
 @admin.register(Quantity)
 class QuantityAdmin(admin.ModelAdmin):
-    list_display = ('meal_quantity', 'food_quantity', 'quantity')
+    list_display = ('meal_quantity', 'food_quantity', 'quantity', 'kcal_quant', 'proteins_quant', 'carbs_quant', 'fats_quant')
 
 
 class QuantityInline(admin.TabularInline):

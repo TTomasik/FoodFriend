@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+import math
 
 TARGETS = (
     (0, "Choose your target:"),
@@ -183,6 +184,49 @@ class Quantity(models.Model):
     food_quantity = models.ForeignKey('Food', on_delete=models.CASCADE, related_name="FoodQuantity")
     quantity = models.IntegerField(default=100, blank=True, null=True)
 
+    @property
+    def kcal_quant(self):
+        calories = Food.objects.filter(FoodQuantity__quantity=self.quantity)[0].kcal
+        before_round = (calories*self.quantity) / 100
+        result = math.ceil(before_round)
+        return result
+
+    @property
+    def proteins_quant(self):
+        proteins = Food.objects.filter(FoodQuantity__quantity=self.quantity)[0].proteins
+        before_round = (proteins * self.quantity) / 100
+        result = math.ceil(before_round)
+        return result
+
+    @property
+    def carbs_quant(self):
+        carbs = Food.objects.filter(FoodQuantity__quantity=self.quantity)[0].carbs
+        before_round = (carbs * self.quantity) / 100
+        result = math.ceil(before_round)
+        return result
+
+    @property
+    def fats_quant(self):
+        fats = Food.objects.filter(FoodQuantity__quantity=self.quantity)[0].fats
+        before_round = (fats * self.quantity) / 100
+        result = math.ceil(before_round)
+        return result
+    
+
 
     def __str__(self):
         return 'meal: %s, quantity: %s' % (self.meal_quantity, self.quantity)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

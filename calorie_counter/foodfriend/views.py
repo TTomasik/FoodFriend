@@ -156,12 +156,14 @@ class FoodsView(View):
         food_list = []
         for food in foods:
             d = {}
+            # d['quantity'] = trzeba to powiazac z tym co na samym dole przygotowalem
             d['name'] = food.name
             d['kcal'] = food.kcal
             d['proteins'] = food.proteins
             d['carbs'] = food.carbs
             d['fats'] = food.fats
             d['grams'] = food.grams
+
             food_list.append(d)
         cont['food_names'] = food_list
         cont['my_id'] = my_id
