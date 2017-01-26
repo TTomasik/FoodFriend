@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'foodfriend',
     'bootstrap3',
+    'chartjs',
 ]
 
 MIDDLEWARE = [

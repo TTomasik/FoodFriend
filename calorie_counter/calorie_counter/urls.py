@@ -18,7 +18,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
 from foodfriend.views import CheckLogin, MyInfo, CreateAccount, DaysView,\
-    MealsView, FoodsView, CreateMeal, UpdateMeal, UpdateUser, CreateFood, FoodList, UserMacros, MyPerson
+    MealsView, FoodsView, CreateMeal, UpdateMeal, UpdateUser, CreateFood,\
+    FoodList, UserMacros, MyPerson, LineChartJSONView
 
 
 urlpatterns = [
@@ -39,7 +40,6 @@ urlpatterns = [
     url(r'^foodlist/$', FoodList.as_view(), name='food-list'),
     url(r'^index/$', UserMacros.as_view(), name='index'),
     url(r'^userupdate/(?P<my_id>\d+)/?$', MyPerson.as_view(), name='test'),
-
-
+    url(r'^chart/$', LineChartJSONView.as_view(), name='chart'),
 
 ]
