@@ -35,16 +35,12 @@
         <form action="" method="post" enctype='multipart/form-data'>
             {% csrf_token %}
             <div>
-                <font color="grey">
-                    {{ form.meal }}{{ form.day }}
+                    {{ form.day }}{{ form.meal }}
                     <p>{{ form.foods1 }}{{ form.quantity1 }}</p>
                     <p>{{ form.foods2 }}{{ form.quantity2 }}</p>
                     <p>{{ form.foods3 }}{{ form.quantity3 }}</p>
                     <p>{{ form.foods4 }}{{ form.quantity4 }}</p>
                     <p>{{ form.foods5 }}{{ form.quantity5 }}</p>
-
-
-                </font>
             <input type="submit" value="ADD FOOD">
             </div>
         </form>

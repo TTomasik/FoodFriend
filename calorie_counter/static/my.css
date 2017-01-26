@@ -85,8 +85,9 @@ body {
 }
 
 .button-next-button input{
-  float:left;
-  width: 10%;
+  float: right;
+  width: 20%;
+  margin-left:10px
 }
 
 .tip span {
@@ -94,4 +95,11 @@ body {
 }
 img {
     vertical-align: right;
+}
+
+.button-away-button input{
+  float: left;
+  width: 40%;
+  margin-left:10px
+
 }

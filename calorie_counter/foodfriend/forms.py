@@ -67,15 +67,15 @@ class CreateMealForm(forms.Form):
     day = forms.ModelChoiceField(queryset=Days.objects.all(), required=True, empty_label="Choose day:")
     meal = forms.ChoiceField(choices=MEALS, required=True)
     foods1 = forms.ModelChoiceField(queryset=Food.objects.all(), required=True, empty_label="Choose food:")
-    quantity1 = forms.IntegerField()
+    quantity1 = forms.IntegerField(label='grams')
     foods2 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:")
-    quantity2 = forms.IntegerField(required=False)
+    quantity2 = forms.IntegerField(label='grams', required=False)
     foods3 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:")
-    quantity3 = forms.IntegerField(required=False)
+    quantity3 = forms.IntegerField(label='grams', required=False)
     foods4 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:")
-    quantity4 = forms.IntegerField(required=False)
+    quantity4 = forms.IntegerField(label='grams', required=False)
     foods5 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:")
-    quantity5 = forms.IntegerField(required=False)
+    quantity5 = forms.IntegerField(label='grams', required=False)
 
 
 
