@@ -172,6 +172,9 @@ class FoodsView(View):
         cont['food_names'] = food_list
         cont['my_id'] = my_id
         cont['meal_id'] = meal.id
+        cont['meal_name'] = dict(MEALS).get(meal.meal_name)
+        cont['day_date'] = day.date
+
 
         return render(request, "foodfriend/food.html", cont)
 
@@ -267,7 +270,7 @@ class CreateMeal(View):
                 # meal = Meal.objects.create(meal_name = name, day = day, foods=food)
                 # meal.save()
 
-        return redirect('/calendar/{}'.format(my_id))
+        return redirect('/calendar/{}/meal/{}/food/{}'.format(my_id, day.id, meal.id))
 
 # class AddDay(View):
 #     def get(self, request, my_id):
@@ -288,6 +291,19 @@ class UpdateMeal(UpdateView):
     model = Meal
     fields = ['foods']
     template_name_suffix = '_form'
+
+# class UpdateMeal(View):
+#
+#     def get(self, request, my_id, day_id, meal_id):
+#         if not self.request.user.is_superuser:
+#             my_id = self.request.user.id
+#
+#         day = Days.objects.get(pk=day_id)
+#         user = User.objects.get(pk=my_id)
+#         meal = Meal.objects.get(pk=meal_id)
+#
+#         form = CreateMealForm(request.POST)
+#         return render(request, "foodfriend/meal_form.html", {"form": form})
 
 
 class UpdateUser(UpdateView):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from foodfriend.models import UserExtend, Food, Meal, Days, Quantity
+from foodfriend.models import UserExtend, Food, Meal, Days, Quantity, MEALS
 
 
 
@@ -32,6 +32,7 @@ class DayAdmin(admin.ModelAdmin):
 
 @admin.register(Quantity)
 class QuantityAdmin(admin.ModelAdmin):
+    # meal_quantity = dict(MEALS).get(meal.meal_name)
     list_display = ('meal_quantity', 'food_quantity', 'quantity', 'kcal_quant', 'proteins_quant', 'carbs_quant', 'fats_quant')
 
 
