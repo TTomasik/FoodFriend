@@ -118,10 +118,10 @@ class Days(models.Model):
 
     @property
     def day_calories(self):
-        food_calories = Food.objects.filter(meal__day=self)
+        food_calories = Food.objects.filter(meal__day_id=self.id)
         cal = 0
         for p in food_calories:
-            quant = Quantity.objects.filter(food_quantity__id=p.id)[0].quantity
+            quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
             cal += math.ceil(p.kcal*quant/100)
         return cal
 
@@ -130,7 +130,7 @@ class Days(models.Model):
         food_proteins = Food.objects.filter(meal__day=self)
         protein = 0
         for p in food_proteins:
-            quant = Quantity.objects.filter(food_quantity__id=p.id)[0].quantity
+            quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
             protein += math.ceil(p.proteins*quant/100)
         return protein
 
@@ -140,7 +140,7 @@ class Days(models.Model):
         food_carbs = Food.objects.filter(meal__day=self)
         carb = 0
         for p in food_carbs:
-            quant = Quantity.objects.filter(food_quantity__id=p.id)[0].quantity
+            quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
             carb += math.ceil(p.carbs*quant/100)
         return carb
 
@@ -149,7 +149,7 @@ class Days(models.Model):
         food_fats = Food.objects.filter(meal__day=self)
         fat = 0
         for p in food_fats:
-            quant = Quantity.objects.filter(food_quantity__id=p.id)[0].quantity
+            quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
             fat += math.ceil(p.fats*quant/100)
         return fat
 

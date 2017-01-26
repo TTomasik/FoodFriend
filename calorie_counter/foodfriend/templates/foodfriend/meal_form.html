@@ -36,9 +36,8 @@
             {% csrf_token %}
             <div>
                 <font color="grey">
-                    {{ form.meal_name }}
-                    {{ form.day }}
-                    {{ form.foods }}
+                    {{ form.as_table }}
+
 
                 </font>
             <input type="submit" value="ADD FOOD">

@@ -156,7 +156,7 @@ class FoodsView(View):
         foods = meal.foods.all()
         food_list = []
         for food in foods:
-            quant = Quantity.objects.filter(food_quantity__id=food.id)[0].quantity
+            quant = Quantity.objects.filter(food_quantity__id=food.id, meal_quantity__id=meal_id)[0].quantity
             d = {}
             d['name'] = food.name
             d['kcal'] = food.kcal = math.ceil(food.kcal*quant/food.grams)
