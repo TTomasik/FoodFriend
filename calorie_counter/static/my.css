@@ -83,3 +83,15 @@ body {
     margin: 10px;
     width: 50%;
 }
+
+.button-next-button input{
+  float:left;
+  width: 10%;
+}
+
+.tip span {
+    margin-left:10px;
+}
+img {
+    vertical-align: right;
+}

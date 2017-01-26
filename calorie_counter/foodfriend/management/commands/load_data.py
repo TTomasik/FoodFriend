@@ -20,6 +20,10 @@ def populate():
     Food.objects.update_or_create(name="Orzechy włoskie", kcal=607, proteins=14.1, carbs=14.5, fats=65.3, grams=100)
     Food.objects.update_or_create(name="Ser mozarella", kcal=221, proteins=20.1, carbs=0.1, fats=15.6, grams=100)
     Food.objects.update_or_create(name="Grejpfrut", kcal=30, proteins=0.7, carbs=7.3, fats=0.1, grams=100)
+    Food.objects.update_or_create(name="Mleko kokosowe Aroy-d (100ml)", kcal=181, proteins=1.6, carbs=1.95, fats=18.5, grams=100)
+    Food.objects.update_or_create(name="Kasza jaglana", kcal=348, proteins=10.5, carbs=68.4, fats=2.9, grams=100)
+    Food.objects.update_or_create(name="Filet z indyka", kcal=84, proteins=19, carbs=0, fats=1, grams=100)
+    Food.objects.update_or_create(name="Avokado", kcal=160, proteins=2, carbs=8.5, fats=14.66, grams=100)
 
 class Command(BaseCommand):
     help = 'Initialize database'

@@ -153,11 +153,16 @@ class FoodsView(View):
         day = Days.objects.get(pk=day_id)
         user = User.objects.get(pk=my_id)
         meal = Meal.objects.get(pk=meal_id)
+        extended = UserExtend.objects.get(user_id=my_id)
         foods = meal.foods.all()
         food_list = []
-
+        kcal_sum = []
+        proteins_sum = []
+        carbs_sum = []
+        fats_sum = []
         for food in foods:
             quant = Quantity.objects.filter(food_quantity__id=food.id, meal_quantity__id=meal_id)[0].quantity
+
             d = {}
             d['name'] = food.name
             d['kcal'] = food.kcal = round(food.kcal*quant/food.grams, 0)
@@ -166,14 +171,26 @@ class FoodsView(View):
             d['fats'] = food.fats = round(food.fats*quant/food.grams, 0)
             d['grams'] = food.grams
             d['quantity'] = food.quantity = quant
-
-
+            kcal_sum.append(food.kcal)
+            proteins_sum.append(food.proteins)
+            carbs_sum.append(food.carbs)
+            fats_sum.append(food.fats)
             food_list.append(d)
+
         cont['food_names'] = food_list
         cont['my_id'] = my_id
         cont['meal_id'] = meal.id
         cont['meal_name'] = dict(MEALS).get(meal.meal_name)
         cont['day_date'] = day.date
+        cont['day_id'] = day.id
+        cont['avatar'] = extended.avatar
+        cont['kcal_sum'] = sum(kcal_sum)
+        cont['proteins_sum'] = sum(proteins_sum)
+        cont['carbs_sum'] = sum(carbs_sum)
+        cont['fats_sum'] = sum(fats_sum)
+
+
+
 
 
         return render(request, "foodfriend/food.html", cont)

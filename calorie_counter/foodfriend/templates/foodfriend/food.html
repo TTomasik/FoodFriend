@@ -11,9 +11,9 @@
  <div class="panel panel-primary">
         <div class="panel-heading">
             {% if avatar %}
-            <img src="/{{ avatar }}" width="25%" height="25%">
+            <img src="/{{ avatar }}" width="10%" height="10%">
             {% endif %}
-            <h3>{{ day_date }} | {{ meal_name }}</h3>
+            <span><font size="5">{{ day_date }} | {{ meal_name }}</font></span>
         </div>
         <div class="panel-body">
 
@@ -40,22 +40,33 @@
                             <td>{{ food.carbs }}</td>
                             <td>{{ food.fats }}</td>
                             <td>{{ food.quantity }}</td>
-
-
-
                         </tr>
-
                     {% endfor %}
+
+                <td><b>TOTAL: </b></td>
+                <td><b>{{ kcal_sum }}</b></td>
+                <td><b>{{ proteins_sum }}</b></td>
+                <td><b>{{ carbs_sum }}</b></td>
+                <td><b>{{ fats_sum }}</b></td>
+                    <td></td>
+
                     </tbody>
                 </table>
             </div>
 
             <div class="my_margin">
+                <div class="button-next-button">
     <form action="{% url 'update-meal' pk=meal_id %}">
         {% csrf_token %}
-
         <input type="submit" value="UPDATE" class="btn btn-secondary btn-sm">
     </form>
+                </div>
+                <div class="button-next-button">
+              <form action="{% url 'calendar-meal' my_id=request.user.id day_id=day_id %}">
+        {% csrf_token %}
+        <input type="submit" value="BACK TO MEALS" class="btn btn-secondary btn-sm">
+    </form>
+                </div>
 
 
 
