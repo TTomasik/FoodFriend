@@ -1,7 +1,7 @@
 from django import forms
 from foodfriend.models import UserExtend, Meal, Food, Days, MEALS, Quantity
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, HiddenInput, IntegerField, CharField
+from django.forms import ModelForm
 
 
 class LoginForm(forms.Form):
@@ -52,12 +52,36 @@ class CreateAccountForm(forms.Form):
         required=True,
     )
 
-class CreateMealForm(ModelForm):
-    foods = forms.ModelMultipleChoiceField(queryset=Food.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
-    quantity = forms.IntegerField()
-    class Meta:
-        model = Meal
-        fields = ('meal_name', 'day', 'foods')
+# class CreateMealForm(ModelForm):
+#     foods = forms.ChoiceField(queryset=Food.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
+#     quantity = forms.IntegerField()
+#     class Meta:
+#         model = Meal
+#         fields = ('meal_name', 'day', 'foods')
+#
+#     def __init__(self, *args, **kwargs):
+#         super(CreateMealForm, self).__init(*args, **kwargs)
+#         self.fields['extra_field'].initial = "harvard"
+
+class CreateMealForm(forms.Form):
+    day = forms.ModelChoiceField(queryset=Days.objects.all(), required=True, empty_label="Choose day:")
+    meal = forms.ChoiceField(choices=MEALS, required=True)
+    foods1 = forms.ModelChoiceField(queryset=Food.objects.all(), required=True, empty_label="Choose food:")
+    quantity1 = forms.IntegerField()
+    foods2 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:")
+    quantity2 = forms.IntegerField(required=False)
+    foods3 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:")
+    quantity3 = forms.IntegerField(required=False)
+    foods4 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:")
+    quantity4 = forms.IntegerField(required=False)
+    foods5 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:")
+    quantity5 = forms.IntegerField(required=False)
+
+
+
+
+
+
 
 
 

@@ -134,7 +134,6 @@ class Days(models.Model):
             protein += math.ceil(p.proteins*quant/100)
         return protein
 
-
     @property
     def day_carbs(self):
         food_carbs = Food.objects.filter(meal__day=self)
@@ -161,7 +160,6 @@ class Meal(models.Model):
     meal_name = models.IntegerField(choices=MEALS, default=0)
     day = models.ForeignKey(Days, null=True, blank=True)
     foods = models.ManyToManyField(Food, through='Quantity', blank=True)
-
 
     def __str__(self):
         return str(self.meal_name)
@@ -225,7 +223,7 @@ class Quantity(models.Model):
     def __str__(self):
         return 'meal: %s, quantity: %s, kcal: %s' % (self.meal_quantity, self.quantity, self.kcal_quant)
 
-
+# Quantity.objects.create(meal_quantity=m, food_quantity=f, quantity=250)
 
 
 

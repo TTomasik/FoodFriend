@@ -155,14 +155,15 @@ class FoodsView(View):
         meal = Meal.objects.get(pk=meal_id)
         foods = meal.foods.all()
         food_list = []
+
         for food in foods:
             quant = Quantity.objects.filter(food_quantity__id=food.id, meal_quantity__id=meal_id)[0].quantity
             d = {}
             d['name'] = food.name
-            d['kcal'] = food.kcal = math.ceil(food.kcal*quant/food.grams)
-            d['proteins'] = food.proteins = math.ceil(food.proteins*quant/food.grams)
-            d['carbs'] = food.carbs = math.ceil(food.carbs*quant/food.grams)
-            d['fats'] = food.fats = math.ceil(food.fats*quant/food.grams)
+            d['kcal'] = food.kcal = round(food.kcal*quant/food.grams, 0)
+            d['proteins'] = food.proteins = round(food.proteins*quant/food.grams, 0)
+            d['carbs'] = food.carbs = round(food.carbs*quant/food.grams, 0)
+            d['fats'] = food.fats = round(food.fats*quant/food.grams, 0)
             d['grams'] = food.grams
             d['quantity'] = food.quantity = quant
 
@@ -173,6 +174,8 @@ class FoodsView(View):
         cont['meal_id'] = meal.id
 
         return render(request, "foodfriend/food.html", cont)
+
+
 
 
 class CreateMeal(View):
@@ -190,20 +193,77 @@ class CreateMeal(View):
         my_id = self.request.user.id
 
         if form.is_valid():
-            name = form.cleaned_data['meal_name']
+            name = form.cleaned_data['meal']
             day = form.cleaned_data['day']
-            food = form.cleaned_data['foods']
+            food1 = form.cleaned_data['foods1']
+            quantity1 = form.cleaned_data['quantity1']
+            food2 = form.cleaned_data['foods2']
+            quantity2 = form.cleaned_data['quantity2']
+            food3 = form.cleaned_data['foods3']
+            quantity3 = form.cleaned_data['quantity3']
+            food4 = form.cleaned_data['foods4']
+            quantity4 = form.cleaned_data['quantity4']
+            food5 = form.cleaned_data['foods5']
+            quantity5 = form.cleaned_data['quantity5']
 
 
             meal, _create = Meal.objects.get_or_create(meal_name = name, day = day)
+            day_foods_list = meal.foods.all()
 
-            if _create is False:
-                return HttpResponse("""<h1>You have already added this meal today!</h1>
-                <h1><a href="/calendar/{}">Create another meal or update exist one!</a></h1>
-                """.format(my_id))
+            if food1 not in day_foods_list:
+                Quantity.objects.create(meal_quantity=meal, food_quantity=food1, quantity=quantity1)
             else:
-                # print(meal)
-                meal.foods.set(food)
+                Quantity.objects.filter(meal_quantity=meal, food_quantity=food1).update(quantity=quantity1)
+
+            if food2 != None and quantity2 != None:
+                if food2 not in day_foods_list:
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food2, quantity=quantity2)
+                else:
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food2).update(quantity=quantity2)
+            else:
+                pass
+            if food3 != None and quantity3 != None:
+                if food3 not in day_foods_list:
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food3, quantity=quantity3)
+                else:
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food3).update(quantity=quantity3)
+            else:
+                pass
+            if food4 != None and quantity4 != None:
+                if food4 not in day_foods_list:
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food4, quantity=quantity4)
+                else:
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food4).update(quantity=quantity4)
+            else:
+                pass
+            if food5 != None and quantity5 != None:
+                if food5 not in day_foods_list:
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food5, quantity=quantity5)
+                else:
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food5).update(quantity=quantity5)
+            else:
+                pass
+
+            # else:
+            #     # meal.foods.set(food)
+            #     Quantity.objects.create(meal_quantity=meal, food_quantity=food1, quantity=quantity1)
+            #     if food2 != None and quantity2 != None:
+            #         Quantity.objects.create(meal_quantity=meal, food_quantity=food2, quantity=quantity2)
+            #     else:
+            #         pass
+            #     if food3 != None and quantity3 != None:
+            #         Quantity.objects.create(meal_quantity=meal, food_quantity=food3, quantity=quantity3)
+            #     else:
+            #         pass
+            #     if food4 != None and quantity4 != None:
+            #         Quantity.objects.create(meal_quantity=meal, food_quantity=food4, quantity=quantity4)
+            #     else:
+            #         pass
+            #     if food5 != None and quantity5 != None:
+            #         Quantity.objects.create(meal_quantity=meal, food_quantity=food5, quantity=quantity5)
+            #     else:
+            #         pass
+
                 # meal = Meal.objects.create(meal_name = name, day = day, foods=food)
                 # meal.save()
 
@@ -275,10 +335,10 @@ class UserMacros(View):
             my_id = self.request.user.id
             day, _create = Days.objects.get_or_create(date=datetime.date.today(), date_user=request.user.userextend)
         cont = {}
-        cont['calories'] = int(day.day_calories)
-        cont['proteins'] = int(day.day_proteins)
-        cont['carbs'] = int(day.day_carbs)
-        cont['fats'] = int(day.day_fats)
+        cont['calories'] = round(day.day_calories, 0)
+        cont['proteins'] = round(day.day_proteins, 0)
+        cont['carbs'] = round(day.day_carbs, 0)
+        cont['fats'] = round(day.day_fats, 0)
 
         return render(request, 'foodfriend/index.html', cont)
 
