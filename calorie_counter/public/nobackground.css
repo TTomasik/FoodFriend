@@ -43,12 +43,10 @@
 .content-block {
     margin: 10px;
     width: 25%;
+
+
+
 }
-
-
-
-
-
 .content-block-404 {
     text-align: center;
     margin-top: 200px;
@@ -62,22 +60,15 @@
     padding: 0px 8px;
 }
 
-html {
-  background: url(foodfriend/img/wallpaper.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
 
 body {
     background: transparent;
 }
 
-.join {
-    position: absolute;
-    width: 25%;
-    text-align: right;
+}
+.content-block2 {
+    margin: 10px;
+    width: 50%;
 }
 
 .my_margin {

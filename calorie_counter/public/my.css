@@ -43,12 +43,10 @@
 .content-block {
     margin: 10px;
     width: 25%;
+
+
+
 }
-
-
-
-
-
 .content-block-404 {
     text-align: center;
     margin-top: 200px;
@@ -63,7 +61,7 @@
 }
 
 html {
-  background: url(foodfriend/img/wallpaper.jpg) no-repeat center center fixed;
+  background: url(foodfriend/img/mywallpaper.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -74,12 +72,34 @@ body {
     background: transparent;
 }
 
-.join {
-    position: absolute;
-    width: 25%;
-    text-align: right;
+
+
+.to-calendar {
+    margin: 10px;
+    width: 5%;
 }
 
-.my_margin {
-    padding-left: 25px;
+.new-food {
+    margin: 10px;
+    width: 50%;
+}
+
+.button-next-button input{
+  float: right;
+  width: 20%;
+  margin-left:10px
+}
+
+.tip span {
+    margin-left:10px;
+}
+img {
+    vertical-align: right;
+}
+
+.button-away-button input{
+  float: left;
+  width: 40%;
+  margin-left:10px
+
 }

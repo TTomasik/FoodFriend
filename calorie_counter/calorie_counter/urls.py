@@ -17,6 +17,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
+from django.conf.urls.static import static
+from django.conf import settings
 from foodfriend.views import CheckLogin, MyInfo, CreateAccount, DaysView,\
     MealsView, FoodsView, CreateMeal, UpdateMeal, UpdateUser, CreateFood,\
     FoodList, UserMacros, MyPerson, LineChartJSONView
@@ -40,6 +42,10 @@ urlpatterns = [
     url(r'^foodlist/$', FoodList.as_view(), name='food-list'),
     url(r'^index/$', UserMacros.as_view(), name='index'),
     url(r'^userupdate/(?P<my_id>\d+)/?$', MyPerson.as_view(), name='test'),
-    url(r'^chart/$', LineChartJSONView.as_view(), name='chart'),
+    url(r'^line_chart_jason/$', LineChartJSONView.as_view(), name='line_chart'),
 
 ]
+
+# if settings.DEBUG:
+#     urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+#     urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
