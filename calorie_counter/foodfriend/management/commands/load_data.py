@@ -26,7 +26,7 @@ def populate():
     Food.objects.update_or_create(name="Avokado", kcal=160, proteins=2, carbs=8.5, fats=14.66, grams=100)
     Food.objects.update_or_create(name="Twaróg półtłusty", kcal=116, proteins=17, carbs=3.4, fats=4, grams=100)
     Food.objects.update_or_create(name="Pierś z makaronem razowym (1 porcja)", kcal=652, proteins=55, carbs=70, fats=12, grams=1)
-
+    Food.objects.update_or_create(name="Olej kokosowy", kcal=830, proteins=0, carbs=0, fats=100, grams=100)
 
 class Command(BaseCommand):
     help = 'Initialize database'
