@@ -122,7 +122,7 @@ class Days(models.Model):
         cal = 0
         for p in food_calories:
             quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            cal += int(round(p.kcal*quant/100, 0))
+            cal += int(round(p.kcal*quant/p.grams, 0))
         return cal
 
     @property
@@ -131,7 +131,7 @@ class Days(models.Model):
         protein = 0
         for p in food_proteins:
             quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            protein += int(round(p.proteins*quant/100, 0))
+            protein += int(round(p.proteins*quant/p.grams, 0))
         return protein
 
     @property
@@ -140,7 +140,7 @@ class Days(models.Model):
         carb = 0
         for p in food_carbs:
             quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            carb += int(round(p.carbs*quant/100))
+            carb += int(round(p.carbs*quant/p.grams, 0))
         return carb
 
     @property
@@ -149,7 +149,7 @@ class Days(models.Model):
         fat = 0
         for p in food_fats:
             quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            fat += int(round(p.fats*quant/100))
+            fat += int(round(p.fats*quant/p.grams, 0))
         return fat
 
     def __str__(self):

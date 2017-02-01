@@ -27,6 +27,12 @@ def populate():
     Food.objects.update_or_create(name="Twaróg półtłusty", kcal=116, proteins=17, carbs=3.4, fats=4, grams=100)
     Food.objects.update_or_create(name="Pierś z makaronem razowym (1 porcja)", kcal=652, proteins=55, carbs=70, fats=12, grams=1)
     Food.objects.update_or_create(name="Olej kokosowy", kcal=830, proteins=0, carbs=0, fats=100, grams=100)
+    Food.objects.update_or_create(name="Ryba dorada", kcal=100, proteins=20.5, carbs=0, fats=1.3, grams=100)
+    Food.objects.update_or_create(name="Brokuły", kcal=30, proteins=2.8, carbs=4, fats=0.4, grams=100)
+    Food.objects.update_or_create(name="Fasola biała", kcal=328, proteins=29.5, carbs=50, fats=1.3, grams=100)
+    Food.objects.update_or_create(name="McRoyal podwójny pikanty (1 porcja)", kcal=765, proteins=52, carbs=36, fats=45, grams=1)
+    Food.objects.update_or_create(name="Pringles Sour Cream & Onion", kcal=509, proteins=3.9, carbs=52, fats=32, grams=100)
+    Food.objects.update_or_create(name="Masło orzechowe (orzeszki ziemne)", kcal=630, proteins=26, carbs=4, fats=54, grams=100)
 
 class Command(BaseCommand):
     help = 'Initialize database'
