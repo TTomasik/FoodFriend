@@ -223,7 +223,7 @@ class Quantity(models.Model):
     def __str__(self):
         return 'meal: %s, quantity: %s, kcal: %s' % (self.meal_quantity, self.quantity, self.kcal_quant)
 
-# Quantity.objects.create(meal_quantity=m, food_quantity=f, quantity=250)
+
 
 
 
