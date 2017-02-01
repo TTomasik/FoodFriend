@@ -3,6 +3,7 @@ from foodfriend.models import UserExtend, Meal, Food, Days, MEALS, Quantity
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from dal import autocomplete
+import datetime
 
 
 class LoginForm(forms.Form):
@@ -65,7 +66,7 @@ class CreateAccountForm(forms.Form):
 #         self.fields['extra_field'].initial = "harvard"
 
 class CreateMealForm(forms.Form):
-    day = forms.ModelChoiceField(queryset=Days.objects.all(), required=True, label="Choose day:", widget=autocomplete.ModelSelect2)
+    day = forms.ModelChoiceField(queryset=Days.objects.all(), required=True, empty_label="Choose day: ", widget=autocomplete.Select2)
     meal = forms.ChoiceField(choices=MEALS, required=True, widget=autocomplete.ModelSelect2)
     foods1 = forms.ModelChoiceField(queryset=Food.objects.all(), required=True, empty_label="Choose food:", widget=autocomplete.ModelSelect2)
     quantity1 = forms.IntegerField(label='grams')

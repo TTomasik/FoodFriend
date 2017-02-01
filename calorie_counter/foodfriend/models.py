@@ -26,7 +26,7 @@ SEX = (
 )
 
 MEALS = (
-    (0, "Choose meal type:"),
+    (0, ""),
     (1, "Breakfast"),
     (2, "Breakfast II"),
     (3, "Lunch"),

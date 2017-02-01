@@ -34,13 +34,15 @@
     <div class="my_margin">
         <form action="" method="post" enctype='multipart/form-data'>
             {% csrf_token %}
-            <div>
-                    {{ form.day }}{{ form.meal }}
-                    <p>{{ form.foods1 }}{{ form.quantity1 }}</p>
-                    <p>{{ form.foods2 }}{{ form.quantity2 }}</p>
-                    <p>{{ form.foods3 }}{{ form.quantity3 }}</p>
-                    <p>{{ form.foods4 }}{{ form.quantity4 }}</p>
-                    <p>{{ form.foods5 }}{{ form.quantity5 }}</p>
+            <div><br><br>
+                <font color="white">  DAY: {{ form.day }} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp MEAL: {{ form.meal }}</font>
+                <p></p>
+                <p><font color="white">CHOOSE FOODS:</font></p>
+                <p>{{ form.foods1 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity1 }}<font color="white"> grams</font></p>
+                <p>{{ form.foods2 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity2 }}<font color="white"> grams</font></p>
+                <p>{{ form.foods3 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity3 }}<font color="white"> grams</font></p>
+                <p>{{ form.foods4 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity4 }}<font color="white"> grams</font></p>
+                <p>{{ form.foods5 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity5 }}<font color="white"> grams</font></p>
             <input type="submit" value="ADD FOOD">
             </div>
         </form>

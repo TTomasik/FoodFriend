@@ -305,7 +305,7 @@ class CreateMeal(View):
 
 class UpdateMeal(UpdateView):
     def get_success_url(self, **kwargs):
-        return reverse('calendar-food', kwargs={'meal_id':self.object.id,
+        return reverse('update-meal', kwargs={'meal_id':self.object.id,
                                                 'my_id':self.object.day.date_user.id,
                                                 'day_id':self.object.day.id})
     model = Meal
@@ -323,7 +323,7 @@ class UpdateMeal(UpdateView):
 #         meal = Meal.objects.get(pk=meal_id)
 #
 #         form = CreateMealForm(request.POST)
-#         return render(request, "foodfriend/meal_form.html", {"form": form})
+#         return render(request, "foodfriend/meal_form.html", {"form": form}, day_id, my_id, meal_id)
 
 
 class UpdateUser(UpdateView):
