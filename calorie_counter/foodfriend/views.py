@@ -371,10 +371,10 @@ class UserMacros(View):
             my_id = self.request.user.id
             day, _create = Days.objects.get_or_create(date=datetime.date.today(), date_user=request.user.userextend)
         cont = {}
-        cont['calories'] = round(day.day_calories, 0)
-        cont['proteins'] = round(day.day_proteins, 0)
-        cont['carbs'] = round(day.day_carbs, 0)
-        cont['fats'] = round(day.day_fats, 0)
+        cont['calories'] = round(day.day_calories, 1)
+        cont['proteins'] = round(day.day_proteins, 1)
+        cont['carbs'] = round(day.day_carbs, 1)
+        cont['fats'] = round(day.day_fats, 1)
 
         return render(request, 'foodfriend/index.html', cont)
 

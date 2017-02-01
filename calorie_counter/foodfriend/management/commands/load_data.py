@@ -7,7 +7,7 @@ def populate():
     Food.objects.update_or_create(name="Ryż brązowy", kcal=353, proteins=7.1, carbs=76.8, fats=1.9, grams=100)
     Food.objects.update_or_create(name="Boczek parzony", kcal=259, proteins=14, carbs=1.3, fats=22, grams=100)
     Food.objects.update_or_create(name="Ser Gouda", kcal=356, proteins=24.9, carbs=2.2, fats=27.5, grams=100)
-    Food.objects.update_or_create(name="Chleb razowy", kcal=217, proteins=6.7, carbs=43.7, fats=1.5, grams=100)
+    Food.objects.update_or_create(name="Chleb razowy (1 kromka ok. 30g)", kcal=217, proteins=6.7, carbs=43.7, fats=1.5, grams=100)
     Food.objects.update_or_create(name="Pomidor", kcal=20, proteins=1, carbs=3, fats=0.2, grams=100)
     Food.objects.update_or_create(name="Jajko (1 porcja ok. 68g)", kcal=139, proteins=12.5, carbs=0.6, fats=9.7, grams=100)
     Food.objects.update_or_create(name="Ziemniaki", kcal=80, proteins=2, carbs=16.8, fats=0.1, grams=100)

@@ -51,9 +51,9 @@ class UserExtend(models.Model):
         if self.sex == 2:
             if self.age and self.weight and self.height and self.factor:
                 if self.target == 1:
-                    calories_count = int((66.5+13.7*self.weight+5*self.height-6.8*self.age)*self.factor+300)
+                    calories_count = int((66+13.7*self.weight+5*self.height-6.8*self.age)*self.factor+300)
                 if self.target == 2:
-                    calories_count = int((66.5+13.7*self.weight+5*self.height-6.8*self.age)*self.factor-300)
+                    calories_count = int((66+13.7*self.weight+5*self.height-6.8*self.age)*self.factor-300)
             else:
                 calories_count = "No full data"
 
@@ -62,9 +62,9 @@ class UserExtend(models.Model):
         if self.sex == 1:
             if self.age and self.weight and self.height and self.factor:
                 if self.target == 1:
-                    calories_count = int((66.5+9.6*self.weight+1.85*self.height-4.7*self.age)*self.factor+300)
+                    calories_count = int((665+9.6*self.weight+1.85*self.height-4.7*self.age)*self.factor+300)
                 if self.target == 2:
-                    calories_count = int((66.5+9.6*self.weight+1.85*self.height-4.7*self.age)*self.factor-300)
+                    calories_count = int((665+9.6*self.weight+1.85*self.height-4.7*self.age)*self.factor-300)
             else:
                 calories_count = "No full data"
 
@@ -122,7 +122,7 @@ class Days(models.Model):
         cal = 0
         for p in food_calories:
             quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            cal += math.ceil(p.kcal*quant/100)
+            cal += int(round(p.kcal*quant/100, 0))
         return cal
 
     @property
@@ -131,7 +131,7 @@ class Days(models.Model):
         protein = 0
         for p in food_proteins:
             quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            protein += math.ceil(p.proteins*quant/100)
+            protein += int(round(p.proteins*quant/100, 0))
         return protein
 
     @property
@@ -140,7 +140,7 @@ class Days(models.Model):
         carb = 0
         for p in food_carbs:
             quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            carb += math.ceil(p.carbs*quant/100)
+            carb += int(round(p.carbs*quant/100))
         return carb
 
     @property
@@ -149,7 +149,7 @@ class Days(models.Model):
         fat = 0
         for p in food_fats:
             quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            fat += math.ceil(p.fats*quant/100)
+            fat += int(round(p.fats*quant/100))
         return fat
 
     def __str__(self):
