@@ -62,13 +62,13 @@
                 <div class="button-next-button">
     <form action="{% url 'create-meal' %}">
         {% csrf_token %}
-        <input type="submit" value="UPDATE" class="btn btn-secondary btn-sm">
+        <input type="submit" value="UPDATE" class="btn btn-primary">
     </form>
                 </div>
                 <div class="button-next-button">
               <form action="{% url 'calendar-meal' my_id=request.user.id day_id=day_id %}">
         {% csrf_token %}
-        <input type="submit" value="BACK TO MEALS" class="btn btn-secondary btn-sm">
+        <input type="submit" value="BACK" class="btn btn-primary">
     </form>
                 </div>
 

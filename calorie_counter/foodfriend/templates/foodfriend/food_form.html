@@ -27,7 +27,7 @@
 
         </p>
     </div>
-<div class="my_margin">
+<div class="base-headline-title">
         <font color="white">
             <h3>Food Friend </h3>
         </font>
@@ -36,10 +36,14 @@
         <form action="" method="post" enctype='multipart/form-data'>
             {% csrf_token %}
             <div class="to-calendar">
-                <font color="grey">
-            {{ form.as_p }}
-                </font>
-            <input type="submit" value="ADD FOOD">
+                {% for field in form %}
+
+                <font color="white"><p><b>{{ field.label }}:</b></p></font>
+                <p><div class="{{ field.name }}">{{ field }}</div></p>
+
+
+            {% endfor %}
+            <input type="submit" value="ADD FOOD" class="btn btn-primary">
             </div>
     </div>
     {% bootstrap_javascript %}

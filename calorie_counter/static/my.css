@@ -109,3 +109,16 @@ img {
     border-style: solid;
     width: 500px;
 }
+
+.button-next-next input{
+  float: right;
+  margin-left:10px
+}
+
+.special-margin input{
+  margin-left:30px
+}
+
+.my_margin {
+    padding-left: 25px;
+}

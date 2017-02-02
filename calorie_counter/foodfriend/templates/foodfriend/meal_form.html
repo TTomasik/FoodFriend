@@ -26,7 +26,7 @@
 
         </p>
     </div>
-<div class="my_margin">
+<div class="base-headline-title">
         <font color="white">
             <h3>Food Friend </h3>
         </font>
@@ -34,17 +34,17 @@
     <div class="my_margin">
         <form action="" method="post" enctype='multipart/form-data'>
             {% csrf_token %}
-            <div><br><br>
+            <br><br>
                 <font color="white">  DAY: {{ form.day }} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp MEAL: {{ form.meal }}</font>
                 <p></p>
                 <p><font color="white">CHOOSE FOODS:</font></p>
-                <p>{{ form.foods1 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity1 }}<font color="white"> grams</font></p>
-                <p>{{ form.foods2 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity2 }}<font color="white"> grams</font></p>
-                <p>{{ form.foods3 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity3 }}<font color="white"> grams</font></p>
-                <p>{{ form.foods4 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity4 }}<font color="white"> grams</font></p>
-                <p>{{ form.foods5 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity5 }}<font color="white"> grams</font></p>
-            <input type="submit" value="ADD FOODS">
-            </div>
+                <p>{{ form.foods1 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity1 }}<font color="white"> g</font></p>
+                <p>{{ form.foods2 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity2 }}<font color="white"> g</font></p>
+                <p>{{ form.foods3 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity3 }}<font color="white"> g</font></p>
+                <p>{{ form.foods4 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity4 }}<font color="white"> g</font></p>
+                <p>{{ form.foods5 }}<font color="white"> &nbsp x &nbsp </font>{{ form.quantity5 }}<font color="white"> g</font></p>
+            <input type="submit" value="ADD FOODS" class="btn btn-primary">
+
         </form>
     </div>
     {% bootstrap_javascript %}
