@@ -36,10 +36,16 @@
         <form action="" method="post" enctype='multipart/form-data'>
             {% csrf_token %}
             <div class="to-calendar">
-                <font color="grey">
-            {{ form.as_p }}
-                </font>
-            <input type="submit" value="UPDATE">
+
+            {% for field in form %}
+
+                <font color="white"><p><b>{{ field.label }}:</b></p></font>
+                <p><div class="{{ field.name }}">{{ field }}</div></p>
+
+
+            {% endfor %}
+
+            <input type="submit" class="btn btn-primary" value="UPDATE">
             </div>
         </form>
     </div>

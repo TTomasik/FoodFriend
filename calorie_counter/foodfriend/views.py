@@ -361,6 +361,8 @@ class UpdateUser(UpdateView):
 
     template_name_suffix = '_update_form'
 
+
+
 class CreateFood(CreateView):
     def get_success_url(self, **kwargs):
         return reverse('food-list')
@@ -426,7 +428,7 @@ class MyPerson(View):
 
     def post(self, request, my_id):
         p = UserExtend.objects.get(user_id=my_id)
-        form = UserExtendForm(request.POST, instance=p)
+        form = UserExtendForm(request.POST)
         if form.is_valid():
             form.save()
         return render(request, "foodfriend/userextend_update_form2.html", {"form": form})

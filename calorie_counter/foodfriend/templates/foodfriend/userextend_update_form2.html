@@ -17,7 +17,7 @@
         </font>
 </div>
     <div class="my_margin">
-        <form action="{% url 'my-info' my_id=request.user.id %}" method="post" enctype='multipart/form-data'>
+        <form action="{% url 'my-info' my_id=request.user.id %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="UPDATE">

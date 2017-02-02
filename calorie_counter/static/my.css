@@ -103,3 +103,9 @@ img {
   margin-left:10px
 
 }
+
+.avatar {
+    color: white;
+    border-style: solid;
+    width: 500px;
+}
