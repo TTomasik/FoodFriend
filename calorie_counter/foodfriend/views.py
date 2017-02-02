@@ -54,7 +54,7 @@ class CheckLogin(View):
 
 # LoginRequiredMixin, UserPassesTestMixin,  <--- tego uzywac do ponizszego w class MyInfo
 
-class MyInfo(View):
+class MyInfo(LoginRequiredMixin, View):
     def get(self, request, my_id):
         if not self.request.user.is_superuser:
             my_id = self.request.user.id
@@ -103,7 +103,7 @@ class CreateAccount(View):
 
         return redirect("/login")
 
-class DaysView(View):
+class DaysView(LoginRequiredMixin, View):
     def get(self, request, my_id):
         if not self.request.user.is_superuser:
             my_id = self.request.user.id
@@ -123,7 +123,7 @@ class DaysView(View):
         return render(request, "foodfriend/calendar.html", cont)
 
 
-class MealsView(View):
+class MealsView(LoginRequiredMixin, View):
     def get(self, request, my_id, day_id):
         if not self.request.user.is_superuser:
             my_id = self.request.user.id
@@ -147,7 +147,7 @@ class MealsView(View):
 
         return render(request, "foodfriend/meal.html", cont)
 
-class FoodsView(View):
+class FoodsView(LoginRequiredMixin, View):
     def get(self, request, my_id, day_id, meal_id):
         if not self.request.user.is_superuser:
             my_id = self.request.user.id
@@ -201,7 +201,7 @@ class FoodsView(View):
 
 
 
-class CreateMeal(View):
+class CreateMeal(LoginRequiredMixin, View):
 
     def get(self, request):
         my_id = self.request.user.id
@@ -352,7 +352,7 @@ class UpdateMeal(UpdateView):
 #         return render(request, "foodfriend/meal_form.html", {"form": form}, day_id, my_id, meal_id)
 
 
-class UpdateUser(UpdateView):
+class UpdateUser(LoginRequiredMixin, UpdateView):
     def get_success_url(self, **kwargs):
         return reverse('my-info', kwargs={'my_id':self.object.user_id})
 
@@ -361,9 +361,7 @@ class UpdateUser(UpdateView):
 
     template_name_suffix = '_update_form'
 
-
-
-class CreateFood(CreateView):
+class CreateFood(LoginRequiredMixin, CreateView):
     def get_success_url(self, **kwargs):
         return reverse('food-list')
 
@@ -372,7 +370,7 @@ class CreateFood(CreateView):
     template_name_suffix = '_form'
     success_url = '/foodlist'
 
-class FoodList(View):
+class FoodList(LoginRequiredMixin, View):
     def get(self, request):
 
         cont = {}
