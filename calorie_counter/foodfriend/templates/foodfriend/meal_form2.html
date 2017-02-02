@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FoodFriend</title>
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/my.css" >
+</head>
+<body>
+
+<div class="my_margin">
+        <font color="white">
+            <h3>Food Friend </h3>
+        </font>
+</div>
+    <div class="my_margin">
+        <form action="{% url 'update-meal' meal_id=request.user.id %}" method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% for food in food_quants %}
+            <p>{{ food.quantity }}</p>
+            {% endfor %}
+            <input type="submit" value="UPDATE">
+        </form>
+    </div>
+    {% bootstrap_javascript %}
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    {% block content_js %}
+    {% endblock %}
+</body>
+</html>

@@ -54,16 +54,6 @@ class CreateAccountForm(forms.Form):
         required=True,
     )
 
-# class CreateMealForm(ModelForm):
-#     foods = forms.ChoiceField(queryset=Food.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
-#     quantity = forms.IntegerField()
-#     class Meta:
-#         model = Meal
-#         fields = ('meal_name', 'day', 'foods')
-#
-#     def __init__(self, *args, **kwargs):
-#         super(CreateMealForm, self).__init(*args, **kwargs)
-#         self.fields['extra_field'].initial = "harvard"
 
 class CreateMealForm(forms.Form):
     day = forms.ModelChoiceField(queryset=Days.objects.all(), required=True, empty_label="Choose day: ", widget=autocomplete.Select2)
@@ -82,6 +72,10 @@ class CreateMealForm(forms.Form):
 
 
 
+class CreateMealForm2(ModelForm):
+    class Meta:
+        model = Meal
+        fields = ('foods', )
 
 
 

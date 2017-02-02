@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm
+from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm, CreateMealForm2
 from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food, MEALS, Quantity
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
@@ -302,6 +302,32 @@ class CreateMeal(View):
 #             return redirect('/calendar/{}'.format(my_id))
 #         except IntegrityError:
 #             return HttpResponse('<h1>You have already done this <b>today</b>!</h1>')
+
+class UpdateMeal2(View):
+    def get(self, request, meal_id):
+        p = Meal.objects.get(pk=meal_id)
+        form = CreateMealForm2(instance=p)
+        cont = {}
+        food_quant = []
+        for food in form:
+            d = {}
+            print(food)
+            quant = Quantity.objects.filter(meal_quantity=Meal.objects.get(pk=meal_id), food_quantity=Food.objects.get(pk=11))
+            d['quantity'] = food.quantity = quant
+            food_quant.append(d)
+
+        cont['food_quants'] = food_quant
+
+        return render(request, "foodfriend/meal_form2.html", {"form": form}, cont)
+
+    def post(self, request, meal_id):
+        p = Meal.objects.get(pk=meal_id)
+        form = CreateMealForm2(request.POST, instance=p)
+        if form.is_valid():
+            form.save()
+        return render(request, "foodfriend/meal_form2.html", {"form": form})
+
+
 
 class UpdateMeal(UpdateView):
     def get_success_url(self, **kwargs):

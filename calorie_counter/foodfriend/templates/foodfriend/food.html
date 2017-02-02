@@ -60,7 +60,7 @@
 
             <div class="my_margin">
                 <div class="button-next-button">
-    <form action="{% url 'update-meal' pk=request.user.id %}">
+    <form action="{% url 'create-meal' %}">
         {% csrf_token %}
         <input type="submit" value="UPDATE" class="btn btn-secondary btn-sm">
     </form>
