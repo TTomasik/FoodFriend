@@ -36,6 +36,9 @@ def populate():
     Food.objects.update_or_create(name="Masło klarowane", kcal=898, proteins=0.1, carbs=0.1, fats=99.8, grams=100)
     Food.objects.update_or_create(name="PowerPack: Pikantny kurczak (1 porcja)", kcal=685, proteins=57, carbs=72, fats=14, grams=1)
     Food.objects.update_or_create(name="Oliwa z oliwek", kcal=824, proteins=0, carbs=0, fats=91.6, grams=100)
+    Food.objects.update_or_create(name="Szynka Parmeńska Prosciutto di Parma", kcal=273, proteins=27, carbs=0.7, fats=18.6, grams=100)
+
+
 
 class Command(BaseCommand):
     help = 'Initialize database'
