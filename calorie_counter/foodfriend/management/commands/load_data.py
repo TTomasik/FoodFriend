@@ -40,6 +40,9 @@ def populate():
     Food.objects.update_or_create(name="Papryka", kcal=32, proteins=1.7, carbs=4, fats=0.5, grams=100)
     Food.objects.update_or_create(name="Ser Cheddar", kcal=379, proteins=25, carbs=0, fats=31, grams=100)
     Food.objects.update_or_create(name="Bataty", kcal=86, proteins=1.6, carbs=20.1, fats=0.1, grams=100)
+    Food.objects.update_or_create(name="Chleb żytni pytlowy", kcal=239, proteins=4, carbs=51, fats=1, grams=100)
+
+
 
 class Command(BaseCommand):
     help = 'Initialize database'

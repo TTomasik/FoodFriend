@@ -206,7 +206,8 @@ class CreateMeal(LoginRequiredMixin, View):
     def get(self, request):
         my_id = self.request.user.id
         user = User.objects.get(pk=my_id)
-        form = CreateMealForm()
+        today = Days.objects.filter(date_user=request.user.userextend, date=datetime.date.today())[0]
+        form = CreateMealForm(initial = {"day": today})
         form.fields["day"].queryset = Days.objects.filter(date_user=user.userextend)
 
         return render(request, "foodfriend/meal_form.html", {"form": form})
@@ -391,7 +392,7 @@ class FoodList(LoginRequiredMixin, View):
 
         return render(request, 'foodfriend/food_list.html', cont)
 
-class UserMacros(View):
+class UserMacros(LoginRequiredMixin, View):
     def get(self, request, my_id=None):
         if not my_id:
             my_id = self.request.user.id

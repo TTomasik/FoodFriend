@@ -26,7 +26,7 @@ SEX = (
 )
 
 MEALS = (
-    (0, ""),
+
     (1, "Breakfast"),
     (2, "Breakfast II"),
     (3, "Lunch"),
@@ -153,11 +153,11 @@ class Days(models.Model):
         return fat
 
     def __str__(self):
-        return "{} - {}".format(self.date, self.date_user)
+        return "{}".format(self.date) #self.date_user
 
 
 class Meal(models.Model):
-    meal_name = models.IntegerField(choices=MEALS, default=0)
+    meal_name = models.IntegerField(choices=MEALS, default=1)
     day = models.ForeignKey(Days, null=True, blank=True)
     foods = models.ManyToManyField(Food, through='Quantity', blank=True)
 
