@@ -452,5 +452,6 @@ class LineChartJSONView(BaseLineChartView):
                 [41, 92, 18, 3, 73, 87, 92],
                 [87, 21, 94, 3, 90, 13, 65]]
 
+
 line_chart = TemplateView.as_view(template_name='foodfriend/line_chart.html')
 line_chart_json = LineChartJSONView.as_view()

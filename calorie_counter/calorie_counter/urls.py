@@ -42,7 +42,7 @@ urlpatterns = [
     url(r'^foodlist/$', FoodList.as_view(), name='food-list'),
     url(r'^index/$', UserMacros.as_view(), name='index'),
     url(r'^userupdate/(?P<my_id>\d+)/?$', MyPerson.as_view(), name='test'),
-    url(r'^line_chart_jason/$', LineChartJSONView.as_view(), name='line_chart'),
+    url(r'^line_chart_json/$', LineChartJSONView.as_view(), name='line_chart_json'),
 
 ]
 
