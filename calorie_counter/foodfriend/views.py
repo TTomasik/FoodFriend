@@ -22,6 +22,9 @@ import math
 from random import randint
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
+import calendar
+from datetime import timedelta
+
 
 
 
@@ -112,10 +115,12 @@ class DaysView(LoginRequiredMixin, View):
         cont = {}
         extended = UserExtend.objects.get(user_id=my_id)
         days = Days.objects.filter(date_user=extended)
+
         days_list = []
         for day in days:
             d = {}
             d['date'] = day.date
+            d['name'] = day.name = calendar.day_name[day.date.weekday()]
             d['id'] = day.id
             days_list.append(d)
         cont['days'] = days_list
@@ -443,15 +448,58 @@ class MyPerson(View):
 class LineChartJSONView(BaseLineChartView):
     def get_labels(self):
         """Return 7 labels."""
-        return ["January", "February", "March", "April", "May", "June", "July"]
+        if not self.request.user.is_superuser:
+            my_id = self.request.user.id
+
+        cont = []
+        extended = UserExtend.objects.get(user_id=self.request.user.id)
+        days = Days.objects.filter(date_user=extended)
+
+        for d in days:
+            cont.append(d.date)
+        day = datetime.date.today()
+        return cont[-7::]
 
     def get_data(self):
         """Return 3 datasets to plot."""
+        if not self.request.user.is_superuser:
+            my_id = self.request.user.id
 
-        return [[75, 44, 92, 11, 44, 95, 35],
-                [41, 92, 18, 3, 73, 87, 92],
-                [87, 21, 94, 3, 90, 13, 65]]
+        cont = []
+        extended = UserExtend.objects.get(user_id=self.request.user.id)
+        days = Days.objects.filter(date_user=extended)
+
+        for d in days:
+            cont.append(d)
+
+        days_final = cont[-7::]
+        kcals = []
+        proteins = []
+        carbs = []
+        fats = []
+        print(days_final)
+        for day in days_final:
+            print(day)
+            kcal = round(day.day_calories, 1)
+            kcals.append(kcal)
+            prot = round(day.day_proteins, 1)
+            proteins.append(prot)
+            carb = round(day.day_carbs, 1)
+            carbs.append(carb)
+            fat = round(day.day_fats, 1)
+            fats.append(fat)
+
+        return [kcals, proteins, carbs, fats]
 
 
 line_chart = TemplateView.as_view(template_name='foodfriend/line_chart.html')
 line_chart_json = LineChartJSONView.as_view()
+
+# calendar.day_name[day.date.weekday()]
+#
+#         days_list = []
+#         for day in days:
+#             d = {}
+#             d['date'] = day.date
+#             days_list.append(d)
+#         cont['days'] = days_list

@@ -1,11 +1,11 @@
 {% extends 'foodfriend/base.html' %}
-
+{% load staticfiles %}
 {% block title %}
-<font color="white">Food Friend</font>
+<font color="white">Food Friend
 {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="/static/my.css" >
+<link rel="stylesheet" type="text/css" href="{% static 'my.css' %}" >
 <div class="content-block">
 
 
@@ -14,7 +14,7 @@
             {% if avatar %}
             <img src="/{{ avatar }}" width="25%" height="25%">
             {% endif %}
-            <h3>{{ user }} | CALENDAR</font></a></h3>
+            <h3>{{ user }} | CALENDAR</a></h3>
         </div>
         <div class="panel-body">
 
@@ -27,24 +27,41 @@
                     </tr>
                     </thead>
                     <tbody class="list">
-
                     {{ example }}
                     {% for day in days %}
                         <tr>
-                            <td><a href="{% url 'calendar-meal' my_id=my_id day_id=day.id %}">{{ day.date }}</a></td>
-
+                            <td><a href="{% url 'calendar-meal' my_id=my_id day_id=day.id %}">{{ day.date }} - {{day.name }}</a></td>
                         </tr>
-
                     {% endfor %}
-
                     </tbody>
+                                    <div class="my_charts">
+
+        <canvas id="myChart" width="800" height="400"></canvas>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+        <script type="text/javascript">
+            $.get('{% url "line_chart_json" %}', function(data) {
+                var ctx = $("#myChart").get(0).getContext("2d");
+                new Chart(ctx).Line(data);
+            });
+        </script>
+
+
+
+
+                </div>
                 </table>
 
             </div>
 
         </div>
+
     </div>
+
 </div>
+
+
 
 {% endblock %}
 

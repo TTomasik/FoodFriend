@@ -19,6 +19,8 @@ from django.contrib import admin
 from django.contrib.auth.views import logout_then_login
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic import TemplateView
+from foodfriend import views
 from foodfriend.views import CheckLogin, MyInfo, CreateAccount, DaysView,\
     MealsView, FoodsView, CreateMeal, UpdateMeal, UpdateUser, CreateFood,\
     FoodList, UserMacros, MyPerson, LineChartJSONView, UpdateMeal2
@@ -42,7 +44,8 @@ urlpatterns = [
     url(r'^foodlist/$', FoodList.as_view(), name='food-list'),
     url(r'^index/$', UserMacros.as_view(), name='index'),
     url(r'^userupdate/(?P<my_id>\d+)/?$', MyPerson.as_view(), name='test'),
-    url(r'^line_chart_json/$', LineChartJSONView.as_view(), name='line_chart_json'),
+    url(r'^line_chart/$', views.line_chart, name='line_chart'),
+    url(r'^line_chart/json/$', views.line_chart_json, name='line_chart_json'),
 
 ]
 

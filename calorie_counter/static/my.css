@@ -43,6 +43,7 @@
 .content-block {
     margin: 10px;
     width: 25%;
+    float: left;
 
 
 
@@ -121,4 +122,9 @@ img {
 
 .my_margin {
     padding-left: 25px;
+}
+
+.my_charts {
+    position: absolute; /*or fixed*/
+    left: 30%;
 }
