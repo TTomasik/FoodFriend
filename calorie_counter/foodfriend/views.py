@@ -24,6 +24,7 @@ from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 
 
+
 class CheckLogin(View):
     def get(self, request):
         form = LoginForm()
