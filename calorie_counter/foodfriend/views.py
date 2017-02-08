@@ -458,6 +458,9 @@ class LineChartJSONView(BaseLineChartView):
         for d in days:
             cont.append(d.date)
         day = datetime.date.today()
+
+        if len(days) < 2:
+            return cont[datetime.date.today(), "Tomorrow"]
         return cont[-7::]
 
     def get_data(self):
@@ -489,6 +492,13 @@ class LineChartJSONView(BaseLineChartView):
         user_calories = []
         for i in range(7):
             user_calories.append(extended.calories)
+
+        if len(kcals) < 2:
+            kcals = [0, 0]
+            proteins = [0, 0]
+            carbs = [0, 0]
+            fats = [0, 0]
+            user_calories = [extended.calories, extended.calories]
 
 
         return [user_calories, kcals, proteins, carbs, fats]
