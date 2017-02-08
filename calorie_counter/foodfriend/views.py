@@ -468,7 +468,6 @@ class LineChartJSONView(BaseLineChartView):
         cont = []
         extended = UserExtend.objects.get(user_id=self.request.user.id)
         days = Days.objects.filter(date_user=extended)
-
         for d in days:
             cont.append(d)
 
@@ -477,7 +476,6 @@ class LineChartJSONView(BaseLineChartView):
         proteins = []
         carbs = []
         fats = []
-        print(days_final)
         for day in days_final:
             print(day)
             kcal = round(day.day_calories, 1)
@@ -488,8 +486,12 @@ class LineChartJSONView(BaseLineChartView):
             carbs.append(carb)
             fat = round(day.day_fats, 1)
             fats.append(fat)
+        user_calories = []
+        for i in range(7):
+            user_calories.append(extended.calories)
 
-        return [kcals, proteins, carbs, fats]
+
+        return [user_calories, kcals, proteins, carbs, fats]
 
 
 line_chart = TemplateView.as_view(template_name='foodfriend/line_chart.html')
