@@ -448,7 +448,6 @@ class MyPerson(View):
 
 class LineChartJSONView(BaseLineChartView):
     def get_labels(self):
-        """Return 7 labels."""
         if not self.request.user.is_superuser:
             my_id = self.request.user.id
 
@@ -466,7 +465,6 @@ class LineChartJSONView(BaseLineChartView):
         return labels
 
     def get_data(self):
-        """Return 3 datasets to plot."""
         if not self.request.user.is_superuser:
             my_id = self.request.user.id
 

@@ -41,12 +41,9 @@
         <script type="text/javascript">
 
             $.get('{% url "line_chart_json" %}', function(data) {
+                var options = {tooltipEvents: [], showTooltips: true, tooltipTemplate: "<%= value %>"};
                 var ctx = $("#myChart").get(0).getContext("2d");
-                var myChart = new Chart(ctx).Line(data, {showTooltips: true});
-
-
-
-
+                new Chart(ctx).Line(data, options);
             });
 
 
