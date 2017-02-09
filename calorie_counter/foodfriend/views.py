@@ -403,6 +403,7 @@ class UserMacros(LoginRequiredMixin, View):
         if not my_id:
             my_id = self.request.user.id
             day, _create = Days.objects.get_or_create(date=datetime.date.today(), date_user=request.user.userextend)
+
         cont = {}
         cont['calories'] = round(day.day_calories, 1)
         cont['proteins'] = round(day.day_proteins, 1)
@@ -461,7 +462,8 @@ class LineChartJSONView(BaseLineChartView):
 
         if len(days) < 2:
             return cont[datetime.date.today(), "Tomorrow"]
-        return cont[-7::]
+        labels = cont[-7::]
+        return labels
 
     def get_data(self):
         """Return 3 datasets to plot."""
@@ -469,7 +471,7 @@ class LineChartJSONView(BaseLineChartView):
             my_id = self.request.user.id
 
         cont = []
-        extended = UserExtend.objects.get(user_id=self.request.user.id)
+        extended = UserExtend.objects.get(user_id=my_id)
         days = Days.objects.filter(date_user=extended)
         for d in days:
             cont.append(d)
@@ -480,7 +482,6 @@ class LineChartJSONView(BaseLineChartView):
         carbs = []
         fats = []
         for day in days_final:
-            print(day)
             kcal = round(day.day_calories, 1)
             kcals.append(kcal)
             prot = round(day.day_proteins, 1)
@@ -501,7 +502,7 @@ class LineChartJSONView(BaseLineChartView):
             user_calories = [extended.calories, extended.calories]
 
 
-        return [user_calories, kcals, proteins, carbs, fats]
+        return user_calories, kcals, proteins, carbs, fats
 
 
 line_chart = TemplateView.as_view(template_name='foodfriend/line_chart.html')

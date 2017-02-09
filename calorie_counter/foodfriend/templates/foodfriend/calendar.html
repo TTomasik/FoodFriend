@@ -5,11 +5,9 @@
 {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'my.css' %}" >
+<link rel="stylesheet" type="text/css" href="{% static 'my-blank.css' %}" >
 <div class="content-block">
-
-
- <div class="panel panel-primary">
+    <div class="panel panel-primary">
         <div class="panel-heading">
             {% if avatar %}
             <img src="/{{ avatar }}" width="25%" height="25%">
@@ -41,19 +39,21 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
         <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
         <script type="text/javascript">
+
             $.get('{% url "line_chart_json" %}', function(data) {
                 var ctx = $("#myChart").get(0).getContext("2d");
+                var myChart = new Chart(ctx).Line(data, {showTooltips: true});
 
 
 
 
-
-
-
-
-
-                new Chart(ctx).Line(data);
             });
+
+
+
+
+
+
         </script>
 
 
@@ -61,13 +61,9 @@
 
                 </div>
                 </table>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 

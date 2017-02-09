@@ -1,0 +1,29 @@
+coverage==4.3.4
+Django==1.10.5
+-e git+https://github.com/yourlabs/django-autocomplete-light.git@8519141ecd6901c8b225f008fb3ac028f1b54a24#egg=django_autocomplete_light
+django-bootstrap3==8.0.0
+django-chartjs==1.1
+django-extensions==1.7.6
+-e git+https://github.com/coleifer/django-generic-m2m.git@83b90cd38275b04413f944fe37e4446e4fe09bf6#egg=django_generic_m2m
+django-gm2m==0.4.8
+django-querysetsequence==0.7
+django-tagging==0.4.5
+django-taggit==0.22.0
+djangorestframework==3.5.3
+mock==2.0.0
+mysql-connector==2.1.4
+numpy==1.12.0
+olefile==0.44
+pandas==0.19.2
+pbr==1.10.0
+Pillow==4.0.0
+py==1.4.32
+pytest==3.0.6
+pytest-cov==2.4.0
+pytest-django==3.1.2
+pytest-splinter==1.8.1
+python-dateutil==2.6.0
+pytz==2016.10
+selenium==3.0.2
+six==1.10.0
+splinter==0.7.5

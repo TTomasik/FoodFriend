@@ -43,6 +43,7 @@
 .content-block {
     margin: 10px;
     width: 25%;
+    float: left;
 
 
 
@@ -61,11 +62,7 @@
 }
 
 html {
-  background: url(foodfriend/img/mywallpaper.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: #001d2d;
 }
 
 body {
@@ -104,9 +101,26 @@ img {
 
 }
 
-.content-block2 {
-    margin: 10px;
+.avatar {
+    color: white;
+    border-style: solid;
+    width: 500px;
 }
 
+.button-next-next input{
+  float: right;
+  margin-left:10px
+}
 
-#001d2d
+.special-margin input{
+  margin-left:30px
+}
+
+.my_margin {
+    padding-left: 25px;
+}
+
+.my_charts {
+    position: absolute; /*or fixed*/
+    left: 30%;
+}
