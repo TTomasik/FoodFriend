@@ -213,7 +213,20 @@ class CreateMeal(LoginRequiredMixin, View):
         my_id = self.request.user.id
         user = User.objects.get(pk=my_id)
         today = Days.objects.filter(date_user=request.user.userextend, date=datetime.date.today())[0]
-        form = CreateMealForm(initial = {"day": today})
+        today_meals = Meal.objects.filter(day__date_user=user.userextend, day__date=datetime.date.today())
+        if len(today_meals) == 0:
+            a = 0
+        if len(today_meals) == 1:
+            a = 1
+        if len(today_meals) == 2:
+            a = 2
+        if len(today_meals) == 3:
+            a = 3
+        if len(today_meals) == 4:
+            a = 4
+        if len(today_meals) == 5:
+            a = 4
+        form = CreateMealForm(initial = {"meal": MEALS[a][0], "day": today})
         form.fields["day"].queryset = Days.objects.filter(date_user=user.userextend)
 
         return render(request, "foodfriend/meal_form.html", {"form": form})
