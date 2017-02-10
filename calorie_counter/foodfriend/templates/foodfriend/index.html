@@ -1,4 +1,4 @@
-
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,12 +88,43 @@
         </font>
     </div>
     <div class="my_margin">
-    <form action="{% url 'calendar' request.user.id %}">
-        {% csrf_token %}
 
-        <input type="submit" value="ADD FOOD" class="btn btn-secondary btn-sm">
-    </form>
     </div>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+        <div class="my_charts">
+        <canvas id="income" width="600" height="300"></canvas>
+        <script type="text/javascript">
+            var options = {
+            fontColor: "white",
+
+            }
+            var barData = {
+                labels : ["kcal","proteins","carbs","fats"],
+                datasets : [
+                    {
+                        fillColor : "rgb(255,255,255)",
+                        strokeColor : "rgb(255,255,255)",
+                        data : [{{ request.user.userextend.calories }},{{ request.user.userextend.protein }},{{ request.user.userextend.carb }},{{ request.user.userextend.fat }}]
+                    },
+                    {
+                        fillColor : "rgba(255,255,255,0.4)",
+                        strokeColor : "rgba(255,255,255,0.4)",
+                        data : [{{ calories }},{{ proteins }},{{ carbs }},{{ fats }}]
+                    }
+                ]
+            }
+            var income = document.getElementById("income").getContext("2d");
+            new Chart(income).Bar(barData, options);
+        </script>
+        </div>
+        <div class="my_charts2">
+            <form action="{% url 'calendar' request.user.id %}">
+                {% csrf_token %}
+                <input type="submit" value="ADD FOOD" class="btn btn-secondary btn-sm">
+            </form>
+        </div>
+
 
 </body>
 </html>

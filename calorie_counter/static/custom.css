@@ -83,3 +83,14 @@ body {
 .my_margin {
     padding-left: 25px;
 }
+
+.my_charts {
+    float: left;
+
+}
+
+.my_charts2 {
+    left: 600px;
+    position: fixed;
+    bottom: 10px;
+}

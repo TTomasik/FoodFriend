@@ -40,25 +40,28 @@
         <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
         <script type="text/javascript">
 
+
+
+
+
+
+
             $.get('{% url "line_chart_json" %}', function(data) {
                 var ctx = $("#myChart").get(0).getContext("2d");
-                var myChart = new Chart(ctx).Line(data, {
 
+                var options = {
+                labelColor: "white",
                 showTooltips: true,
-                tooltipTemplate: data.labels[0],
+                mutliTooltipTemplate: "TEST",
                 scaleGridLineColor: 'grey',
                 scaleLineColor : 'grey',
                 animationEasing : 'easeOutBounce',
-                <!--tooltipYPadding : 16,-->
-                <!--tooltipCornerRadius : 0,-->
-                <!--tooltipTitleFontStyle : 'normal',-->
-                <!--tooltipFillColor : 'rgba(0,160,0,0.8)',-->
-
-                });
-                console.log(data.labels[0])
+                legendTemplate: "TEST",
+                }
+                var myChart2 = new Chart(ctx).Line(data, options);
             });
 
-
+<!--<%= data.labels[0] %>-->
 
 
 
