@@ -40,12 +40,6 @@
         <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
         <script type="text/javascript">
 
-
-
-
-
-
-
             $.get('{% url "line_chart_json" %}', function(data) {
                 var ctx = $("#myChart").get(0).getContext("2d");
 
@@ -55,7 +49,6 @@
                 mutliTooltipTemplate: "TEST",
                 scaleGridLineColor: 'grey',
                 scaleLineColor : 'grey',
-                animationEasing : 'easeOutBounce',
                 legendTemplate: "TEST",
                 }
                 var myChart2 = new Chart(ctx).Line(data, options);
