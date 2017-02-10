@@ -93,12 +93,20 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
         <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
         <div class="my_charts">
-        <canvas id="income" width="600" height="300"></canvas>
+        <canvas id="daily" width="600" height="300"></canvas>
         <script type="text/javascript">
-            var options = {
-            fontColor: "white",
+            <!--var options: {-->
+        <!--scales: {-->
+            <!--yAxes: [{-->
+                <!--ticks: {-->
+                    <!--max: 5,-->
+                    <!--min: 0,-->
+                    <!--stepSize: 0.5-->
+                <!--}-->
+            <!--}]-->
+        <!--}-->
+    <!--}-->
 
-            }
             var barData = {
                 labels : ["kcal","proteins","carbs","fats"],
                 datasets : [
@@ -114,8 +122,8 @@
                     }
                 ]
             }
-            var income = document.getElementById("income").getContext("2d");
-            new Chart(income).Bar(barData, options);
+            var daily = document.getElementById("daily").getContext("2d");
+            new Chart(daily).Bar(barData);
         </script>
         </div>
         <div class="my_charts2">
