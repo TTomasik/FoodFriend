@@ -136,29 +136,56 @@ class Days(models.Model):
 
     @property
     def day_proteins(self):
-        food_proteins = Food.objects.filter(meal__day=self)
+        food_calories = Food.objects.filter(meal__day_id=self.id)
         protein = 0
-        for p in food_proteins:
-            quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            protein += int(round(p.proteins*quant/p.grams, 0))
+        counter = []
+        for index, p in enumerate(food_calories):
+            container = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)
+            if len(container) > 1 and food_calories[index].id not in counter:
+                counter.append(food_calories[index].id)
+                quant = 0
+                for i in container:
+                    quant += i.quantity
+                protein += int(round(p.proteins * quant / p.grams, 0))
+            if food_calories[index].id not in counter:
+                quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
+                protein += int(round(p.proteins * quant / p.grams, 0))
         return protein
 
     @property
     def day_carbs(self):
-        food_carbs = Food.objects.filter(meal__day=self)
+        food_calories = Food.objects.filter(meal__day_id=self.id)
         carb = 0
-        for p in food_carbs:
-            quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            carb += int(round(p.carbs*quant/p.grams, 0))
+        counter = []
+        for index, p in enumerate(food_calories):
+            container = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)
+            if len(container) > 1 and food_calories[index].id not in counter:
+                counter.append(food_calories[index].id)
+                quant = 0
+                for i in container:
+                    quant += i.quantity
+                carb += int(round(p.carbs * quant / p.grams, 0))
+            if food_calories[index].id not in counter:
+                quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
+                carb += int(round(p.carbs * quant / p.grams, 0))
         return carb
 
     @property
     def day_fats(self):
-        food_fats = Food.objects.filter(meal__day=self)
+        food_calories = Food.objects.filter(meal__day_id=self.id)
         fat = 0
-        for p in food_fats:
-            quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            fat += int(round(p.fats*quant/p.grams, 0))
+        counter = []
+        for index, p in enumerate(food_calories):
+            container = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)
+            if len(container) > 1 and food_calories[index].id not in counter:
+                counter.append(food_calories[index].id)
+                quant = 0
+                for i in container:
+                    quant += i.quantity
+                fat += int(round(p.fats * quant / p.grams, 0))
+            if food_calories[index].id not in counter:
+                quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
+                fat += int(round(p.fats * quant / p.grams, 0))
         return fat
 
     def __str__(self):
