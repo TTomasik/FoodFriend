@@ -120,9 +120,18 @@ class Days(models.Model):
     def day_calories(self):
         food_calories = Food.objects.filter(meal__day_id=self.id)
         cal = 0
-        for p in food_calories:
-            quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
-            cal += int(round(p.kcal*quant/p.grams, 0))
+        counter = []
+        for index, p in enumerate(food_calories):
+            container = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)
+            if len(container) > 1 and food_calories[index].id not in counter:
+                counter.append(food_calories[index].id)
+                quant = 0
+                for i in container:
+                    quant += i.quantity
+                cal += int(round(p.kcal * quant / p.grams, 0))
+            if food_calories[index].id not in counter:
+                quant = Quantity.objects.filter(food_quantity__id=p.id, meal_quantity__day_id=self.id)[0].quantity
+                cal += int(round(p.kcal*quant/p.grams, 0))
         return cal
 
     @property
