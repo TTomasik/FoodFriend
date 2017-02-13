@@ -44,7 +44,7 @@ def populate():
     Food.objects.update_or_create(name="Frytki", kcal=314, proteins=4, carbs=38, fats=16, grams=100)
     Food.objects.update_or_create(name="Majonez", kcal=732, proteins=1.1, carbs=4.2, fats=79, grams=100)
     Food.objects.update_or_create(name="Naleśnik gryczany (1 porcja)", kcal=85, proteins=4.6, carbs=10.6, fats=2.7, grams=1)
-
+    Food.objects.update_or_create(name="Parówki 93% mięsa (1 parówka ok. 38g)", kcal=285, proteins=13, carbs=2, fats=25, grams=100)
 
 class Command(BaseCommand):
     help = 'Initialize database'
