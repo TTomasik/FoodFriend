@@ -25,6 +25,7 @@ from chartjs.views.lines import BaseLineChartView
 import calendar
 from datetime import timedelta
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.files.storage import FileSystemStorage
 
 
 
@@ -47,7 +48,7 @@ class CheckLogin(View):
         form = LoginForm()
         # my_id = user.pk
 
-        if user is not None:
+        if user is not None and User.objects.filter(username__iexact=u).exists():
             login(request, user)
             return redirect("/index")
         else:
@@ -448,7 +449,7 @@ class MyPerson(LoginRequiredMixin, View):
 
     def post(self, request, my_id):
         p = UserExtend.objects.get(user_id=my_id)
-        form = UserExtendForm(request.POST, instance=p)
+        form = UserExtendForm(request.POST, request.FILES, instance=p)
         if form.is_valid():
             form.save()
         return HttpResponseRedirect('/myinfo/{}'.format(my_id))
