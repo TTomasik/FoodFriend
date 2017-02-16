@@ -52,7 +52,7 @@ class CheckLogin(View):
             login(request, user)
             return redirect("/index")
         else:
-            return HttpResponse("<h1><center><br><br><br><br><font color='red'>Incorrect login or password!<center></font></h1>")
+            return HttpResponse("<body bgcolor=#5A5A29><h1><center><br><br><br><br><font color='white'>Incorrect login or password :(<br><br><img src='/static/foodfriend/img/rotten.gif'><center></font></h1></body>")
         # przekierowanie dalej
         # else:
         #     # return render(request, "exercises/login.html", {"form": form})
