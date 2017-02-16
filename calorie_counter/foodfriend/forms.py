@@ -21,9 +21,14 @@ class LoginForm(forms.Form):
     )
 
 class UserExtendForm(forms.ModelForm):
+    def image_url(self, obj):
+        return "<img src ='/{}' width='50' height='50' >".format(obj.avatar)
+
+    image_url.allow_tags = True
+
     class Meta:
         model = UserExtend
-        fields = ('avatar', 'age', 'sex', 'weight', 'height', 'factor','target')
+        fields = ('avatar', 'age', 'sex', 'weight', 'height', 'factor', 'target')
 
 
 

@@ -108,7 +108,7 @@ img {
 .avatar {
     color: white;
     border-style: solid;
-    width: 500px;
+    width: 550px;
 }
 
 .button-next-next input{
@@ -127,4 +127,9 @@ img {
 .my_charts {
     position: absolute; /*or fixed*/
     left: 30%;
+}
+
+.my_avatar {
+    position: absolute; /*or fixed*/
+    float: right;
 }

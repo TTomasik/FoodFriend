@@ -373,7 +373,7 @@ class UpdateMeal(UpdateView):
 #         form = CreateMealForm(request.POST)
 #         return render(request, "foodfriend/meal_form.html", {"form": form}, day_id, my_id, meal_id)
 
-
+###trzeba to usunac bo tylko zasmieca
 class UpdateUser(LoginRequiredMixin, UpdateView):
     def get_success_url(self, **kwargs):
         return reverse('my-info', kwargs={'my_id':self.object.user_id})
@@ -444,8 +444,9 @@ class MyPerson(LoginRequiredMixin, View):
     def get(self, request, my_id):
         p = UserExtend.objects.get(user_id=my_id)
         form = UserExtendForm(instance=p)
+        avatar = p.avatar
+        return render(request, "foodfriend/userextend_update_form2.html", {"form": form, "avatar": avatar})
 
-        return render(request, "foodfriend/userextend_update_form2.html", {"form": form})
 
     def post(self, request, my_id):
         p = UserExtend.objects.get(user_id=my_id)

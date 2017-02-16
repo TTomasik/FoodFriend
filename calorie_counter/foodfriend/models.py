@@ -46,6 +46,8 @@ class UserExtend(models.Model):
     target = models.IntegerField(choices=TARGETS, default=0)
     creation_date = models.DateTimeField(default=timezone.now)
 
+
+
     @property
     def calories(self):
         if self.sex == 2:
