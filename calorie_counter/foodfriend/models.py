@@ -221,7 +221,7 @@ class Meal(models.Model):
 class Quantity(models.Model):
     meal_quantity = models.ForeignKey('Meal', on_delete=models.CASCADE, related_name="MealQuantity")
     food_quantity = models.ForeignKey('Food', on_delete=models.CASCADE, related_name="FoodQuantity")
-    quantity = models.IntegerField(default=100, blank=True, null=True)
+    quantity = models.FloatField(default=100, blank=True, null=True)
 
     @property
     def kcal_quant(self):

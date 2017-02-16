@@ -23,7 +23,7 @@ class LoginForm(forms.Form):
 class UserExtendForm(ModelForm):
     class Meta:
         model = UserExtend
-        fields = ('avatar', 'user', 'age', 'sex', 'weight', 'height', 'target')
+        fields = ('avatar', 'age', 'sex', 'weight', 'height', 'factor','target')
 
 
 
@@ -59,15 +59,15 @@ class CreateMealForm(forms.Form):
     day = forms.ModelChoiceField(queryset=Days.objects.all(), required=True, empty_label="Choose day: ", widget=autocomplete.Select2)
     meal = forms.ChoiceField(choices=MEALS, required=True, widget=autocomplete.ModelSelect2)
     foods1 = forms.ModelChoiceField(queryset=Food.objects.all(), required=True, empty_label="Choose food:", widget=autocomplete.ModelSelect2)
-    quantity1 = forms.IntegerField(label='grams')
+    quantity1 = forms.FloatField(label='grams')
     foods2 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:", widget=autocomplete.ModelSelect2)
-    quantity2 = forms.IntegerField(label='grams', required=False)
+    quantity2 = forms.FloatField(label='grams', required=False)
     foods3 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:", widget=autocomplete.ModelSelect2)
-    quantity3 = forms.IntegerField(label='grams', required=False)
+    quantity3 = forms.FloatField(label='grams', required=False)
     foods4 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:", widget=autocomplete.ModelSelect2)
-    quantity4 = forms.IntegerField(label='grams', required=False)
+    quantity4 = forms.FloatField(label='grams', required=False)
     foods5 = forms.ModelChoiceField(queryset=Food.objects.all(), required=False, empty_label="Choose food:", widget=autocomplete.ModelSelect2)
-    quantity5 = forms.IntegerField(label='grams', required=False)
+    quantity5 = forms.FloatField(label='grams', required=False)
 
 
 

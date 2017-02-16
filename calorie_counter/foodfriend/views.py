@@ -24,6 +24,7 @@ from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 import calendar
 from datetime import timedelta
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 
@@ -438,7 +439,7 @@ class UserMacros(LoginRequiredMixin, View):
     #
     #     day = Days.objects.get(date=datetime.date.today(), date_user=request.user.userextend)
 
-class MyPerson(View):
+class MyPerson(LoginRequiredMixin, View):
     def get(self, request, my_id):
         p = UserExtend.objects.get(user_id=my_id)
         form = UserExtendForm(instance=p)
@@ -447,10 +448,10 @@ class MyPerson(View):
 
     def post(self, request, my_id):
         p = UserExtend.objects.get(user_id=my_id)
-        form = UserExtendForm(request.POST)
+        form = UserExtendForm(request.POST, instance=p)
         if form.is_valid():
             form.save()
-        return render(request, "foodfriend/userextend_update_form2.html", {"form": form})
+        return HttpResponseRedirect('/myinfo/{}'.format(my_id))
 
 
 # Quantity.objects.filter(meal_quantity__day__date=datetime.date.today())
