@@ -52,7 +52,9 @@ class CheckLogin(View):
             login(request, user)
             return redirect("/index")
         else:
-            return HttpResponse("<body bgcolor=#5A5A29><h1><center><br><br><br><br><font color='white'>Incorrect login or password :(<br><br><img src='/static/foodfriend/img/rotten.gif'><center></font></h1></body>")
+            return HttpResponse("""<body bgcolor=#5A5A29><h1><center><br><br><br><br><font color='white'>
+            Incorrect login or password :(<br><br><img src='/static/foodfriend/img/rotten.gif'><center>
+            </font></h1></body>""")
         # przekierowanie dalej
         # else:
         #     # return render(request, "exercises/login.html", {"form": form})
@@ -100,12 +102,23 @@ class CreateAccount(View):
             em = form.cleaned_data['email']
 
             if pass1 == pass2:
-                a = User.objects.create_user(username = user, password = pass1, email = em)
-                a.save()
-                b = UserExtend.objects.create(user = User.objects.get(username=a.username))
-                b.save()
+                if len(User.objects.filter(username=user)) > 0:
+                    return HttpResponse("""<body bgcolor=#5A5A29><h1><center><br><br><br><br><font color='white'>
+                        We are sorry but username: {} is already taken :(<br><br><img src='/static/foodfriend/img/rotten.gif'>
+                        <center></font></h1></body>""".format(user))
+                if len(User.objects.filter(email=em)) > 0:
+                    return HttpResponse("""<body bgcolor=#5A5A29><h1><center><br><br><br><br><font color='white'>
+                        We are sorry but email: {} is already taken :(<br><br><img src='/static/foodfriend/img/rotten.gif'>
+                        <center></font></h1></body>""".format(em))
+                else:
+                    a = User.objects.create_user(username = user, password = pass1, email = em)
+                    a.save()
+                    b = UserExtend.objects.create(user = User.objects.get(username=a.username))
+                    b.save()
             else:
-                return HttpResponse("<h1>Your password is incorrect.</h1>")
+                return HttpResponse("""<body bgcolor=#5A5A29><h1><center><br><br><br><br><font color='white'>
+                        Your password is incorrect :(<br><br><img src='/static/foodfriend/img/rotten.gif'>
+                        <center></font></h1></body>""")
 
         return redirect("/login")
 
