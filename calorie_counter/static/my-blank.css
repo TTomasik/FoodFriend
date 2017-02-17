@@ -124,3 +124,8 @@ img {
     position: absolute; /*or fixed*/
     left: 30%;
 }
+
+.my_slider {
+    color: white;
+    border-style: solid;
+}

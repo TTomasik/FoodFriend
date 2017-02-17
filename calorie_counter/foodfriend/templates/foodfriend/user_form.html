@@ -1,22 +1,21 @@
 {% extends 'foodfriend/base.html' %}
+{% load static %}
 
 <div class="base-headline-title">
         <h3>
-            {% block title %}<font color="white">Welcome to Food Friend</font>{% endblock %}
+            {% block title %}<font color="white">Welcome to Food Friend</font>
+            {% endblock %}
         </h3>
     </div>
-
 {% block content %}
-<link rel="stylesheet" type="text/css" href="/static/my.css" >
+<link rel="stylesheet" type="text/css" href="/static/my-blank.css" >
 <div class="content-block">
-<link rel="stylesheet" type="text/css" href="/static/custom.css" >
+<link rel="stylesheet" type="text/css" href="/static/my-blank.css" >
     <div class="panel panel-primary">
         <div class="panel-heading">
             Create account:
         </div>
         <div class="panel-body">
-
-
             <div>
                 <form action="" method="post">
                     {% csrf_token %}
@@ -27,5 +26,73 @@
         </div>
     </div>
 </div>
+<div class="w3-display-bottomright" style="width:50%; float=right; color: white; border-right: 2px solid; border-left: 2px solid; border-top: 2px solid; border-bottom: 7px solid; margin-right:12.5%; margin-bottom: 21%">
+    <style scoped>@import "https://www.w3schools.com/lib/w3.css";</style>
+    <!--<h2><center><font color="white">Quick look:</font></center></h2>-->
+    <img class="mySlides" src="{% static 'foodfriend/img/1.jpg' %}" style="width:100%">
+    <img class="mySlides" src="{% static 'foodfriend/img/2.jpg' %}" style="width:100%">
+    <img class="mySlides" src="{% static 'foodfriend/img/3.jpg' %}" style="width:100%">
+    <img class="mySlides" src="{% static 'foodfriend/img/4.jpg' %}" style="width:100%">
+    <img class="mySlides" src="{% static 'foodfriend/img/5.jpg' %}" style="width:100%">
+    <img class="mySlides" src="{% static 'foodfriend/img/6.jpg' %}" style="width:100%">
+    <img class="mySlides" src="{% static 'foodfriend/img/7.jpg' %}" style="width:100%">
+    <img class="mySlides" src="{% static 'foodfriend/img/8.jpg' %}" style="width:100%">
+    <img class="mySlides" src="{% static 'foodfriend/img/9.jpg' %}" style="width:100%">
+</div>
+<script>
+    var slideIndex = 0;
+    carousel();
+    function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > x.length) {slideIndex = 1}
+    x[slideIndex-1].style.display = "block";
+    setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+</script>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+<!--{% extends 'foodfriend/base.html' %}-->
+
+<!--<div class="base-headline-title">-->
+        <!--<h3>-->
+            <!--{% block title %}<font color="white">Welcome to Food Friend</font>{% endblock %}-->
+        <!--</h3>-->
+    <!--</div>-->
+
+<!--{% block content %}-->
+<!--<link rel="stylesheet" type="text/css" href="/static/my.css" >-->
+<!--<div class="content-block">-->
+<!--<link rel="stylesheet" type="text/css" href="/static/custom.css" >-->
+    <!--<div class="panel panel-primary">-->
+        <!--<div class="panel-heading">-->
+            <!--Create account:-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+
+
+            <!--<div>-->
+                <!--<form action="" method="post">-->
+                    <!--{% csrf_token %}-->
+                    <!--{{ form.as_p }}-->
+                    <!--<input type="submit" value="Join">-->
+                <!--</form>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--{% endblock %}-->
+
 

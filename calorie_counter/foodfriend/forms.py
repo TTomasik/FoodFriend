@@ -52,10 +52,9 @@ class CreateAccountForm(forms.Form):
         required=True,
 
     )
-    email = forms.CharField(
+    email = forms.EmailField(
         label='Email',
-        max_length=64,
-        widget=forms.TextInput,
+        max_length=None,
         required=True,
     )
 
