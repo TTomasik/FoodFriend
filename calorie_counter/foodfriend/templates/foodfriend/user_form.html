@@ -1,13 +1,13 @@
 {% extends 'foodfriend/base.html' %}
 {% load static %}
 
+
+{% block content %}
 <div class="base-headline-title">
         <h3>
-            {% block title %}<font color="white">Welcome to Food Friend</font>
-            {% endblock %}
+            <font color="white">Welcome to Food Friend</font>
         </h3>
     </div>
-{% block content %}
 <link rel="stylesheet" type="text/css" href="/static/my-blank.css" >
 <div class="content-block">
 <link rel="stylesheet" type="text/css" href="/static/my-blank.css" >
@@ -26,9 +26,15 @@
         </div>
     </div>
 </div>
-<div class="w3-display-bottomright" style="width:50%; float=right; color: white; border-right: 2px solid; border-left: 2px solid; border-top: 2px solid; border-bottom: 7px solid; margin-right:12.5%; margin-bottom: 21%">
+<div class="w3-display-bottomright" style="width:60%; float=right; color: white; border-right: 2px solid; border-left: 2px solid; border-top: 2px solid; border-bottom: 7px solid; margin-right:7.5%;">
     <style scoped>@import "https://www.w3schools.com/lib/w3.css";</style>
-    <!--<h2><center><font color="white">Quick look:</font></center></h2>-->
+    <h2 style="margin-left:5px"><font color="white" size="3"><b>Take a quick look at our aplication:</b>
+        <br>1. <b>EDIT</b> your profile that we can count calories for you.
+        <br>2. Go to <b>CALENDAR</b> and add your today's meal than add food for that meal.
+        <br>3. If you have not find your food you can go to <b>CREATE FOOD</b> and add new food to database.
+        <br>4. Charts in your calendar appears after entering meals for more than one day.
+        <br>5. <b>Enjoy and start your journey!</b>
+    </font></h2>
     <img class="mySlides" src="{% static 'foodfriend/img/1.jpg' %}" style="width:100%">
     <img class="mySlides" src="{% static 'foodfriend/img/2.jpg' %}" style="width:100%">
     <img class="mySlides" src="{% static 'foodfriend/img/3.jpg' %}" style="width:100%">
@@ -63,36 +69,5 @@
 
 
 
-
-<!--{% extends 'foodfriend/base.html' %}-->
-
-<!--<div class="base-headline-title">-->
-        <!--<h3>-->
-            <!--{% block title %}<font color="white">Welcome to Food Friend</font>{% endblock %}-->
-        <!--</h3>-->
-    <!--</div>-->
-
-<!--{% block content %}-->
-<!--<link rel="stylesheet" type="text/css" href="/static/my.css" >-->
-<!--<div class="content-block">-->
-<!--<link rel="stylesheet" type="text/css" href="/static/custom.css" >-->
-    <!--<div class="panel panel-primary">-->
-        <!--<div class="panel-heading">-->
-            <!--Create account:-->
-        <!--</div>-->
-        <!--<div class="panel-body">-->
-
-
-            <!--<div>-->
-                <!--<form action="" method="post">-->
-                    <!--{% csrf_token %}-->
-                    <!--{{ form.as_p }}-->
-                    <!--<input type="submit" value="Join">-->
-                <!--</form>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-<!--{% endblock %}-->
 
 

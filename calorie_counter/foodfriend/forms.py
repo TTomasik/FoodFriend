@@ -28,7 +28,7 @@ class UserExtendForm(forms.ModelForm):
 
     class Meta:
         model = UserExtend
-        fields = ('avatar', 'age', 'sex', 'weight', 'height', 'factor', 'target')
+        fields = ('age', 'sex', 'weight', 'height', 'factor', 'target', 'avatar')
 
 
 

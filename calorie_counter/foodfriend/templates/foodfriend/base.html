@@ -13,28 +13,6 @@
 <body>
 
 
-    <div class="topmenu">
-        <p class="navbar-right logout">
-            {% if request.user.username %} <a class="menuspace" href="{% url 'my-info' my_id=request.user.id %}"><font color="white">
-            {{ request.user.username }}   |</font>
-            <a class="menuspace" href="{% url 'test' my_id=request.user.id %}"><font color="white">EDIT</a>|</font>
-            <a class="menuspace" href="{% url 'calendar' my_id=request.user.id %}"><font color="white">CALENDAR</a>|</font>
-            <a class="menuspace" href="{% url 'create-food' %}"><font color="white">CREATE FOOD</a> | </font>
-                <a class="menuspace" href="{% url 'food-list' %}"><font color="white">FOOD LIST</a> | </font>
-            <a class="menuspace" href="{% url 'index' %}"><font color="white">MAIN</a> | </font>
-                <a class="menuspace" href="{% url 'logout' %}"><font color="white">LOGOUT</a>  </font>
-
-
-                {% endif %}
-
-        </p>
-    </div>
-    <div class="base-headline-title">
-        <h3>
-            {% block title %}{% endblock %}
-        </h3>
-    </div>
-
 
         {% block content %}
         {% endblock %}

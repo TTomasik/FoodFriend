@@ -1,10 +1,30 @@
 {% extends 'foodfriend/base.html' %}
 
-{% block title %}
-<font color="white">Food Friend</font>
-{% endblock %}
+
 
 {% block content %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" style="color:white; background-color: rgba(255,255,255,0.0);"><b>FOOD FRIEND</b></a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">{% if avatar %}
+          <li><img src="/{{ avatar }}" width="50px" height="auto" style="padding: 2px 2px; margin-top: 0px;"></li>
+          {% endif %}
+          <li class="active"><a href="{% url 'my-info' request.user.id %}" >{{ request.user.username }}<span class="sr-only">(current)</span></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'test' my_id=request.user.id %}">Edit Profile</a></li>
+          <li><a href="{% url 'calendar' my_id=request.user.id %}">Calendar</a></li>
+          <li><a href="{% url 'create-food' %}">Create Food</a></li>
+          <li><a href="{% url 'food-list' %}">Food List</a></li>
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'logout' %}"><B>LOGOUT</B></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 <link rel="stylesheet" type="text/css" href="/static/my.css" >
 <div class="content-block">
 

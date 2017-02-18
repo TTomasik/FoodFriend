@@ -11,15 +11,11 @@
     <link rel="stylesheet" type="text/css" href="/static/custom.css" >
 </head>
 <body>
-
         {% if not request.user.username %}
-
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="/static/custom.css" >
         <link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}">
-
-
     <div class="base-headline-title">
         <h3><font color="white">
             {% block title %}Welcome to Food Friend{% endblock %}
@@ -42,7 +38,6 @@
                 </form>
             </div>
         </div>
-
             <div>
         <a href="{% url 'create-account' %}">
         <font color="white" class="join">Join our community</font>
@@ -50,41 +45,41 @@
     </div>
     </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
 {% endif %}
 
 {% if request.user.username %}
-
-    <div class="topmenu">
-        <p class="navbar-right logout">
-            <a class="menuspace" href="{% url 'my-info' request.user.id %}"><font color="white">
-            {{ request.user.username }}   |</font>
-            <a class="menuspace" href="{% url 'test' my_id=request.user.id %}"><font color="white">EDIT</a>|</font>
-            <a class="menuspace" href="{% url 'calendar' my_id=request.user.id %}"><font color="white">CALENDAR</a>|</font>
-            <a class="menuspace" href="{% url 'create-food' %}"><font color="white">CREATE FOOD</a> | </font>
-                <a class="menuspace" href="{% url 'food-list' %}"><font color="white">FOOD LIST</a> | </font>
-            <a class="menuspace" href="{% url 'index' %}"><font color="white">MAIN</a> | </font>
-                <a class="menuspace" href="{% url 'logout' %}"><font color="white">LOGOUT</a>  </font>
-
-        </p>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" style="color:white; background-color: rgba(255,255,255,0.0);"><b>FOOD FRIEND</b></a>
     </div>
-
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">{% if avatar %}
+          <li><img src="/{{ avatar }}" width="50px" height="auto" style="padding: 2px 2px; margin-top: 0px;"></li>
+          {% endif %}
+          <li><a href="{% url 'my-info' request.user.id %}">{{ request.user.username }}</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'test' my_id=request.user.id %}">Edit Profile</a></li>
+          <li><a href="{% url 'calendar' my_id=request.user.id %}">Calendar</a></li>
+          <li><a href="{% url 'create-food' %}">Create Food</a></li>
+          <li><a href="{% url 'food-list' %}">Food List</a></li>
+          <li class="active"><a href="{% url 'index' %}">Home<span class="sr-only">(current)</span></a></li>
+          <li><a href="{% url 'logout' %}"><B>LOGOUT</B></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="my_margin2">
+    <font color="white">
+<h3>Welcome to Food Friend  {{ request.user.username }}!</h3>
+            <h5>You haven't been here since: {{ request.user.last_login }}</h5>
+    </div>
     <div class="my_margin">
         <font color="white">
-            <h3>Welcome to Food Friend  {{ request.user.username }}!</h3>
-            <h5>You haven't been here since: {{ request.user.last_login }}</h5>
+
             <h3>Your daily goal:</h3>
             <div>
                 <h1>
@@ -102,7 +97,7 @@
             </div>
         </font>
     </div>
-    <div class="my_margin">
+    <div class="my_charts">
 
     </div>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
@@ -142,12 +137,7 @@
             new Chart(daily).Bar(barData);
         </script>
         </div>
-        <div class="my_charts2">
-            <form action="{% url 'calendar' request.user.id %}">
-                {% csrf_token %}
-                <input type="submit" value="ADD FOOD" class="btn btn-secondary btn-sm">
-            </form>
-        </div>
+
 
 
 </body>

@@ -140,6 +140,7 @@ class DaysView(LoginRequiredMixin, View):
             days_list.append(d)
         cont['days'] = days_list
         cont['my_id'] = my_id
+        cont['avatar'] = extended.avatar
 
         return render(request, "foodfriend/calendar.html", cont)
 
@@ -164,6 +165,7 @@ class MealsView(LoginRequiredMixin, View):
         cont['my_id'] = my_id
         cont['day_id'] = day.id
         cont['day_date'] = day.date
+        cont['avatar'] = user.userextend.avatar
 
 
         return render(request, "foodfriend/meal.html", cont)
@@ -188,6 +190,7 @@ class FoodsView(LoginRequiredMixin, View):
             quant = Quantity.objects.filter(food_quantity__id=food.id, meal_quantity__id=meal_id)[0].quantity
 
             d = {}
+            d['id'] = food.id
             d['name'] = food.name
             d['kcal'] = food.kcal = round(food.kcal*quant/food.grams, 0)
             d['proteins'] = food.proteins = round(food.proteins*quant/food.grams, 0)
@@ -212,12 +215,120 @@ class FoodsView(LoginRequiredMixin, View):
         cont['proteins_sum'] = sum(proteins_sum)
         cont['carbs_sum'] = sum(carbs_sum)
         cont['fats_sum'] = sum(fats_sum)
-
-
-
+        cont['zero'] = [0.0]
 
 
         return render(request, "foodfriend/food.html", cont)
+
+    def post(self, request, my_id, day_id, meal_id):
+        my_id = self.request.user.id
+        cont={}
+        day = Days.objects.get(pk=day_id)
+        user = User.objects.get(pk=my_id)
+        meal = Meal.objects.get(pk=meal_id)
+        cont['day_id'] = day.id
+        cont['my_id'] = my_id
+        cont['meal_id'] = meal.id
+        result = []
+        if "csrfmiddlewaretoken" in request.POST:
+            result = [s for s in request.POST if s.isdigit()]
+
+        food_id = int(result[0])
+        print(result[0])
+        to_change = Quantity.objects.filter(food_quantity__id=food_id, meal_quantity__id=meal_id)[0]
+        to_change.quantity = 0.0
+        to_change.save()
+        return redirect('/calendar/{}/meal/{}/food/{}'.format(my_id, day_id, meal_id))
+
+class CreateMealTwo(LoginRequiredMixin, View):
+
+    def get(self, request, meal_id):
+        print(meal_id)
+        meal_type = Meal.objects.filter(id=meal_id)[0].meal_name
+        my_id = self.request.user.id
+        user = User.objects.get(pk=my_id)
+        today = Days.objects.filter(date_user=request.user.userextend, date=datetime.date.today())[0]
+        today_meals = Meal.objects.filter(day__date_user=user.userextend, day__date=datetime.date.today())
+        if len(today_meals) == 0:
+            a = 0
+        if len(today_meals) == 1:
+            a = 1
+        if len(today_meals) == 2:
+            a = 2
+        if len(today_meals) == 3:
+            a = 3
+        if len(today_meals) == 4:
+            a = 4
+        if len(today_meals) == 5:
+            a = 4
+        form = CreateMealForm(initial = {"meal": meal_type, "day": today})
+        form.fields["day"].queryset = Days.objects.filter(date_user=user.userextend)
+        avatar = user.userextend.avatar
+
+        return render(request, "foodfriend/meal_form.html", {"form": form, "avatar": avatar})
+
+    def post(self, request, meal_id):
+        form = CreateMealForm(request.POST)
+        my_id = self.request.user.id
+
+        if form.is_valid():
+            name = form.cleaned_data['meal']
+            day = form.cleaned_data['day']
+            food1 = form.cleaned_data['foods1']
+            quantity1 = form.cleaned_data['quantity1']
+            food2 = form.cleaned_data['foods2']
+            quantity2 = form.cleaned_data['quantity2']
+            food3 = form.cleaned_data['foods3']
+            quantity3 = form.cleaned_data['quantity3']
+            food4 = form.cleaned_data['foods4']
+            quantity4 = form.cleaned_data['quantity4']
+            food5 = form.cleaned_data['foods5']
+            quantity5 = form.cleaned_data['quantity5']
+
+
+            meal, _create = Meal.objects.get_or_create(meal_name = name, day = day)
+            day_foods_list = meal.foods.all()
+
+            if food1 not in day_foods_list:
+                Quantity.objects.create(meal_quantity=meal, food_quantity=food1, quantity=quantity1)
+            else:
+                Quantity.objects.filter(meal_quantity=meal, food_quantity=food1).update(quantity=quantity1)
+
+            if food2 != None and quantity2 != None:
+                if food2 not in day_foods_list:
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food2, quantity=quantity2)
+                else:
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food2).update(quantity=quantity2)
+            else:
+                pass
+            if food3 != None and quantity3 != None:
+                if food3 not in day_foods_list:
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food3, quantity=quantity3)
+                else:
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food3).update(quantity=quantity3)
+            else:
+                pass
+            if food4 != None and quantity4 != None:
+                if food4 not in day_foods_list:
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food4, quantity=quantity4)
+                else:
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food4).update(quantity=quantity4)
+            else:
+                pass
+            if food5 != None and quantity5 != None:
+                if food5 not in day_foods_list:
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food5, quantity=quantity5)
+                else:
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food5).update(quantity=quantity5)
+            else:
+                pass
+
+        return redirect('/calendar/{}/meal/{}/food/{}'.format(my_id, day.id, meal.id))
+
+
+
+
+
 
 
 
@@ -243,8 +354,9 @@ class CreateMeal(LoginRequiredMixin, View):
             a = 4
         form = CreateMealForm(initial = {"meal": MEALS[a][0], "day": today})
         form.fields["day"].queryset = Days.objects.filter(date_user=user.userextend)
+        avatar = user.userextend.avatar
 
-        return render(request, "foodfriend/meal_form.html", {"form": form})
+        return render(request, "foodfriend/meal_form.html", {"form": form, "avatar": avatar})
 
     def post(self, request):
         form = CreateMealForm(request.POST)
@@ -407,11 +519,10 @@ class CreateFood(LoginRequiredMixin, CreateView):
 
 class FoodList(LoginRequiredMixin, View):
     def get(self, request):
-
+        extended = UserExtend.objects.get(user_id=self.request.user.id)
         cont = {}
         foods = Food.objects.all()
         food_list = []
-
         for m in foods:
             d = {}
             d['name'] = m.name
@@ -421,8 +532,8 @@ class FoodList(LoginRequiredMixin, View):
             d['fats'] = m.fats
             d['grams'] = m.grams
             food_list.append(d)
-
         cont['food'] = food_list
+        cont['avatar'] = extended.avatar
 
         return render(request, 'foodfriend/food_list.html', cont)
 
@@ -431,12 +542,13 @@ class UserMacros(LoginRequiredMixin, View):
         if not my_id:
             my_id = self.request.user.id
             day, _create = Days.objects.get_or_create(date=datetime.date.today(), date_user=request.user.userextend)
-
+        extended = UserExtend.objects.get(user_id=my_id)
         cont = {}
         cont['calories'] = round(day.day_calories, 1)
         cont['proteins'] = round(day.day_proteins, 1)
         cont['carbs'] = round(day.day_carbs, 1)
         cont['fats'] = round(day.day_fats, 1)
+        cont['avatar'] = extended.avatar
 
         return render(request, 'foodfriend/index.html', cont)
 

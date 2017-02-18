@@ -5,16 +5,38 @@
 {% endblock %}
 
 {% block content %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" style="color:white; background-color: rgba(255,255,255,0.0);"><b>FOOD FRIEND</b></a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">{% if avatar %}
+          <li><img src="/{{ avatar }}" width="50px" height="auto" style="padding: 2px 2px; margin-top: 0px;"></li>
+          {% endif %}
+          <li><a href="{% url 'my-info' request.user.id %}">{{ request.user.username }}</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'test' my_id=request.user.id %}">Edit Profile</a></li>
+          <li class="active"><a href="{% url 'calendar' my_id=request.user.id %}">Calendar<span class="sr-only">(current)</span></a></li>
+          <li><a href="{% url 'create-food' %}">Create Food</a></li>
+          <li><a href="{% url 'food-list' %}">Food List</a></li>
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'logout' %}"><B>LOGOUT</B></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 <link rel="stylesheet" type="text/css" href="/static/my.css" >
 <div class="new-food">
 
  <div class="panel panel-primary">
         <div class="panel-heading">
-            {% if avatar %}
-            <div class="button-away-button">
-            <img src="/{{ avatar }}" width="10%" height="10%">
-            </div>
-            {% endif %}
+
+
+
+
+
             <div class="button-away-button">
             <span><font size="5">{{ day_date }} | {{ meal_name }}</font></span>
             </div>
@@ -31,20 +53,24 @@
                         <th>carbs[g]</th>
                         <th>fats[g]</th>
                         <th>quantity[g]</th>
+                        <th></th>
 
                     </tr>
                     </thead>
                     <tbody class="list">
 
                 {% for food in food_names %}
-                        <tr>
+                        <tr>{% if food.quantity not in zero %}
                             <td><b>{{ food.name }}:</b></td>
                             <td>{{ food.kcal }}</td>
                             <td>{{ food.proteins }}</td>
                             <td>{{ food.carbs }}</td>
                             <td>{{ food.fats }}</td>
                             <td>{{ food.quantity }}</td>
-                        </tr>
+                            <td><form action="{% url 'calendar-food' my_id=request.user.id day_id=day_id meal_id=meal_id %}" method="post">{% csrf_token %}
+                            <input type="submit" value="Delete" name="{{ food.id }}" class="btn btn-primary"/>
+                            </form></td>
+                        </tr>{% endif %}
                     {% endfor %}
 
                 <td><b>TOTAL: </b></td>
@@ -60,16 +86,18 @@
 
             <div class="my_margin">
                 <div class="button-next-button">
-    <form action="{% url 'create-meal' %}">
-        {% csrf_token %}
-        <input type="submit" value="UPDATE" class="btn btn-primary">
-    </form>
+                    <form action="{% url 'create-meal-two' meal_id=meal_id %}"  name="{{ meal_id }}">
+                        {% csrf_token %}
+                        <input type="submit" value="ADD MORE" class="btn btn-primary" name="{{ meal_name }}"/>
+                    </form>
                 </div>
+            </div>
+            <div class="my_margin">
                 <div class="button-next-button">
-              <form action="{% url 'calendar-meal' my_id=request.user.id day_id=day_id %}">
-        {% csrf_token %}
-        <input type="submit" value="BACK" class="btn btn-primary">
-    </form>
+                        <form action="{% url 'calendar-meal' my_id=request.user.id day_id=day_id %}" name="different">
+                {% csrf_token %}
+                    <input type="submit" value="BACK" class="btn btn-primary"/>
+                </form>
                 </div>
 
 

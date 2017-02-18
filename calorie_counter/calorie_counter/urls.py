@@ -23,7 +23,7 @@ from django.views.generic import TemplateView
 from foodfriend import views
 from foodfriend.views import CheckLogin, MyInfo, CreateAccount, DaysView,\
     MealsView, FoodsView, CreateMeal, UpdateMeal, UpdateUser, CreateFood,\
-    FoodList, UserMacros, MyPerson, LineChartJSONView, UpdateMeal2
+    FoodList, UserMacros, MyPerson, LineChartJSONView, UpdateMeal2, CreateMealTwo
 
 
 urlpatterns = [
@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^userupdate/(?P<my_id>\d+)/?$', MyPerson.as_view(), name='test'),
     url(r'^line_chart/$', views.line_chart, name='line_chart'),
     url(r'^line_chart/json/$', views.line_chart_json, name='line_chart_json'),
+    url(r'^createmealtwo/(?P<meal_id>\d+)/?$', CreateMealTwo.as_view(), name='create-meal-two'),
 
 ]
 
