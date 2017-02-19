@@ -74,3 +74,33 @@ body {
 .my_margin {
     padding-left: 25px;
 }
+
+.navbar {
+   background-color: rgba(255,255,255,0.4);
+   background: rgba(255,255,255,0.4);
+   border-color: rgba(255,255,255,0.4);
+
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+color: black;  /*Sets the text hover color on navbar*/
+}
+
+.navbar-default .navbar-nav > li > a {
+   color: white; /*Change active text color here*/
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active >
+ a:hover, .navbar-default .navbar-nav > .active > a:focus {
+color: white; /*BACKGROUND color for active*/
+background-color: rgba(255,255,255,0.7);
+color: black;
+}
+
+.navbar-default .navbar-header > a, .navbar-text {
+color: white;
+}
+
+.navbar-default .navbar-header > a:hover, .navbar-text {
+color: black;
+}

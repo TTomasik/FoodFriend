@@ -40,7 +40,7 @@
         </div>
             <div>
         <a href="{% url 'create-account' %}">
-        <font color="white" class="join">Join our community</font>
+            <font color="white" class="join"><b>JOIN OUR COMMUNITY</b></font>
         </a>
     </div>
     </div>
@@ -57,7 +57,7 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">{% if avatar %}
-          <li><img src="/{{ avatar }}" width="50px" height="auto" style="padding: 2px 2px; margin-top: 0px;"></li>
+          <li><img src="/{{ avatar }}" width="auto" height="50px" style="padding: 2px 2px; margin-top: 0px;"></li>
           {% endif %}
           <li><a href="{% url 'my-info' request.user.id %}">{{ request.user.username }}</a></li>
       </ul>

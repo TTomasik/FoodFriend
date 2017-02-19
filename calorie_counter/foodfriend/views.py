@@ -326,13 +326,6 @@ class CreateMealTwo(LoginRequiredMixin, View):
         return redirect('/calendar/{}/meal/{}/food/{}'.format(my_id, day.id, meal.id))
 
 
-
-
-
-
-
-
-
 class CreateMeal(LoginRequiredMixin, View):
 
     def get(self, request):

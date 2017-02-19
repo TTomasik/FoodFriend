@@ -1,0 +1,167 @@
+.underline:hover {
+    text-decoration: underline;
+}
+.headline {
+    margin: 15px 0;
+    padding: 0 5px;
+    clear: both;
+}
+.headline-title {
+    float: left;
+    margin: 10px 0;
+    font-size: 18px;
+    background-color: blue;
+}
+.tab-margin {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.float-right {
+    float: right;
+}
+.margin-4 {
+    margin: 0px 4px;
+}
+.margin-4 a {
+    color: #fff;
+}
+.current-link {
+    color: #f0ad4e !important;
+    text-decoration: underline;
+}
+.not-current-link {
+}
+.logout {
+    margin-right: 0px;
+}
+.base-headline-title h3 {
+    margin-left: 30px;
+    margin-bottom: 20px;
+
+
+}
+.content-block {
+    margin: 10px;
+    width: 25%;
+    float: left;
+
+
+
+}
+.content-block-404 {
+    text-align: center;
+    margin-top: 200px;
+}
+.topmenu {
+    margin-top: 10px;
+    margin-left: 10px;
+
+}
+.menuspace {
+    padding: 0px 8px;
+}
+
+html {
+  background: #001d2d;
+}
+
+body {
+    background: transparent;
+}
+
+
+
+.to-calendar {
+    margin: 10px;
+    width: 5%;
+}
+
+.new-food {
+    margin: 10px;
+    width: 50%;
+}
+
+.button-next-button input{
+  float: right;
+  width: 20%;
+  margin-left:10px
+}
+
+.tip span {
+    margin-left:10px;
+}
+img {
+    vertical-align: right;
+}
+
+.button-away-button input{
+  float: left;
+  width: 40%;
+  margin-left:10px
+
+}
+
+.avatar {
+    color: white;
+    border-style: solid;
+    width: 500px;
+}
+
+.button-next-next input{
+  float: right;
+  margin-left:10px
+}
+
+.special-margin input{
+  margin-left:30px
+}
+
+.my_margin {
+    padding-left: 25px;
+}
+
+.my_charts {
+    position: absolute; /*or fixed*/
+    left: 30%;
+}
+
+.my_slider {
+    color: white;
+    border-style: solid;
+}
+
+.navbar {
+   background-color: transparent;
+   background: transparent;
+   border-color: transparent;
+}
+
+.navbar {
+   background-color: rgba(255,255,255,0.4);
+   background: rgba(255,255,255,0.4);
+   border-color: rgba(255,255,255,0.4);
+
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+color: black;  /*Sets the text hover color on navbar*/
+}
+
+.navbar-default .navbar-nav > li > a {
+   color: white; /*Change active text color here*/
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active >
+ a:hover, .navbar-default .navbar-nav > .active > a:focus {
+color: white; /*BACKGROUND color for active*/
+background-color: rgba(255,255,255,0.7);
+color: black;
+}
+
+.navbar-default .navbar-header > a, .navbar-text {
+color: white;
+}
+
+.navbar-default .navbar-header > a:hover, .navbar-text {
+color: black;
+}
