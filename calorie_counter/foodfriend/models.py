@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.core.validators import MaxValueValidator, MinValueValidator
 import math
 
 TARGETS = (
@@ -38,10 +39,10 @@ MEALS = (
 class UserExtend(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='static/foodfriend/img', null=True, blank=True)
-    age = models.IntegerField(null=True)
+    age = models.IntegerField(null=True, validators=[MaxValueValidator(150), MinValueValidator(1)])
     sex = models.IntegerField(choices=SEX, default=0)
-    weight = models.IntegerField(null=True)
-    height = models.IntegerField(null=True)
+    weight = models.IntegerField(null=True, validators=[MinValueValidator(1)])
+    height = models.IntegerField(null=True, validators=[MinValueValidator(50)])
     factor = models.FloatField(choices=FACTORS, default=0)
     target = models.IntegerField(choices=TARGETS, default=0)
     creation_date = models.DateTimeField(default=timezone.now)
