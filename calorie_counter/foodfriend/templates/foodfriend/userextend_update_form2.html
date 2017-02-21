@@ -40,7 +40,7 @@
 
             {% for field in form %}
                 <font color="white"><p><b>{{ field.label }}:</b></p></font>
-                <p><div class="{{ field.name }}">{% if field.name == 'avatar' %}
+                <p><div class="{{ field.name }}">{% if field.type == "number" %}AAA{% endif %}{% if field.name == 'avatar' %}
                 <img src="/{{ avatar }}" width="15%" height="15%">
                 {% endif %}{{ field }}</div></p>
             {% endfor %}

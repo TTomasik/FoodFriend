@@ -3,6 +3,7 @@ from foodfriend.models import UserExtend, Meal, Food, Days, MEALS, Quantity
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from dal import autocomplete
+from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
 

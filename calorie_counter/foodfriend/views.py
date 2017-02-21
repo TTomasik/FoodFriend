@@ -284,15 +284,16 @@ class CreateMealTwo(LoginRequiredMixin, View):
             quantity4 = form.cleaned_data['quantity4']
             food5 = form.cleaned_data['foods5']
             quantity5 = form.cleaned_data['quantity5']
+            print(quantity1)
 
 
             meal, _create = Meal.objects.get_or_create(meal_name = name, day = day)
             day_foods_list = meal.foods.all()
 
             if food1 not in day_foods_list:
-                Quantity.objects.create(meal_quantity=meal, food_quantity=food1, quantity=quantity1)
+                Quantity.objects.create(meal_quantity=meal, food_quantity=food1, quantity=abs(quantity1))
             else:
-                Quantity.objects.filter(meal_quantity=meal, food_quantity=food1).update(quantity=quantity1)
+                Quantity.objects.filter(meal_quantity=meal, food_quantity=food1).update(quantity=abs(quantity1))
 
             if food2 != None and quantity2 != None:
                 if food2 not in day_foods_list:
