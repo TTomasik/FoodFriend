@@ -203,24 +203,6 @@ class Meal(models.Model):
     def __str__(self):
         return str(self.meal_name)
 
-
-# class Movie(models.Model):
-#     title = models.CharField(max_length=128)
-#     director = models.ForeignKey('Person', related_name='movie_director')
-#     screenplay = models.ForeignKey('Person', related_name='movie_screenplay')
-#     starring = models.ManyToManyField('Person', through='Role', blank=True)
-#     year = models.SmallIntegerField()
-#     ranking = models.IntegerField(choices=RANKS, default=0)
-#
-#     def __str__(self):
-#         return self.title
-#
-#
-# class Role(models.Model):
-#     person = models.ForeignKey('Person', on_delete=models.CASCADE, related_name="Movie")
-#     movie = models.ForeignKey('Movie', on_delete=models.CASCADE, related_name="Movie")
-#     role = models.CharField(max_length=128, primary_key=True)
-
 class Quantity(models.Model):
     meal_quantity = models.ForeignKey('Meal', on_delete=models.CASCADE, related_name="MealQuantity")
     food_quantity = models.ForeignKey('Food', on_delete=models.CASCADE, related_name="FoodQuantity")

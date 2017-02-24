@@ -197,7 +197,8 @@ class FoodsView(LoginRequiredMixin, View):
             d['carbs'] = food.carbs = round(food.carbs*quant/food.grams, 0)
             d['fats'] = food.fats = round(food.fats*quant/food.grams, 0)
             d['grams'] = food.grams
-            d['quantity'] = food.quantity = quant
+            d['quantity'] = quant
+            print(quant)
             kcal_sum.append(food.kcal)
             proteins_sum.append(food.proteins)
             carbs_sum.append(food.carbs)
@@ -297,30 +298,30 @@ class CreateMealTwo(LoginRequiredMixin, View):
 
             if food2 != None and quantity2 != None:
                 if food2 not in day_foods_list:
-                    Quantity.objects.create(meal_quantity=meal, food_quantity=food2, quantity=quantity2)
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food2, quantity=abs(quantity2))
                 else:
-                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food2).update(quantity=quantity2)
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food2).update(quantity=abs(quantity2))
             else:
                 pass
             if food3 != None and quantity3 != None:
                 if food3 not in day_foods_list:
-                    Quantity.objects.create(meal_quantity=meal, food_quantity=food3, quantity=quantity3)
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food3, quantity=abs(quantity3))
                 else:
-                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food3).update(quantity=quantity3)
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food3).update(quantity=abs(quantity3))
             else:
                 pass
             if food4 != None and quantity4 != None:
                 if food4 not in day_foods_list:
-                    Quantity.objects.create(meal_quantity=meal, food_quantity=food4, quantity=quantity4)
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food4, quantity=abs(quantity4))
                 else:
-                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food4).update(quantity=quantity4)
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food4).update(quantity=abs(quantity4))
             else:
                 pass
             if food5 != None and quantity5 != None:
                 if food5 not in day_foods_list:
-                    Quantity.objects.create(meal_quantity=meal, food_quantity=food5, quantity=quantity5)
+                    Quantity.objects.create(meal_quantity=meal, food_quantity=food5, quantity=abs(quantity5))
                 else:
-                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food5).update(quantity=quantity5)
+                    Quantity.objects.filter(meal_quantity=meal, food_quantity=food5).update(quantity=abs(quantity5))
             else:
                 pass
 

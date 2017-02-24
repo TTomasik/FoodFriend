@@ -98,7 +98,8 @@
         </font>
     </div>
     <div class="my_charts">
-
+    {% if request.user.userextend.calories == None %}<font size="6"><b>PLEASE ENTER ALL DATA IN EDIT PROFILE<br> TO
+        MAKE YOUR CHART VISIBLE</b> </font>{% endif %}
     </div>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
         <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
