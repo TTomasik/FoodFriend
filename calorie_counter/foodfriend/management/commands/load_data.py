@@ -48,7 +48,7 @@ def populate():
     Food.objects.update_or_create(name="Maliny", kcal=28, proteins=1.2, carbs=5, fats=0.3, grams=100)
     Food.objects.update_or_create(name="Polędwica z dorsza", kcal=71, proteins=16, carbs=0, fats=0.8, grams=100)
     Food.objects.update_or_create(name="Kebab na cienkim cieście (1 porcja)", kcal=688, proteins=39, carbs=78, fats=25, grams=1)
-
+    Food.objects.update_or_create(name="Orzechy nerkowca", kcal=553, proteins=10.2, carbs=26.5, fats=43.5, grams=100)
 
 
 class Command(BaseCommand):
