@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm, CreateMealForm2
+from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm, CreateMealForm2, Calendar
 from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food, MEALS, Quantity
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
@@ -26,7 +26,8 @@ import calendar
 from datetime import timedelta
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
-
+import calendar
+from django.utils.safestring import mark_safe
 
 
 
@@ -130,7 +131,7 @@ class DaysView(LoginRequiredMixin, View):
         cont = {}
         extended = UserExtend.objects.get(user_id=my_id)
         days = Days.objects.filter(date_user=extended)
-
+        print(days)
         days_list = []
         for day in days:
             d = {}
@@ -141,7 +142,59 @@ class DaysView(LoginRequiredMixin, View):
         cont['days'] = days_list
         cont['my_id'] = my_id
         cont['avatar'] = extended.avatar
+        c = calendar.TextCalendar(calendar.SUNDAY)
+        str = c.formatmonth(datetime.date.today().year, datetime.date.today().month)
+        cont['pycal'] = str
+        cont['cal_month'] = calendar.month_name[datetime.date.today().month]
+        cont['cal_day'] = calendar.day_name[datetime.date.today().day+1]
+        cont['cal_year'] = datetime.date.today().year
+        week_1 = []
+        week_1_yes_no = []
+        week1 = []
+        week_2 = []
+        week_3 = []
+        week_4 = []
+        week_5 = []
+        user_days = [i['date'] for i in days_list]
+        print(user_days)
+        for index, i in enumerate(c.itermonthdates(datetime.date.today().year, datetime.date.today().month)):
+            if index in range (0, 7):
+                if i in user_days:
+                    week1.append(i)
+                    week_1_yes_no.append("yes")
+                    week_1.append(i.day)
+                if i not in user_days:
+                    week1.append(i)
+                    week_1_yes_no.append("not")
+                    week_1.append(i.day)
+            if index in range (7, 14):
+                week_2.append(i.day)
+            if index in range (14, 21):
+                week_3.append(i.day)
+            if index in range (21, 28):
+                week_4.append(i.day)
+            if index in range (28, 34):
+                week_5.append(i.day)
+        week_1_id = []
+        for i in week1:
+            if i in user_days:
+                week_1_id.append(Days.objects.filter(date_user=extended, date=i)[0].id)
+            if i not in user_days:
+                week_1_id.append(False)
 
+        cont['week_1'] = week_1
+        cont['week_2'] = week_2
+        cont['week_3'] = week_3
+        cont['week_4'] = week_4
+        cont['week_5'] = week_5
+        cont['cal_month_number'] = datetime.date.today().month-1
+        cont['cal_range'] = list(range(14))
+        cont['no'] = ["not"]
+        cont['yes'] = ['yes']
+        cont['week_1_with_yes_no'] = zip(week_1_yes_no, week_1, week_1_id)
+        print(week_1)
+        print(week_1_id)
+        print(week1)
         return render(request, "foodfriend/calendar.html", cont)
 
 
@@ -642,11 +695,14 @@ class LineChartJSONView(BaseLineChartView):
 line_chart = TemplateView.as_view(template_name='foodfriend/line_chart.html')
 line_chart_json = LineChartJSONView.as_view()
 
-# calendar.day_name[day.date.weekday()]
-#
-#         days_list = []
-#         for day in days:
-#             d = {}
-#             d['date'] = day.date
-#             days_list.append(d)
-#         cont['days'] = days_list
+class DatePicker(View):
+    def get(self, request):
+        if not self.request.user.is_superuser:
+            my_id = self.request.user.id
+        user = User.objects.get(pk=self.request.user.id)
+        form = Calendar()
+        form.fields["cal"].queryset = Days.objects.filter(date_user=user.userextend)
+        return render(request, "foodfriend/date_picker.html", {'form': form})
+
+date_picker = TemplateView.as_view(template_name="foodfriend/date_picker.html")
+date_picker_jquery = DatePicker.as_view()

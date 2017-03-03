@@ -47,6 +47,9 @@ urlpatterns = [
     url(r'^line_chart/$', views.line_chart, name='line_chart'),
     url(r'^line_chart/json/$', views.line_chart_json, name='line_chart_json'),
     url(r'^createmealtwo/(?P<meal_id>\d+)/?$', CreateMealTwo.as_view(), name='create-meal-two'),
+    url(r'^date_picker/$', views.date_picker, name='date_picker'),
+    url(r'^date_picker/jquery/$', views.date_picker_jquery, name='date_picker_jquery'),
+
 
 ]
 

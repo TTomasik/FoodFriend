@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 
+
 {% block content %}
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -33,19 +34,29 @@
         </div>
         <div class="panel-body">
 
+
+
             <div>
                 <table class="table" id="albums-table">
+
                     <thead>
+
+
+
+
+
+
                     <tr>
                         <th>Days:</th>
 
                     </tr>
                     </thead>
                     <tbody class="list">
+
                     {{ example }}
                     {% for day in days %}
                         <tr>
-                            <td><a href="{% url 'calendar-meal' my_id=my_id day_id=day.id %}">{{ day.date }} - {{day.name }}</a></td>
+                            <td><a href="{% url 'calendar-meal' my_id=my_id day_id=day.id %}">{{ day.date }} - {{ day.name }}</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -73,23 +84,85 @@
 
 <!--<%= data.labels[0] %>-->
 
-
-
-
-
         </script>
-
-
-
 
                 </div>
                 </table>
             </div>
         </div>
+
     </div>
+    <link rel="stylesheet" type="text/css" href="/static/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <div id="datepicker" class="hasDatepicker">
+            <div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;">
+                <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
+                    <a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev">
+                        <span class="ui-icon ui-icon-circle-triangle-w">Prev</span>
+                    </a>
+                    <a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next">
+                        <span class="ui-icon ui-icon-circle-triangle-e">Next</span>
+                    </a>
+                <div class="ui-datepicker-title">
+                    <span class="ui-datepicker-month">{{ cal_month }}</span>
+                    <span class="ui-datepicker-year">{{ cal_year }}</span>
+                </div>
+            </div>
+            <table class="ui-datepicker-calendar">
+                <thead>
+                    <tr>
+                        <th class="ui-datepicker-week-end" scope="col">
+                            <span title="Sunday">Su</span>
+                        </th>
+                        <th scope="col">
+                            <span title="Monday">Mo</span>
+                        </th>
+                        <th scope="col">
+                            <span title="Tuesday">Tu</span>
+                        </th>
+                        <th scope="col">
+                            <span title="Wednesday">We</span>
+                        </th>
+                        <th scope="col">
+                            <span title="Thursday">Th</span>
+                        </th>
+                        <th scope="col">
+                            <span title="Friday">Fr</span>
+                        </th>
+                        <th class="ui-datepicker-week-end" scope="col">
+                            <span title="Saturday">Sa</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for x, y, z in week_1_with_yes_no  %}
+                        {% if x in yes %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+
+                            <a class="ui-state-active" href="{{ request.user.id }}/meal/{{ z }}">{{ y }}</a>
+
+                        </td>
+                        {% elif x in no %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            <a class="ui-state-default">{{ y }}</a>
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                </tbody>
+
+
+        </div>
+
+
+
 </div>
 
 
 
 {% endblock %}
 
+{{ pycal }}

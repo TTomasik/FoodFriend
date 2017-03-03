@@ -75,15 +75,14 @@ class CreateMealForm(forms.Form):
     quantity5 = forms.FloatField(label='grams', required=False)
 
 
-
-
 class CreateMealForm2(ModelForm):
     class Meta:
         model = Meal
         fields = ('foods', )
 
 
-
+class Calendar(forms.Form):
+    cal = forms.DateField(widget=forms.DateInput(attrs={'class': 'datepicker'}))
 
 
 # class CreateMealForm(ModelForm):

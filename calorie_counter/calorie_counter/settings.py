@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'foodfriend',
     'bootstrap3',
     'chartjs',
+
 ]
 
 MIDDLEWARE = [
