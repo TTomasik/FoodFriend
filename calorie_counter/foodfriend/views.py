@@ -148,13 +148,21 @@ class DaysView(LoginRequiredMixin, View):
         cont['cal_month'] = calendar.month_name[datetime.date.today().month]
         cont['cal_day'] = calendar.day_name[datetime.date.today().day+1]
         cont['cal_year'] = datetime.date.today().year
+        week1 = []
         week_1 = []
         week_1_yes_no = []
-        week1 = []
+        week2 = []
         week_2 = []
+        week_2_yes_no = []
+        week3 = []
         week_3 = []
+        week_3_yes_no = []
+        week4 = []
         week_4 = []
+        week_4_yes_no = []
+        week5 = []
         week_5 = []
+        week_5_yes_no = []
         user_days = [i['date'] for i in days_list]
         print(user_days)
         for index, i in enumerate(c.itermonthdates(datetime.date.today().year, datetime.date.today().month)):
@@ -168,33 +176,87 @@ class DaysView(LoginRequiredMixin, View):
                     week_1_yes_no.append("not")
                     week_1.append(i.day)
             if index in range (7, 14):
-                week_2.append(i.day)
+                if i in user_days:
+                    week2.append(i)
+                    week_2_yes_no.append("yes")
+                    week_2.append(i.day)
+                if i not in user_days:
+                    week2.append(i)
+                    week_2_yes_no.append("not")
+                    week_2.append(i.day)
             if index in range (14, 21):
-                week_3.append(i.day)
+                if i in user_days:
+                    week3.append(i)
+                    week_3_yes_no.append("yes")
+                    week_3.append(i.day)
+                if i not in user_days:
+                    week3.append(i)
+                    week_3_yes_no.append("not")
+                    week_3.append(i.day)
             if index in range (21, 28):
-                week_4.append(i.day)
-            if index in range (28, 34):
-                week_5.append(i.day)
+                if i in user_days:
+                    week4.append(i)
+                    week_4_yes_no.append("yes")
+                    week_4.append(i.day)
+                if i not in user_days:
+                    week4.append(i)
+                    week_4_yes_no.append("not")
+                    week_4.append(i.day)
+            if index in range (28, 35):
+                if i in user_days:
+                    week5.append(i)
+                    week_5_yes_no.append("yes")
+                    week_5.append(i.day)
+                if i not in user_days:
+                    week5.append(i)
+                    week_5_yes_no.append("not")
+                    week_5.append(i.day)
         week_1_id = []
+        week_2_id = []
+        week_3_id = []
+        week_4_id = []
+        week_5_id = []
         for i in week1:
             if i in user_days:
                 week_1_id.append(Days.objects.filter(date_user=extended, date=i)[0].id)
             if i not in user_days:
                 week_1_id.append(False)
-
+        for i in week2:
+            if i in user_days:
+                week_2_id.append(Days.objects.filter(date_user=extended, date=i)[0].id)
+            if i not in user_days:
+                week_2_id.append(False)
+        for i in week3:
+            if i in user_days:
+                week_3_id.append(Days.objects.filter(date_user=extended, date=i)[0].id)
+            if i not in user_days:
+                week_3_id.append(False)
+        for i in week4:
+            if i in user_days:
+                week_4_id.append(Days.objects.filter(date_user=extended, date=i)[0].id)
+            if i not in user_days:
+                week_4_id.append(False)
+        for i in week5:
+            if i in user_days:
+                week_5_id.append(Days.objects.filter(date_user=extended, date=i)[0].id)
+            if i not in user_days:
+                week_5_id.append(False)
         cont['week_1'] = week_1
         cont['week_2'] = week_2
         cont['week_3'] = week_3
         cont['week_4'] = week_4
         cont['week_5'] = week_5
         cont['cal_month_number'] = datetime.date.today().month-1
-        cont['cal_range'] = list(range(14))
         cont['no'] = ["not"]
         cont['yes'] = ['yes']
         cont['week_1_with_yes_no'] = zip(week_1_yes_no, week_1, week_1_id)
-        print(week_1)
-        print(week_1_id)
-        print(week1)
+        cont['week_2_with_yes_no'] = zip(week_2_yes_no, week_2, week_2_id)
+        cont['week_3_with_yes_no'] = zip(week_3_yes_no, week_3, week_3_id)
+        cont['week_4_with_yes_no'] = zip(week_4_yes_no, week_4, week_4_id)
+        cont['week_5_with_yes_no'] = zip(week_5_yes_no, week_5, week_5_id)
+        print(week_4)
+        print(week_4_id)
+        print(week4)
         return render(request, "foodfriend/calendar.html", cont)
 
 

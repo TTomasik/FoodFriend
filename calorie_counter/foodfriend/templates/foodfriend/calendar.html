@@ -27,39 +27,29 @@
   </div>
 </nav>
 <link rel="stylesheet" type="text/css" href="{% static 'my-blank.css' %}">
-<div class="content-block">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3>CALENDAR</h3>
-        </div>
-        <div class="panel-body">
+<!--<div class="content-block">-->
+    <!--<div class="panel panel-primary">-->
+        <!--<div class="panel-heading">-->
+            <!--<h3>CALENDAR</h3>-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+            <!--<div>-->
+                <!--<table class="table" id="albums-table">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th>Days:</th>-->
+
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody class="list">-->
 
 
-
-            <div>
-                <table class="table" id="albums-table">
-
-                    <thead>
-
-
-
-
-
-
-                    <tr>
-                        <th>Days:</th>
-
-                    </tr>
-                    </thead>
-                    <tbody class="list">
-
-                    {{ example }}
-                    {% for day in days %}
-                        <tr>
-                            <td><a href="{% url 'calendar-meal' my_id=my_id day_id=day.id %}">{{ day.date }} - {{ day.name }}</a></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
+                    <!--{% for day in days %}-->
+                        <!--<tr>-->
+                            <!--<td><a href="{% url 'calendar-meal' my_id=my_id day_id=day.id %}">{{ day.date }} - {{ day.name }}</a></td>-->
+                        <!--</tr>-->
+                    <!--{% endfor %}-->
+                    <!--</tbody>-->
                                     <div class="my_charts">
 
         <canvas id="myChart" width="800" height="400"></canvas>
@@ -96,7 +86,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-        <div id="datepicker" class="hasDatepicker">
+        <div id="datepicker" class="hasDatepicker my_margin">
             <div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;">
                 <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
                     <a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev">
@@ -141,9 +131,59 @@
                         {% for x, y, z in week_1_with_yes_no  %}
                         {% if x in yes %}
                         <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
-
                             <a class="ui-state-active" href="{{ request.user.id }}/meal/{{ z }}">{{ y }}</a>
-
+                        </td>
+                        {% elif x in no %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            <a class="ui-state-default">{{ y }}</a>
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for x, y, z in week_2_with_yes_no  %}
+                        {% if x in yes %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            <a class="ui-state-active" href="{{ request.user.id }}/meal/{{ z }}">{{ y }}</a>
+                        </td>
+                        {% elif x in no %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            <a class="ui-state-default">{{ y }}</a>
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for x, y, z in week_3_with_yes_no  %}
+                        {% if x in yes %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            <a class="ui-state-active" href="{{ request.user.id }}/meal/{{ z }}">{{ y }}</a>
+                        </td>
+                        {% elif x in no %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            <a class="ui-state-default">{{ y }}</a>
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for x, y, z in week_4_with_yes_no  %}
+                        {% if x in yes %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            <a class="ui-state-active" href="{{ request.user.id }}/meal/{{ z }}">{{ y }}</a>
+                        </td>
+                        {% elif x in no %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            <a class="ui-state-default">{{ y }}</a>
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for x, y, z in week_5_with_yes_no  %}
+                        {% if x in yes %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            <a class="ui-state-active" href="{{ request.user.id }}/meal/{{ z }}">{{ y }}</a>
                         </td>
                         {% elif x in no %}
                         <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
@@ -153,8 +193,10 @@
                         {% endfor %}
                     </tr>
                 </tbody>
+            </table>
 
 
+        </div>
         </div>
 
 
