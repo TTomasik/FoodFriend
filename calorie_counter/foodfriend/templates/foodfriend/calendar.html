@@ -82,19 +82,14 @@
         </div>
 
     </div>
-    <link rel="stylesheet" type="text/css" href="/static/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'jquery-ui.css' %}">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
         <div id="datepicker" class="hasDatepicker my_margin">
             <div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;">
                 <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
-                    <a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev">
-                        <span class="ui-icon ui-icon-circle-triangle-w">Prev</span>
-                    </a>
-                    <a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next">
-                        <span class="ui-icon ui-icon-circle-triangle-e">Next</span>
-                    </a>
+
                 <div class="ui-datepicker-title">
                     <span class="ui-datepicker-month">{{ cal_month }}</span>
                     <span class="ui-datepicker-year">{{ cal_year }}</span>

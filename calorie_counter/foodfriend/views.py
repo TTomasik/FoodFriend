@@ -26,8 +26,12 @@ import calendar
 from datetime import timedelta
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
-import calendar
-from django.utils.safestring import mark_safe
+from foodfriend.serializers import FoodSerializer
+from rest_framework.response import Response
+from rest_framework import status, permissions
+from rest_framework.views import APIView
+
+
 
 
 
@@ -146,7 +150,7 @@ class DaysView(LoginRequiredMixin, View):
         str = c.formatmonth(datetime.date.today().year, datetime.date.today().month)
         cont['pycal'] = str
         cont['cal_month'] = calendar.month_name[datetime.date.today().month]
-        cont['cal_day'] = calendar.day_name[datetime.date.today().day+1]
+        cont['cal_day'] = calendar.day_name[datetime.datetime.today().weekday()]
         cont['cal_year'] = datetime.date.today().year
         week1 = []
         week_1 = []
@@ -768,3 +772,16 @@ class DatePicker(View):
 
 date_picker = TemplateView.as_view(template_name="foodfriend/date_picker.html")
 date_picker_jquery = DatePicker.as_view()
+
+
+class FoodListSerializer(APIView):
+    def get(self, request, format=None):
+        food = Food.objects.all()
+        serializer = FoodSerializer(food, many=True, context={'request': request})
+        return Response(serializer.data)
+
+# from requests.auth import HTTPBasicAuth
+#     food = requests.get('http://127.0.0.1:8000/food_list_serializer/?format=json',
+#                         auth=HTTPBasicAuth('user', 'pass'))
+
+

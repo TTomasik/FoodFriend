@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'foodfriend',
     'bootstrap3',
     'chartjs',
+    'rest_framework',
 
 ]
 
@@ -90,6 +91,12 @@ DATABASES = {
                     'autocommit': True,
         },
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 
 LOGIN_URL = '/login/'
