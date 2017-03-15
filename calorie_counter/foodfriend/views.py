@@ -32,9 +32,6 @@ from rest_framework import status, permissions
 from rest_framework.views import APIView
 
 
-
-
-
 class CheckLogin(View):
     def get(self, request):
         form = LoginForm()
@@ -779,6 +776,16 @@ class FoodListSerializer(APIView):
         food = Food.objects.all()
         serializer = FoodSerializer(food, many=True, context={'request': request})
         return Response(serializer.data)
+
+    def post(self, request):
+        food_create = Food.objects.create()
+        serializer = FoodSerializer(food_create, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 # from requests.auth import HTTPBasicAuth
 #     food = requests.get('http://127.0.0.1:8000/food_list_serializer/?format=json',
