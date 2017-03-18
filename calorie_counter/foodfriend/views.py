@@ -777,9 +777,8 @@ class FoodListSerializer(APIView):
         serializer = FoodSerializer(food, many=True, context={'request': request})
         return Response(serializer.data)
 
-    def post(self, request):
-        food_create = Food.objects.create()
-        serializer = FoodSerializer(food_create, data=request.data, context={'request': request})
+    def post(self, request, format=None):
+        serializer = FoodSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
