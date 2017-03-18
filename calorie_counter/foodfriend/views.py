@@ -784,6 +784,29 @@ class FoodListSerializer(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class FoodSerializerDetails(APIView):
+    def get_object(self, pk):
+        try:
+            return Food.objects.get(pk=pk)
+        except Food.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        detail = self.get_object(pk)
+        serializer = FoodSerializer(detail, context={"request": request})
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        food_put = self.get_object(pk)
+        serializer = FoodSerializer(food_put, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+    def delete(self, request, pk):
+        food = self.get_object(pk)
+        food.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # from requests.auth import HTTPBasicAuth
