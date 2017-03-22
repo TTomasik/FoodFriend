@@ -18,7 +18,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{% url 'test' my_id=request.user.id %}">Edit Profile</a></li>
           <li class="active"><a href="{% url 'calendar' my_id=request.user.id %}">Calendar<span class="sr-only">(current)</span></a></li>
-          <li><a href="{% url 'create-food' %}">Create Food</a></li>
+
           <li><a href="{% url 'food-list' %}">Food List</a></li>
           <li><a href="{% url 'index' %}">Home</a></li>
           <li><a href="{% url 'logout' %}"><B>LOGOUT</B></a></li>
