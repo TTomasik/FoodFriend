@@ -98,7 +98,7 @@ class UserExtend(models.Model):
 
     @property
     def water(self):
-        return int(self.calories)
+        return math.ceil(self.calories/100)*100
 
     def __str__(self):
         return self.user.username
