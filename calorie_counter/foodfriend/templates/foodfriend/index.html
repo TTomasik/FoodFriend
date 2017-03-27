@@ -98,6 +98,19 @@
                 <h1>
                 {{ fats }} / {{ request.user.userextend.fat }} fats
                 </h1>
+                <h1>
+                    WATER: {{ water }} / {{ request.user.userextend.water }} ml
+                </h1>
+
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: {{ progress }}%;">
+                        <span class="sr-only">{{ progress }}% Complete</span>
+                    </div>
+                </div>
+
+
+
             </div>
         </font>
     </div>

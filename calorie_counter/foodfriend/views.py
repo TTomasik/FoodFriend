@@ -660,6 +660,9 @@ class UserMacros(LoginRequiredMixin, View):
         cont['carbs'] = round(day.day_carbs, 1)
         cont['fats'] = round(day.day_fats, 1)
         cont['avatar'] = extended.avatar
+        cont['water'] = int(day.day_water)
+        cont['progress'] = round(day.day_water/extended.water, 1)*100
+
 
         return render(request, 'foodfriend/index.html', cont)
 

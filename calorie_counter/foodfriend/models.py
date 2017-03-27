@@ -194,6 +194,14 @@ class Days(models.Model):
                 fat += int(round(p.fats * quant / p.grams, 0))
         return fat
 
+    @property
+    def day_water(self):
+        water = 0
+        container = Quantity.objects.filter(food_quantity__id=53, meal_quantity__day_id=self.id)
+        for i in container:
+            water += i.quantity
+        return water
+
     def __str__(self):
         return "{}".format(self.date) #self.date_user
 
