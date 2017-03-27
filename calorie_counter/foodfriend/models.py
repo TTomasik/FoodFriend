@@ -48,7 +48,6 @@ class UserExtend(models.Model):
     creation_date = models.DateTimeField(default=timezone.now)
 
 
-
     @property
     def calories(self):
         if self.sex == 2:
@@ -96,6 +95,10 @@ class UserExtend(models.Model):
         else:
             result = int(self.calories*0.2/9)
         return result
+
+    @property
+    def water(self):
+        return int(self.calories)
 
     def __str__(self):
         return self.user.username
