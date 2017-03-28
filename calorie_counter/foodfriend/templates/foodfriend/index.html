@@ -99,7 +99,7 @@
                 {{ fats }} / {{ request.user.userextend.fat }} fats
                 </h1>
                 <h1>
-                    WATER: {{ water }} / {{ request.user.userextend.water }} ml
+                     {{ water }} / {{ request.user.userextend.water }} ml <img src="/static/foodfriend/img/h2o.svg" width="70px" height="auto" style="padding: 2px 2px; margin-top: 0px;">
                 </h1>
 
 
@@ -115,8 +115,8 @@
                 </div>
                 <form action="" method="post" enctype='multipart/form-data'>
             {% csrf_token %}
-                    <input type="submit" name= "add_water" value="WATER" class="btn btn-primary">
-                    <input type="submit" name="delete_water" value="DELETE" class="btn btn-danger">
+                    <input type="submit" name= "add_water" value="ADD GLASS" class="btn btn-primary">
+                    <input type="submit" name="delete_water" value="REMOVE GLASS" class="btn btn-danger">
                 </form>
 
 
