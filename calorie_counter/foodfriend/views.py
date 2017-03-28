@@ -663,17 +663,20 @@ class UserMacros(LoginRequiredMixin, View):
         cont['carbs'] = round(day.day_carbs, 1)
         cont['fats'] = round(day.day_fats, 1)
         cont['avatar'] = extended.avatar
-        cont['water'] = int(day.day_water)
-        cont['progress'] = round(day.day_water/extended.water, 1)*100
+        if extended.calories == None:
+            cont['water'] = 0
+            cont['progress'] = 0
+        else:
+            cont['water'] = int(day.day_water)
+            cont['progress'] = round(day.day_water / extended.water, 1) * 100
 
         form = WaterForm()
         form2 = DeleteWaterForm()
 
-        return render(request, 'foodfriend/index.html', cont, {"form": form, "form2": form2})
+        return render(request, 'foodfriend/index.html', cont, {"form": form})
 
     def post(self, request):
         form = WaterForm(request.POST)
-        form2 = DeleteWaterForm(request.POST)
         my_id = self.request.user.id
         user = User.objects.get(pk=my_id)
         today = Days.objects.filter(date_user=request.user.userextend, date=datetime.date.today())[0]
