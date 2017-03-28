@@ -106,9 +106,12 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: {{ progress }}%;">
                         <span class="sr-only">{{ progress }}% Complete</span>
-
+                        {% if progress < 100 %}
+                        THAT IS GOOD! YOU ARE ALMOST DONE!
+                        {% else %}
+                        GOOD JOB!
+                        {% endif %}
                     </div>
-
                 </div>
                 <form action="" method="post" enctype='multipart/form-data'>
             {% csrf_token %}
