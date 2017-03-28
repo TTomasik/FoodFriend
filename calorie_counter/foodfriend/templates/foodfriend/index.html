@@ -106,8 +106,14 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: {{ progress }}%;">
                         <span class="sr-only">{{ progress }}% Complete</span>
+
                     </div>
+
                 </div>
+                <form action="" method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+                    <input type="submit" value="WATEEER" class="btn btn-primary">
+                </form>
 
 
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm, CreateMealForm2, Calendar
+from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm, CreateMealForm2, Calendar, WaterForm
 from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food, MEALS, Quantity
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
@@ -306,20 +306,23 @@ class FoodsView(LoginRequiredMixin, View):
             quant = Quantity.objects.filter(food_quantity__id=food.id, meal_quantity__id=meal_id)[0].quantity
 
             d = {}
-            d['id'] = food.id
-            d['name'] = food.name
-            d['kcal'] = food.kcal = round(food.kcal*quant/food.grams, 0)
-            d['proteins'] = food.proteins = round(food.proteins*quant/food.grams, 0)
-            d['carbs'] = food.carbs = round(food.carbs*quant/food.grams, 0)
-            d['fats'] = food.fats = round(food.fats*quant/food.grams, 0)
-            d['grams'] = food.grams
-            d['quantity'] = quant
-            print(quant)
-            kcal_sum.append(food.kcal)
-            proteins_sum.append(food.proteins)
-            carbs_sum.append(food.carbs)
-            fats_sum.append(food.fats)
-            food_list.append(d)
+            if food.id == 53:
+                pass
+            else:
+                d['id'] = food.id
+                d['name'] = food.name
+                d['kcal'] = food.kcal = round(food.kcal*quant/food.grams, 0)
+                d['proteins'] = food.proteins = round(food.proteins*quant/food.grams, 0)
+                d['carbs'] = food.carbs = round(food.carbs*quant/food.grams, 0)
+                d['fats'] = food.fats = round(food.fats*quant/food.grams, 0)
+                d['grams'] = food.grams
+                d['quantity'] = quant
+                print(quant)
+                kcal_sum.append(food.kcal)
+                proteins_sum.append(food.proteins)
+                carbs_sum.append(food.carbs)
+                fats_sum.append(food.fats)
+                food_list.append(d)
 
         cont['food_names'] = food_list
         cont['my_id'] = my_id
@@ -663,8 +666,29 @@ class UserMacros(LoginRequiredMixin, View):
         cont['water'] = int(day.day_water)
         cont['progress'] = round(day.day_water/extended.water, 1)*100
 
+        form = WaterForm()
 
-        return render(request, 'foodfriend/index.html', cont)
+        return render(request, 'foodfriend/index.html', cont, {"form": form})
+
+    def post(self, request):
+        form = WaterForm(request.POST)
+        my_id = self.request.user.id
+        user = User.objects.get(pk=my_id)
+        today = Days.objects.filter(date_user=request.user.userextend, date=datetime.date.today())[0]
+        if form.is_valid():
+            meal, _create = Meal.objects.get_or_create(meal_name=1, day=today)
+            form = WaterForm(request.POST)
+            # water = form.cleaned_data['water_quantity']
+            water = 250
+            before = 0
+            # for i in Quantity.objects.filter(meal_quantity=meal, food_quantity__id=53):
+            #     before += i.quantity
+            # water_sum = int(water+before)
+            Quantity.objects.create(meal_quantity=meal, food_quantity_id=53, quantity=250)
+
+            return redirect('/index')
+
+
 
     # if not my_id:
     #     my_id = self.request.user.id

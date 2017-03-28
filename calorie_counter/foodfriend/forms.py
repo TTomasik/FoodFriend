@@ -84,6 +84,9 @@ class CreateMealForm2(ModelForm):
 class Calendar(forms.Form):
     cal = forms.DateField(widget=forms.DateInput(attrs={'class': 'datepicker'}))
 
+class WaterForm(forms.Form):
+    water_quantity = forms.IntegerField(required=False)
+
 
 # class CreateMealForm(ModelForm):
 #     class Meta:
