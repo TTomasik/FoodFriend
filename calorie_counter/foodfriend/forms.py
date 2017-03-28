@@ -87,6 +87,9 @@ class Calendar(forms.Form):
 class WaterForm(forms.Form):
     water_quantity = forms.IntegerField(required=False)
 
+class DeleteWaterForm(forms.Form):
+    water_delete = forms.IntegerField(required=False)
+
 
 # class CreateMealForm(ModelForm):
 #     class Meta:

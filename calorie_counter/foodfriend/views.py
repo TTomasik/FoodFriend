@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm, CreateMealForm2, Calendar, WaterForm
+from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm, CreateMealForm2, Calendar, WaterForm, DeleteWaterForm
 from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food, MEALS, Quantity
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
@@ -667,26 +667,32 @@ class UserMacros(LoginRequiredMixin, View):
         cont['progress'] = round(day.day_water/extended.water, 1)*100
 
         form = WaterForm()
+        form2 = DeleteWaterForm()
 
-        return render(request, 'foodfriend/index.html', cont, {"form": form})
+        return render(request, 'foodfriend/index.html', cont, {"form": form, "form2": form2})
 
     def post(self, request):
         form = WaterForm(request.POST)
+        form2 = DeleteWaterForm(request.POST)
         my_id = self.request.user.id
         user = User.objects.get(pk=my_id)
         today = Days.objects.filter(date_user=request.user.userextend, date=datetime.date.today())[0]
         if form.is_valid():
-            meal, _create = Meal.objects.get_or_create(meal_name=1, day=today)
-            form = WaterForm(request.POST)
-            # water = form.cleaned_data['water_quantity']
-            water = 250
-            before = 0
-            # for i in Quantity.objects.filter(meal_quantity=meal, food_quantity__id=53):
-            #     before += i.quantity
-            # water_sum = int(water+before)
-            Quantity.objects.create(meal_quantity=meal, food_quantity_id=53, quantity=250)
+            if 'add_water' in request.POST:
+                meal, _create = Meal.objects.get_or_create(meal_name=1, day=today)
+                # for i in Quantity.objects.filter(meal_quantity=meal, food_quantity__id=53):
+                #     before += i.quantity
+                # water_sum = int(water+before)
+                Quantity.objects.create(meal_quantity=meal, food_quantity_id=53, quantity=250)
+                return redirect('/index')
+            if 'delete_water' in request.POST:
+                meal, _create = Meal.objects.get_or_create(meal_name=1, day=today)
+                to_delete = Quantity.objects.filter(meal_quantity=meal, food_quantity__id=53)[::-1][0]
+                to_delete.delete()
+                return redirect('/index')
 
-            return redirect('/index')
+
+
 
 
 
