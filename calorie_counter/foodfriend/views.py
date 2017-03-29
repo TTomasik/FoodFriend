@@ -32,6 +32,10 @@ from rest_framework import status, permissions
 from rest_framework.views import APIView
 
 
+class Index(View):
+    def get(self, request):
+        return redirect('/index')
+
 class CheckLogin(View):
     def get(self, request):
         form = LoginForm()

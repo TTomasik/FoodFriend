@@ -24,10 +24,11 @@ from foodfriend import views
 from foodfriend.views import CheckLogin, MyInfo, CreateAccount, DaysView,\
     MealsView, FoodsView, CreateMeal, UpdateMeal, UpdateUser, CreateFood,\
     FoodList, UserMacros, MyPerson, LineChartJSONView, UpdateMeal2, CreateMealTwo, FoodListSerializer,\
-    FoodSerializerDetails
+    FoodSerializerDetails, Index
 
 
 urlpatterns = [
+    url(r'^$', Index.as_view()),
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', CheckLogin.as_view(), name='login'),
     url(r'^login/logout$', logout_then_login, name='logout'),
