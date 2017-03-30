@@ -122,10 +122,24 @@ class CreateAccount(View):
                     b.save()
                     try:
                         send_mail(
-                            'Witamy w FoodFriend!',
-                            'Jeśli dostałeś tego maila tzn., że zarejestrowałeś się w www.foodfriend.pl.',
-                            settings.EMAIL_HOST_PASSWORD,
-                            [em],
+                            subject='Witamy w FoodFriend!',
+                            message='...',
+                            html_message="""
+                            <meta charset="utf-8">
+                            <p>Witaj!</p>
+                            <p>Jeśli dostałeś tego maila tzn, że zarejstrowałeś się na portalu <a href="http://www.foodfriend.pl">www.foodfriend.pl</a>. Pomożemy Ci monitorować Twoje założenia oraz cele żywieniowe :)</p>
+                            <p>Tw&oacute;j login: {}</p>
+                            <p>Twoje hasło: {}</p>
+                            <p>Pierwsze kroki:</p>
+                            <p>1. Wprowadź swoje dane, żebyśmy mogli wyliczyć Twoje dzienne zapotrzebowanie kaloryczne rozbite na poszczeg&oacute;lne makroskładniki oraz niezbędną ilość wody.</p>
+                            <p>2. Codziennie dodawaj posiłki oraz ilośc wypitej wody.</p>
+                            <p>3. Wszystko zostanie zapisane i przedstawione na odpowiednich wykresach.</p>
+                            <p>Dzięki nam łatwo będziesz kontrolować poziom spożywanych kalorii co przełoży się na szybki progress i spełnienie Twoich cel&oacute;w!</p>
+                            <p>Zapraszamy do korzystania!</p>
+                            <p>&nbsp;</p>
+                            """.format(user, pass1),
+                            from_email=settings.EMAIL_HOST_PASSWORD,
+                            recipient_list=[em],
                             fail_silently=False,
                         )
                     except:
