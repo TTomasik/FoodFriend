@@ -30,11 +30,16 @@ from foodfriend.serializers import FoodSerializer
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.views import APIView
+from django.http import HttpResponsePermanentRedirect
 
 
-class Index(View):
-    def get(self, request):
-        return redirect('/index')
+
+# class Index(View):
+#     def get(self, request):
+#         print('HTTP_HOST')
+#         if not request.META['HTTP_HOST'].startswith('www.'):
+#             return HttpResponsePermanentRedirect('http://www.foodfriend.pl')
+#         return redirect('/index')
 
 class CheckLogin(View):
     def get(self, request):
