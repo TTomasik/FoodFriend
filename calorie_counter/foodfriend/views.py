@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render
 from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm, CreateMealForm2, Calendar, WaterForm, DeleteWaterForm
 from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food, MEALS, Quantity
@@ -30,16 +31,9 @@ from foodfriend.serializers import FoodSerializer
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.views import APIView
-from django.http import HttpResponsePermanentRedirect
+from django.core.mail import send_mail
 
 
-
-# class Index(View):
-#     def get(self, request):
-#         print('HTTP_HOST')
-#         if not request.META['HTTP_HOST'].startswith('www.'):
-#             return HttpResponsePermanentRedirect('http://www.foodfriend.pl')
-#         return redirect('/index')
 
 class CheckLogin(View):
     def get(self, request):
@@ -126,6 +120,17 @@ class CreateAccount(View):
                     a.save()
                     b = UserExtend.objects.create(user = User.objects.get(username=a.username))
                     b.save()
+                    try:
+                        send_mail(
+                            'Witamy w FoodFriend!',
+                            'Jeśli dostałeś tego maila tzn., że zarejestrowałeś się w www.foodfriend.pl.',
+                            settings.EMAIL_HOST_PASSWORD,
+                            [em],
+                            fail_silently=False,
+                        )
+                    except:
+                        pass
+                    return redirect('/index')
             else:
                 return HttpResponse("""<body bgcolor=#5A5A29><h1><center><br><br><br><br><font color='white'>
                         Your password is incorrect :(<br><br><img src='/static/foodfriend/img/rotten.gif'>

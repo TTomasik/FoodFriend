@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from foodfriend.passwords import email_password
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,6 +27,12 @@ SECRET_KEY = 'h%jf6emus0n!cif$y_!%m4ny-3!6zt0ohq7za7pyg4$1#0#=4*'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'contact.foodfriend@gmail.com'
+EMAIL_HOST_PASSWORD = email_password
+EMAIL_PORT= 587
+EMAIL_USE_TLS = True
 
 
 # Application definition
