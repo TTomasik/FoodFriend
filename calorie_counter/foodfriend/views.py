@@ -310,9 +310,49 @@ class MealsView(LoginRequiredMixin, View):
         cont['day_id'] = day.id
         cont['day_date'] = day.date
         cont['avatar'] = user.userextend.avatar
+        kcal_sum = []
+        proteins_sum = []
+        carbs_sum = []
+        fats_sum = []
+        result = []
+        for meal in meals:
+            for food in meal.foods.all():
+                quant = Quantity.objects.filter(food_quantity__id=food.id, meal_quantity__id=meal.id)[0].quantity
+                kcal_sum.append(round(food.kcal*quant/food.grams, 0))
+                proteins_sum.append(round(food.proteins*quant/food.grams, 0))
+                carbs_sum.append(round(food.carbs*quant/food.grams, 0))
+                fats_sum.append(round(food.fats*quant/food.grams, 0))
+            result.append(sum(kcal_sum))
+            kcal_sum = []
+            result.append(sum(proteins_sum))
+            proteins_sum = []
+            result.append(sum(carbs_sum))
+            carbs_sum = []
+            result.append(sum(fats_sum))
+            fats_sum = []
+        kcal_list = []
+        for index, macro in enumerate(result):
+            d = {}
+            if index in list(range(0,100,4)):
+                d['kcal'] = macro
+                kcal_list.append(d)
+            if index in list(range(1,100,4)):
+                d['proteins'] = macro
+                kcal_list.append(d)
+            if index in list(range(2,100,4)):
+                d['carbs'] = macro
+                kcal_list.append(d)
+            if index in list(range(3,100,4)):
+                d['fats'] = macro
+                kcal_list.append(d)
 
+        cont['kcal_list'] = kcal_list
+        print(meal_list, kcal_list)
+        for x,y in zip(meal_list, kcal_list):
+            print(x,y)
 
         return render(request, "foodfriend/meal.html", cont)
+
 
 class FoodsView(LoginRequiredMixin, View):
     def get(self, request, my_id, day_id, meal_id):
@@ -332,7 +372,6 @@ class FoodsView(LoginRequiredMixin, View):
         fats_sum = []
         for food in foods:
             quant = Quantity.objects.filter(food_quantity__id=food.id, meal_quantity__id=meal_id)[0].quantity
-
             d = {}
             if food.id == 53:
                 pass

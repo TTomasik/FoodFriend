@@ -41,9 +41,14 @@
 
                 {% for meal in meal_names %}
                         <tr>
-                            <td><a href="{% url 'calendar-food' my_id=request.user.id day_id=day_id meal_id=meal.id %}">{{ meal.name }}</td><hr>
+                            <td><a href="{% url 'calendar-food' my_id=request.user.id day_id=day_id meal_id=meal.id %}">{{ meal.name }}</a></td><hr>
                         </tr>
                     {% endfor %}
+                {% for kcal in kcal_list %}
+                        <tr>
+                            <td>{{ kcal.kcal }} KCAL</td>
+                        </tr>
+                {% endfor %}
 
             </div>
 <div class="button-next-next">
