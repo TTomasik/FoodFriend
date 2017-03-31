@@ -331,7 +331,6 @@ class MealsView(LoginRequiredMixin, View):
             result.append(sum(fats_sum))
             fats_sum = []
         kcal_list = []
-        counter = 0
         for index, macro in enumerate(result):
             d = {}
             if index in list(range(0,100,4)):
@@ -340,18 +339,7 @@ class MealsView(LoginRequiredMixin, View):
                 d['carbs'] = result[index+2]
                 d['fats'] = result[index+3]
                 kcal_list.append(d)
-            # if index in list(range(1,100,4)):
-            #     d['proteins'] = macro
-            #     kcal_list.append(d)
-            # if index in list(range(2,100,4)):
-            #     d['carbs'] = macro
-            #     kcal_list.append(d)
-            # if index in list(range(3,100,4)):
-            #     d['fats'] = macro
-            #     kcal_list.append(d)
-
         cont['kcal_list'] = kcal_list
-        # print(meal_list, kcal_list)
         final_result = []
         for x,y in zip(meal_list, kcal_list):
             x.update(y)
@@ -924,4 +912,6 @@ class FoodSerializerDetails(APIView):
 #     food = requests.get('http://127.0.0.1:8000/food_list_serializer/?format=json',
 #                         auth=HTTPBasicAuth('user', 'pass'))
 
-
+# for i in UserExtend.objects.all():
+#     if isinstance(i.weight, int):
+#         print(i.weight, i.height, round(i.weight/(i.height*0.01)**2, 2))
