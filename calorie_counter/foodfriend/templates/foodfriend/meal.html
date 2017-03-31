@@ -39,16 +39,11 @@
 
             <div>
 
-                {% for meal in meal_names %}
+                {% for meal in final_result %}
                         <tr>
-                            <td><a href="{% url 'calendar-food' my_id=request.user.id day_id=day_id meal_id=meal.id %}">{{ meal.name }}</a></td><hr>
+                            <td><a href="{% url 'calendar-food' my_id=request.user.id day_id=day_id meal_id=meal.id %}">{{ meal.name }}:</a> <td>{{ meal.kcal }} KCAL</td><td> | {{ meal.proteins }} P</td> | <td> {{ meal.carbs }} C</td> | <td> {{ meal.fats }} F</td><hr>
                         </tr>
                     {% endfor %}
-                {% for kcal in kcal_list %}
-                        <tr>
-                            <td>{{ kcal.kcal }} KCAL</td>
-                        </tr>
-                {% endfor %}
 
             </div>
 <div class="button-next-next">

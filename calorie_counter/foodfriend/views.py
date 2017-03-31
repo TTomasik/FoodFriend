@@ -331,25 +331,33 @@ class MealsView(LoginRequiredMixin, View):
             result.append(sum(fats_sum))
             fats_sum = []
         kcal_list = []
+        counter = 0
         for index, macro in enumerate(result):
             d = {}
             if index in list(range(0,100,4)):
-                d['kcal'] = macro
+                d['kcal'] = result[index]
+                d['proteins'] = result[index+1]
+                d['carbs'] = result[index+2]
+                d['fats'] = result[index+3]
                 kcal_list.append(d)
-            if index in list(range(1,100,4)):
-                d['proteins'] = macro
-                kcal_list.append(d)
-            if index in list(range(2,100,4)):
-                d['carbs'] = macro
-                kcal_list.append(d)
-            if index in list(range(3,100,4)):
-                d['fats'] = macro
-                kcal_list.append(d)
+            # if index in list(range(1,100,4)):
+            #     d['proteins'] = macro
+            #     kcal_list.append(d)
+            # if index in list(range(2,100,4)):
+            #     d['carbs'] = macro
+            #     kcal_list.append(d)
+            # if index in list(range(3,100,4)):
+            #     d['fats'] = macro
+            #     kcal_list.append(d)
 
         cont['kcal_list'] = kcal_list
-        print(meal_list, kcal_list)
+        # print(meal_list, kcal_list)
+        final_result = []
         for x,y in zip(meal_list, kcal_list):
-            print(x,y)
+            x.update(y)
+            final_result.append(x)
+        print(final_result)
+        cont['final_result'] = final_result
 
         return render(request, "foodfriend/meal.html", cont)
 
