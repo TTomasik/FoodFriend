@@ -152,6 +152,11 @@ class CreateAccount(View):
 
         return redirect("/login")
 
+import numpy as np; np.random.seed(sum(map(ord, 'calmap')))
+import pandas as pd
+import calmap
+import matplotlib.pyplot as plt
+
 class DaysView(LoginRequiredMixin, View):
     def get(self, request, my_id):
         if not self.request.user.is_superuser:
@@ -192,6 +197,9 @@ class DaysView(LoginRequiredMixin, View):
         week5 = []
         week_5 = []
         week_5_yes_no = []
+        week6 = []
+        week_6 = []
+        week_6_yes_no = []
         user_days = [i['date'] for i in days_list]
         print(user_days)
         for index, i in enumerate(c.itermonthdates(datetime.date.today().year, datetime.date.today().month)):
@@ -240,11 +248,21 @@ class DaysView(LoginRequiredMixin, View):
                     week5.append(i)
                     week_5_yes_no.append("not")
                     week_5.append(i.day)
+            if index in range (35, 42):
+                if i in user_days:
+                    week6.append(i)
+                    week_6_yes_no.append("yes")
+                    week_6.append(i.day)
+                if i not in user_days:
+                    week6.append(i)
+                    week_6_yes_no.append("not")
+                    week_6.append(i.day)
         week_1_id = []
         week_2_id = []
         week_3_id = []
         week_4_id = []
         week_5_id = []
+        week_6_id = []
         for i in week1:
             if i in user_days:
                 week_1_id.append(Days.objects.filter(date_user=extended, date=i)[0].id)
@@ -270,11 +288,17 @@ class DaysView(LoginRequiredMixin, View):
                 week_5_id.append(Days.objects.filter(date_user=extended, date=i)[0].id)
             if i not in user_days:
                 week_5_id.append(False)
+        for i in week6:
+            if i in user_days:
+                week_6_id.append(Days.objects.filter(date_user=extended, date=i)[0].id)
+            if i not in user_days:
+                week_6_id.append(False)
         cont['week_1'] = week_1
         cont['week_2'] = week_2
         cont['week_3'] = week_3
         cont['week_4'] = week_4
         cont['week_5'] = week_5
+        cont['week_6'] = week_6
         cont['cal_month_number'] = datetime.date.today().month-1
         cont['no'] = ["not"]
         cont['yes'] = ['yes']
@@ -283,9 +307,30 @@ class DaysView(LoginRequiredMixin, View):
         cont['week_3_with_yes_no'] = zip(week_3_yes_no, week_3, week_3_id)
         cont['week_4_with_yes_no'] = zip(week_4_yes_no, week_4, week_4_id)
         cont['week_5_with_yes_no'] = zip(week_5_yes_no, week_5, week_5_id)
-        print(week_4)
-        print(week_4_id)
-        print(week4)
+        cont['week_6_with_yes_no'] = zip(week_6_yes_no, week_6, week_6_id)
+
+        # all_days = pd.date_range('1/1/2017', periods=365, freq='D')
+        # days = np.random.choice(all_days, 500)
+        # events = pd.Series(np.random.randn(len(days)), index=days)
+        # calmap.yearplot(events, year=2017)
+        # cont['test'] = plt.show()
+        # a = calmap.calendarplot(events, monthticks=3, daylabels='MTWTFSS',
+        #                     dayticks=[0, 2, 4, 6], cmap='YlGn',
+        #                     fillcolor='grey', linewidth=0,
+        #                     fig_kws=dict(figsize=(8, 4)))
+        # print(a)
+
+        # x = [datetime.datetime(2010, 12, 1, 10, 0),
+        #      datetime.datetime(2011, 1, 4, 9, 0),
+        #      datetime.datetime(2011, 5, 5, 9, 0)]
+        # y = [4, 9, 2]
+        #
+        # ax = plt.subplot(111)
+        # ax.bar(x, y, width=10)
+        # ax.xaxis_date()
+        #
+
+
         return render(request, "foodfriend/calendar.html", cont)
 
 

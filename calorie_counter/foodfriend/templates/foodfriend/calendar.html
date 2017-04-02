@@ -130,7 +130,12 @@
                         </td>
                         {% elif x in no %}
                         <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            {% if y < 8 %}
                             <a class="ui-state-default">{{ y }}</a>
+                            {% endif %}
+                            {% if y > 8 %}
+                            <a>{{ y }}</a>
+                            {% endif %}
                         </td>
                         {% endif %}
                         {% endfor %}
@@ -187,12 +192,32 @@
                         {% endif %}
                         {% endfor %}
                     </tr>
+                    <tr>
+                        {% for x, y, z in week_6_with_yes_no  %}
+                        {% if x in yes %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            <a class="ui-state-active" href="{{ request.user.id }}/meal/{{ z }}">{{ y }}</a>
+                        </td>
+                        {% elif x in no %}
+                        <td class=" " data-handler="selectDay" data-event="click" data-month="{{ cal_month_number }}" data-year="{{ cal_year }}">
+                            {% if y > 8 %}
+                            <a class="ui-state-default">{{ y }}</a>
+                            {% endif %}
+                            {% if y < 8 %}
+                            <a>{{ y }}</a>
+                            {% endif %}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
                 </tbody>
             </table>
 
 
         </div>
+
         </div>
+
 
 
 
