@@ -27,7 +27,7 @@ import calendar
 from datetime import timedelta
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
-from foodfriend.serializers import FoodSerializer
+from foodfriend.serializers import FoodSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.views import APIView
@@ -771,15 +771,20 @@ class UserMacros(LoginRequiredMixin, View):
         cont['carbs'] = round(day.day_carbs, 1)
         cont['fats'] = round(day.day_fats, 1)
         cont['avatar'] = extended.avatar
+        cont["zero_active_water"] = 1
         if extended.calories == None:
             cont['water'] = 0
             cont['progress'] = 0
+            cont["zero_active_water"] = 0
         else:
             cont['water'] = int(day.day_water)
             cont['progress'] = round(day.day_water / extended.water, 1) * 100
-
+        cont["zero_water"] = 1
+        if cont['water'] == 0 or cont['water'] == None:
+            cont["zero_water"] = 0
         form = WaterForm()
         form2 = DeleteWaterForm()
+        print(cont['calories'])
 
         return render(request, 'foodfriend/index.html', cont, {"form": form})
 
@@ -914,7 +919,6 @@ class DatePicker(View):
 date_picker = TemplateView.as_view(template_name="foodfriend/date_picker.html")
 date_picker_jquery = DatePicker.as_view()
 
-
 class FoodListSerializer(APIView):
     def get(self, request, format=None):
         food = Food.objects.all()
@@ -927,6 +931,12 @@ class FoodListSerializer(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserListSerializer(APIView):
+    def get(self, request, format=None):
+        user = UserExtend.objects.all()
+        serializer = UserSerializer(user, many=True, context={'request': request})
+        return Response(serializer.data)
 
 class FoodSerializerDetails(APIView):
     def get_object(self, pk):

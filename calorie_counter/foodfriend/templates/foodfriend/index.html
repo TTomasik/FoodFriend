@@ -115,8 +115,16 @@
                 </div>
                 <form action="" method="post" enctype='multipart/form-data'>
             {% csrf_token %}
+                    {% if zero_water == 1 %}
                     <input type="submit" name= "add_water" value="ADD GLASS" class="btn btn-primary">
                     <input type="submit" name="delete_water" value="REMOVE GLASS" class="btn btn-danger">
+                    {% elif zero_active_water == 0 %}
+                    <input type="submit" name= "add_water" value="ADD GLASS" class="btn btn-primary disabled">
+                    <input type="submit" name="delete_water" value="REMOVE GLASS" class="btn btn-danger disabled">
+                    {% elif zero_water == 0 %}
+                    <input type="submit" name= "add_water" value="ADD GLASS" class="btn btn-primary">
+                    <input type="submit" name="delete_water" value="REMOVE GLASS" class="btn btn-danger disabled">
+                    {% endif %}
                 </form>
             </div>
         </font>

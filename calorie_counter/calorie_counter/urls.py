@@ -24,7 +24,7 @@ from foodfriend import views
 from foodfriend.views import CheckLogin, MyInfo, CreateAccount, DaysView,\
     MealsView, FoodsView, CreateMeal, UpdateMeal, UpdateUser, CreateFood,\
     FoodList, UserMacros, MyPerson, LineChartJSONView, UpdateMeal2, CreateMealTwo, FoodListSerializer,\
-    FoodSerializerDetails
+    FoodSerializerDetails, UserListSerializer
 
 
 urlpatterns = [
@@ -53,7 +53,7 @@ urlpatterns = [
     url(r'^date_picker/jquery/$', views.date_picker_jquery, name='date_picker_jquery'),
     url(r'^food_serializer_list/$', FoodListSerializer.as_view(), name='food-list-serializer'),
     url(r'^food_serializer_list/(?P<pk>\d+)/?$', FoodSerializerDetails.as_view(), name='food-details'),
-
+    url(r'^users_list/$', UserListSerializer.as_view(), name="users-list")
 
 ]
 
