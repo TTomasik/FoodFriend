@@ -47,19 +47,17 @@ class UserExtend(models.Model):
     target = models.IntegerField(choices=TARGETS, default=0)
     creation_date = models.DateTimeField(default=timezone.now)
 
-
     @property
     def calories(self):
+        calories_count = None
         if self.sex == 2:
             if self.age and self.weight and self.height and self.factor:
                 if self.target == 1:
-                    calories_count = int((66+13.7*self.weight+5*self.height-6.8*self.age)*self.factor+300)
+                    calories_count = int((66+13.7*int(self.weight)+5*int(self.height)-6.8*int(self.age))*self.factor+300)
                 if self.target == 2:
                     calories_count = int((66+13.7*self.weight+5*self.height-6.8*self.age)*self.factor-300)
             else:
                 calories_count = "No full data"
-
-            return calories_count
 
         if self.sex == 1:
             if self.age and self.weight and self.height and self.factor:
@@ -70,7 +68,7 @@ class UserExtend(models.Model):
             else:
                 calories_count = "No full data"
 
-            return calories_count
+        return calories_count
 
     @property
     def protein(self):

@@ -772,10 +772,10 @@ class UserMacros(LoginRequiredMixin, View):
         cont['fats'] = round(day.day_fats, 1)
         cont['avatar'] = extended.avatar
         cont["zero_active_water"] = 1
-        if extended.calories == None:
+        if isinstance(extended.calories, str):
             cont['water'] = 0
             cont['progress'] = 0
-            cont["zero_active_water"] = 0
+            cont["zero_active_water"] = 0   
         else:
             cont['water'] = int(day.day_water)
             cont['progress'] = round(day.day_water / extended.water, 1) * 100
