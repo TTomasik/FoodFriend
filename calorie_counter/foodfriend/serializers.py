@@ -14,6 +14,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class DaysSerializer(serializers.ModelSerializer):
+    day_calories = serializers.ReadOnlyField()
+    day_proteins = serializers.ReadOnlyField()
+    day_carbs = serializers.ReadOnlyField()
+    day_fats = serializers.ReadOnlyField()
+    day_water = serializers.ReadOnlyField()
+
     class Meta:
         model = Days
         fields = '__all__'
