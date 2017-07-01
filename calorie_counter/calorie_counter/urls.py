@@ -24,7 +24,7 @@ from foodfriend import views
 from foodfriend.views import CheckLogin, MyInfo, CreateAccount, DaysView,\
     MealsView, FoodsView, CreateMeal, UpdateMeal, UpdateUser, CreateFood,\
     FoodList, UserMacros, MyPerson, LineChartJSONView, UpdateMeal2, CreateMealTwo, FoodListSerializer,\
-    FoodSerializerDetails, UserListSerializer
+    FoodSerializerDetails, UserListSerializer, UserDayMacrosSerializer
 
 
 urlpatterns = [
@@ -51,9 +51,10 @@ urlpatterns = [
     url(r'^createmealtwo/(?P<meal_id>\d+)/?$', CreateMealTwo.as_view(), name='create-meal-two'),
     url(r'^date_picker/$', views.date_picker, name='date_picker'),
     url(r'^date_picker/jquery/$', views.date_picker_jquery, name='date_picker_jquery'),
-    url(r'^food_serializer_list/$', FoodListSerializer.as_view(), name='food-list-serializer'),
-    url(r'^food_serializer_list/(?P<pk>\d+)/?$', FoodSerializerDetails.as_view(), name='food-details'),
-    url(r'^users_list/$', UserListSerializer.as_view(), name="users-list")
+    url(r'^food_list_serializer/$', FoodListSerializer.as_view(), name='food-list-serializer'),
+    url(r'^food_list_serializer/(?P<pk>\d+)/?$', FoodSerializerDetails.as_view(), name='food-details'),
+    url(r'^users_list_serializer/$', UserListSerializer.as_view(), name="users-list"),
+    url(r'^user_day_macros_serializer/$', UserDayMacrosSerializer.as_view(), name='user-day-macros')
 
 ]
 

@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.shortcuts import render
-from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm, CreateMealForm2, Calendar, WaterForm, DeleteWaterForm
+from foodfriend.forms import LoginForm, UserExtendForm, CreateAccountForm, CreateMealForm, CreateMealForm2, Calendar, \
+    WaterForm, DeleteWaterForm
 from foodfriend.models import UserExtend, TARGETS, SEX, Days, Meal, Food, MEALS, Quantity
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
@@ -27,12 +28,11 @@ import calendar
 from datetime import timedelta
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
-from foodfriend.serializers import FoodSerializer, UserSerializer
+from foodfriend.serializers import FoodSerializer, UserSerializer, DaysSerializer
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from django.core.mail import send_mail
-
 
 
 class CheckLogin(View):
@@ -60,10 +60,11 @@ class CheckLogin(View):
             return HttpResponse("""<body bgcolor=#5A5A29><h1><center><br><br><br><br><font color='white'>
             Incorrect login or password :(<br><br><img src='/static/foodfriend/img/rotten.gif'><center>
             </font></h1></body>""")
-        # przekierowanie dalej
-        # else:
-        #     # return render(request, "exercises/login.html", {"form": form})
-        #     return HttpResponse("<h1>Nieprawidłowy login lub hasło.</h1>")
+            # przekierowanie dalej
+            # else:
+            #     # return render(request, "exercises/login.html", {"form": form})
+            #     return HttpResponse("<h1>Nieprawidłowy login lub hasło.</h1>")
+
 
 # LoginRequiredMixin, UserPassesTestMixin,  <--- tego uzywac do ponizszego w class MyInfo
 
@@ -92,7 +93,6 @@ class MyInfo(LoginRequiredMixin, View):
         return redirect('/myinfo/{}'.format(my_id))
 
 
-
 class CreateAccount(View):
     def get(self, request):
         form = CreateAccountForm()
@@ -116,9 +116,9 @@ class CreateAccount(View):
                         We are sorry but email: {} is already taken :(<br><br><img src='/static/foodfriend/img/rotten.gif'>
                         <center></font></h1></body>""".format(em))
                 else:
-                    a = User.objects.create_user(username = user, password = pass1, email = em)
+                    a = User.objects.create_user(username=user, password=pass1, email=em)
                     a.save()
-                    b = UserExtend.objects.create(user = User.objects.get(username=a.username))
+                    b = UserExtend.objects.create(user=User.objects.get(username=a.username))
                     b.save()
                     try:
                         send_mail(
@@ -152,10 +152,14 @@ class CreateAccount(View):
 
         return redirect("/login")
 
-import numpy as np; np.random.seed(sum(map(ord, 'calmap')))
+
+import numpy as np;
+
+np.random.seed(sum(map(ord, 'calmap')))
 import pandas as pd
 import calmap
 import matplotlib.pyplot as plt
+
 
 class DaysView(LoginRequiredMixin, View):
     def get(self, request, my_id):
@@ -203,7 +207,7 @@ class DaysView(LoginRequiredMixin, View):
         user_days = [i['date'] for i in days_list]
         print(user_days)
         for index, i in enumerate(c.itermonthdates(datetime.date.today().year, datetime.date.today().month)):
-            if index in range (0, 7):
+            if index in range(0, 7):
                 if i in user_days:
                     week1.append(i)
                     week_1_yes_no.append("yes")
@@ -212,7 +216,7 @@ class DaysView(LoginRequiredMixin, View):
                     week1.append(i)
                     week_1_yes_no.append("not")
                     week_1.append(i.day)
-            if index in range (7, 14):
+            if index in range(7, 14):
                 if i in user_days:
                     week2.append(i)
                     week_2_yes_no.append("yes")
@@ -221,7 +225,7 @@ class DaysView(LoginRequiredMixin, View):
                     week2.append(i)
                     week_2_yes_no.append("not")
                     week_2.append(i.day)
-            if index in range (14, 21):
+            if index in range(14, 21):
                 if i in user_days:
                     week3.append(i)
                     week_3_yes_no.append("yes")
@@ -230,7 +234,7 @@ class DaysView(LoginRequiredMixin, View):
                     week3.append(i)
                     week_3_yes_no.append("not")
                     week_3.append(i.day)
-            if index in range (21, 28):
+            if index in range(21, 28):
                 if i in user_days:
                     week4.append(i)
                     week_4_yes_no.append("yes")
@@ -239,7 +243,7 @@ class DaysView(LoginRequiredMixin, View):
                     week4.append(i)
                     week_4_yes_no.append("not")
                     week_4.append(i.day)
-            if index in range (28, 35):
+            if index in range(28, 35):
                 if i in user_days:
                     week5.append(i)
                     week_5_yes_no.append("yes")
@@ -248,7 +252,7 @@ class DaysView(LoginRequiredMixin, View):
                     week5.append(i)
                     week_5_yes_no.append("not")
                     week_5.append(i.day)
-            if index in range (35, 42):
+            if index in range(35, 42):
                 if i in user_days:
                     week6.append(i)
                     week_6_yes_no.append("yes")
@@ -299,7 +303,7 @@ class DaysView(LoginRequiredMixin, View):
         cont['week_4'] = week_4
         cont['week_5'] = week_5
         cont['week_6'] = week_6
-        cont['cal_month_number'] = datetime.date.today().month-1
+        cont['cal_month_number'] = datetime.date.today().month - 1
         cont['no'] = ["not"]
         cont['yes'] = ['yes']
         cont['week_1_with_yes_no'] = zip(week_1_yes_no, week_1, week_1_id)
@@ -363,10 +367,10 @@ class MealsView(LoginRequiredMixin, View):
         for meal in meals:
             for food in meal.foods.all():
                 quant = Quantity.objects.filter(food_quantity__id=food.id, meal_quantity__id=meal.id)[0].quantity
-                kcal_sum.append(round(food.kcal*quant/food.grams, 0))
-                proteins_sum.append(round(food.proteins*quant/food.grams, 0))
-                carbs_sum.append(round(food.carbs*quant/food.grams, 0))
-                fats_sum.append(round(food.fats*quant/food.grams, 0))
+                kcal_sum.append(round(food.kcal * quant / food.grams, 0))
+                proteins_sum.append(round(food.proteins * quant / food.grams, 0))
+                carbs_sum.append(round(food.carbs * quant / food.grams, 0))
+                fats_sum.append(round(food.fats * quant / food.grams, 0))
             result.append(sum(kcal_sum))
             kcal_sum = []
             result.append(sum(proteins_sum))
@@ -378,15 +382,15 @@ class MealsView(LoginRequiredMixin, View):
         kcal_list = []
         for index, macro in enumerate(result):
             d = {}
-            if index in list(range(0,100,4)):
+            if index in list(range(0, 100, 4)):
                 d['kcal'] = result[index]
-                d['proteins'] = result[index+1]
-                d['carbs'] = result[index+2]
-                d['fats'] = result[index+3]
+                d['proteins'] = result[index + 1]
+                d['carbs'] = result[index + 2]
+                d['fats'] = result[index + 3]
                 kcal_list.append(d)
         cont['kcal_list'] = kcal_list
         final_result = []
-        for x,y in zip(meal_list, kcal_list):
+        for x, y in zip(meal_list, kcal_list):
             x.update(y)
             final_result.append(x)
         print(final_result)
@@ -419,10 +423,10 @@ class FoodsView(LoginRequiredMixin, View):
             else:
                 d['id'] = food.id
                 d['name'] = food.name
-                d['kcal'] = food.kcal = round(food.kcal*quant/food.grams, 0)
-                d['proteins'] = food.proteins = round(food.proteins*quant/food.grams, 0)
-                d['carbs'] = food.carbs = round(food.carbs*quant/food.grams, 0)
-                d['fats'] = food.fats = round(food.fats*quant/food.grams, 0)
+                d['kcal'] = food.kcal = round(food.kcal * quant / food.grams, 0)
+                d['proteins'] = food.proteins = round(food.proteins * quant / food.grams, 0)
+                d['carbs'] = food.carbs = round(food.carbs * quant / food.grams, 0)
+                d['fats'] = food.fats = round(food.fats * quant / food.grams, 0)
                 d['grams'] = food.grams
                 d['quantity'] = quant
                 print(quant)
@@ -445,12 +449,11 @@ class FoodsView(LoginRequiredMixin, View):
         cont['fats_sum'] = sum(fats_sum)
         cont['zero'] = [0.0]
 
-
         return render(request, "foodfriend/food.html", cont)
 
     def post(self, request, my_id, day_id, meal_id):
         my_id = self.request.user.id
-        cont={}
+        cont = {}
         day = Days.objects.get(pk=day_id)
         user = User.objects.get(pk=my_id)
         meal = Meal.objects.get(pk=meal_id)
@@ -468,8 +471,8 @@ class FoodsView(LoginRequiredMixin, View):
         to_change.save()
         return redirect('/calendar/{}/meal/{}/food/{}'.format(my_id, day_id, meal_id))
 
-class CreateMealTwo(LoginRequiredMixin, View):
 
+class CreateMealTwo(LoginRequiredMixin, View):
     def get(self, request, meal_id):
         print(meal_id)
         meal_type = Meal.objects.filter(id=meal_id)[0].meal_name
@@ -489,7 +492,7 @@ class CreateMealTwo(LoginRequiredMixin, View):
             a = 4
         if len(today_meals) == 5:
             a = 4
-        form = CreateMealForm(initial = {"meal": meal_type, "day": today})
+        form = CreateMealForm(initial={"meal": meal_type, "day": today})
         form.fields["day"].queryset = Days.objects.filter(date_user=user.userextend)
         avatar = user.userextend.avatar
 
@@ -514,8 +517,7 @@ class CreateMealTwo(LoginRequiredMixin, View):
             quantity5 = form.cleaned_data['quantity5']
             print(quantity1)
 
-
-            meal, _create = Meal.objects.get_or_create(meal_name = name, day = day)
+            meal, _create = Meal.objects.get_or_create(meal_name=name, day=day)
             day_foods_list = meal.foods.all()
 
             if food1 not in day_foods_list:
@@ -556,7 +558,6 @@ class CreateMealTwo(LoginRequiredMixin, View):
 
 
 class CreateMeal(LoginRequiredMixin, View):
-
     def get(self, request):
         my_id = self.request.user.id
         user = User.objects.get(pk=my_id)
@@ -574,7 +575,7 @@ class CreateMeal(LoginRequiredMixin, View):
             a = 4
         if len(today_meals) == 5:
             a = 4
-        form = CreateMealForm(initial = {"meal": MEALS[a][0], "day": today})
+        form = CreateMealForm(initial={"meal": MEALS[a][0], "day": today})
         form.fields["day"].queryset = Days.objects.filter(date_user=user.userextend)
         avatar = user.userextend.avatar
 
@@ -598,8 +599,7 @@ class CreateMeal(LoginRequiredMixin, View):
             food5 = form.cleaned_data['foods5']
             quantity5 = form.cleaned_data['quantity5']
 
-
-            meal, _create = Meal.objects.get_or_create(meal_name = name, day = day)
+            meal, _create = Meal.objects.get_or_create(meal_name=name, day=day)
             day_foods_list = meal.foods.all()
 
             if food1 not in day_foods_list:
@@ -636,30 +636,31 @@ class CreateMeal(LoginRequiredMixin, View):
             else:
                 pass
 
-            # else:
-            #     # meal.foods.set(food)
-            #     Quantity.objects.create(meal_quantity=meal, food_quantity=food1, quantity=quantity1)
-            #     if food2 != None and quantity2 != None:
-            #         Quantity.objects.create(meal_quantity=meal, food_quantity=food2, quantity=quantity2)
-            #     else:
-            #         pass
-            #     if food3 != None and quantity3 != None:
-            #         Quantity.objects.create(meal_quantity=meal, food_quantity=food3, quantity=quantity3)
-            #     else:
-            #         pass
-            #     if food4 != None and quantity4 != None:
-            #         Quantity.objects.create(meal_quantity=meal, food_quantity=food4, quantity=quantity4)
-            #     else:
-            #         pass
-            #     if food5 != None and quantity5 != None:
-            #         Quantity.objects.create(meal_quantity=meal, food_quantity=food5, quantity=quantity5)
-            #     else:
-            #         pass
+                # else:
+                #     # meal.foods.set(food)
+                #     Quantity.objects.create(meal_quantity=meal, food_quantity=food1, quantity=quantity1)
+                #     if food2 != None and quantity2 != None:
+                #         Quantity.objects.create(meal_quantity=meal, food_quantity=food2, quantity=quantity2)
+                #     else:
+                #         pass
+                #     if food3 != None and quantity3 != None:
+                #         Quantity.objects.create(meal_quantity=meal, food_quantity=food3, quantity=quantity3)
+                #     else:
+                #         pass
+                #     if food4 != None and quantity4 != None:
+                #         Quantity.objects.create(meal_quantity=meal, food_quantity=food4, quantity=quantity4)
+                #     else:
+                #         pass
+                #     if food5 != None and quantity5 != None:
+                #         Quantity.objects.create(meal_quantity=meal, food_quantity=food5, quantity=quantity5)
+                #     else:
+                #         pass
 
                 # meal = Meal.objects.create(meal_name = name, day = day, foods=food)
                 # meal.save()
 
         return redirect('/calendar/{}/meal/{}/food/{}'.format(my_id, day.id, meal.id))
+
 
 # class AddDay(View):
 #     def get(self, request, my_id):
@@ -681,7 +682,8 @@ class UpdateMeal2(View):
         for food in form:
             d = {}
             print(food)
-            quant = Quantity.objects.filter(meal_quantity=Meal.objects.get(pk=meal_id), food_quantity=Food.objects.get(pk=11))
+            quant = Quantity.objects.filter(meal_quantity=Meal.objects.get(pk=meal_id),
+                                            food_quantity=Food.objects.get(pk=11))
             d['quantity'] = food.quantity = quant
             food_quant.append(d)
 
@@ -697,15 +699,16 @@ class UpdateMeal2(View):
         return render(request, "foodfriend/meal_form2.html", {"form": form})
 
 
-
 class UpdateMeal(UpdateView):
     def get_success_url(self, **kwargs):
-        return reverse('update-meal', kwargs={'meal_id':self.object.id,
-                                                'my_id':self.object.day.date_user.id,
-                                                'day_id':self.object.day.id})
+        return reverse('update-meal', kwargs={'meal_id': self.object.id,
+                                              'my_id': self.object.day.date_user.id,
+                                              'day_id': self.object.day.id})
+
     model = Meal
     fields = ['foods']
     template_name_suffix = '_form'
+
 
 # class UpdateMeal(View):
 #
@@ -723,12 +726,13 @@ class UpdateMeal(UpdateView):
 ###trzeba to usunac bo tylko zasmieca
 class UpdateUser(LoginRequiredMixin, UpdateView):
     def get_success_url(self, **kwargs):
-        return reverse('my-info', kwargs={'my_id':self.object.user_id})
+        return reverse('my-info', kwargs={'my_id': self.object.user_id})
 
     model = UserExtend
     fields = ['avatar', 'age', 'sex', 'weight', 'height', 'factor', 'target']
 
     template_name_suffix = '_update_form'
+
 
 class CreateFood(LoginRequiredMixin, CreateView):
     def get_success_url(self, **kwargs):
@@ -738,6 +742,7 @@ class CreateFood(LoginRequiredMixin, CreateView):
     fields = '__all__'
     template_name_suffix = '_form'
     success_url = '/foodlist'
+
 
 class FoodList(LoginRequiredMixin, View):
     def get(self, request):
@@ -759,6 +764,7 @@ class FoodList(LoginRequiredMixin, View):
 
         return render(request, 'foodfriend/food_list.html', cont)
 
+
 class UserMacros(LoginRequiredMixin, View):
     def get(self, request, my_id=None):
         if not my_id:
@@ -775,7 +781,7 @@ class UserMacros(LoginRequiredMixin, View):
         if isinstance(extended.calories, str):
             cont['water'] = 0
             cont['progress'] = 0
-            cont["zero_active_water"] = 0   
+            cont["zero_active_water"] = 0
         else:
             cont['water'] = int(day.day_water)
             cont['progress'] = round(day.day_water / extended.water, 1) * 100
@@ -812,18 +818,19 @@ class UserMacros(LoginRequiredMixin, View):
 
 
 
-    # if not my_id:
-    #     my_id = self.request.user.id
-    #     extended = UserExtend.objects.get(pk=my_id)
-    #     days = Days.objects.filter(date_user=extended)
-    #     for d in days:
-    #         if d.date == datetime.date.today():
-    #             pass
-    #         else:
-    #             day = Days.objects.create(date_user=request.user.userextend)
-    #             day.save()
-    #
-    #     day = Days.objects.get(date=datetime.date.today(), date_user=request.user.userextend)
+                # if not my_id:
+                #     my_id = self.request.user.id
+                #     extended = UserExtend.objects.get(pk=my_id)
+                #     days = Days.objects.filter(date_user=extended)
+                #     for d in days:
+                #         if d.date == datetime.date.today():
+                #             pass
+                #         else:
+                #             day = Days.objects.create(date_user=request.user.userextend)
+                #             day.save()
+                #
+                #     day = Days.objects.get(date=datetime.date.today(), date_user=request.user.userextend)
+
 
 class MyPerson(LoginRequiredMixin, View):
     def get(self, request, my_id):
@@ -831,7 +838,6 @@ class MyPerson(LoginRequiredMixin, View):
         form = UserExtendForm(instance=p)
         avatar = p.avatar
         return render(request, "foodfriend/userextend_update_form2.html", {"form": form, "avatar": avatar})
-
 
     def post(self, request, my_id):
         p = UserExtend.objects.get(user_id=my_id)
@@ -900,12 +906,12 @@ class LineChartJSONView(BaseLineChartView):
             fats = [0, 0]
             user_calories = [extended.calories, extended.calories]
 
-
         return user_calories, kcals, proteins, carbs, fats
 
 
 line_chart = TemplateView.as_view(template_name='foodfriend/line_chart.html')
 line_chart_json = LineChartJSONView.as_view()
+
 
 class DatePicker(View):
     def get(self, request):
@@ -916,8 +922,10 @@ class DatePicker(View):
         form.fields["cal"].queryset = Days.objects.filter(date_user=user.userextend)
         return render(request, "foodfriend/date_picker.html", {'form': form})
 
+
 date_picker = TemplateView.as_view(template_name="foodfriend/date_picker.html")
 date_picker_jquery = DatePicker.as_view()
+
 
 class FoodListSerializer(APIView):
     def get(self, request, format=None):
@@ -932,11 +940,13 @@ class FoodListSerializer(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class UserListSerializer(APIView):
     def get(self, request, format=None):
         user = UserExtend.objects.all()
         serializer = UserSerializer(user, many=True, context={'request': request})
         return Response(serializer.data)
+
 
 class FoodSerializerDetails(APIView):
     def get_object(self, pk):
@@ -962,6 +972,11 @@ class FoodSerializerDetails(APIView):
         food.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class UserDayMacrosSerializer(APIView):
+    def get(self, request, format=None):
+        days = Days.objects.filter(date_user_id=self.request.user.id)
+        serializer = DaysSerializer(days, many=True, context={'request': request})
+        return Response(serializer.data)
 
 # from requests.auth import HTTPBasicAuth
 #     food = requests.get('http://127.0.0.1:8000/food_list_serializer/?format=json',
