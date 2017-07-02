@@ -790,7 +790,7 @@ class UserMacros(LoginRequiredMixin, View):
             cont["zero_water"] = 0
         form = WaterForm()
         form2 = DeleteWaterForm()
-        print(cont['calories'])
+        # print(cont['calories'])
 
         return render(request, 'foodfriend/index.html', cont, {"form": form})
 
