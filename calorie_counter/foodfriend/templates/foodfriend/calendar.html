@@ -27,29 +27,6 @@
     </div>
 </nav>
 <link rel="stylesheet" type="text/css" href="{% static 'my-blank.css' %}">
-<!--<div class="content-block">-->
-<!--<div class="panel panel-primary">-->
-<!--<div class="panel-heading">-->
-<!--<h3>CALENDAR</h3>-->
-<!--</div>-->
-<!--<div class="panel-body">-->
-<!--<div>-->
-<!--<table class="table" id="albums-table">-->
-<!--<thead>-->
-<!--<tr>-->
-<!--<th>Days:</th>-->
-
-<!--</tr>-->
-<!--</thead>-->
-<!--<tbody class="list">-->
-
-
-<!--{% for day in days %}-->
-<!--<tr>-->
-<!--<td><a href="{% url 'calendar-meal' my_id=my_id day_id=day.id %}">{{ day.date }} - {{ day.name }}</a></td>-->
-<!--</tr>-->
-<!--{% endfor %}-->
-<!--</tbody>-->
 <div class="my_charts">
 
     <canvas id="myChart" width="800" height="400"></canvas>
@@ -249,6 +226,19 @@
     function insertReply(content) {
     document.getElementById('output').innerHTML = content;
 }
+var content;
+var xhttp = new XMLHttpRequest();
+var test = xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       content = JSON.parse(xhttp.responseText)
+       return content
+    }
+
+};
+xhttp.open("GET", "http://127.0.0.1:8000/user_day_macros_serializer", true);
+xhttp.send();
+console.log(test)
+
 
 // create script element
 var script = document.createElement('script');
@@ -256,42 +246,42 @@ var script = document.createElement('script');
 script.src = '127.0.0.1:8000/user_day_macros_serializer?callback=insertReply';
 // insert script to document and load content
 document.body.appendChild(script);
-        <!--Highcharts.chart('container', {-->
+        Highcharts.chart('container', {
 
-            <!--title: {-->
-                <!--text: 'CALENDAR'-->
-            <!--},-->
+            title: {
+                text: 'CALENDAR'
+            },
 
-            <!--subtitle: {-->
-                <!--text: 'Calories and water per day.'-->
-            <!--},-->
+            subtitle: {
+                text: 'Calories and water per day.'
+            },
 
-            <!--yAxis: {-->
-                <!--title: {-->
-                    <!--text: 'kcal/ml'-->
-                <!--}-->
-            <!--},-->
-            <!--legend: {-->
-                <!--layout: 'vertical',-->
-                <!--align: 'right',-->
-                <!--verticalAlign: 'middle'-->
-            <!--},-->
+            yAxis: {
+                title: {
+                    text: 'kcal/ml'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
 
-            <!--plotOptions: {-->
-                <!--series: {-->
-                    <!--pointStart: 2010-->
-                <!--}-->
-            <!--},-->
+            plotOptions: {
+                series: {
+                    pointStart: 2010
+                }
+            },
 
-            <!--series: [{-->
-                <!--name: 'Calories',-->
-                <!--data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]-->
-            <!--}, {-->
-                <!--name: 'Water',-->
-                <!--data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]-->
-            <!--}]-->
+            series: [{
+                name: 'Calories',
+                data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+            }, {
+                name: 'Water',
+                data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+            }]
 
-        <!--});-->
+        });
 
     </script>
 </div>
